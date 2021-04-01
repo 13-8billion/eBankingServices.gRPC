@@ -520,12 +520,12 @@ private static final long serialVersionUID = 0L;
      * <code>string accNo = 1;</code>
      */
     public Builder setAccNo(
-        java.lang.String value) {
-      if (value == null) {
+        int i) {
+      if (i == 0) {
     throw new NullPointerException();
   }
   
-      accNo_ = value;
+      accNo_ = i;
       onChanged();
       return this;
     }
@@ -589,12 +589,12 @@ private static final long serialVersionUID = 0L;
      * <code>string sum = 2;</code>
      */
     public Builder setSum(
-        java.lang.String value) {
-      if (value == null) {
+        double d) {
+      if (d == 0) {
     throw new NullPointerException();
   }
   
-      sum_ = value;
+      sum_ = d;
       onChanged();
       return this;
     }

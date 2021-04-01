@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private DepositConfirmation() {
     depositID_ = 0;
     depositConf_ = "";
+    message_ = "";
   }
 
   @java.lang.Override
@@ -53,6 +54,12 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             depositConf_ = s;
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            message_ = s;
             break;
           }
           default: {
@@ -130,6 +137,40 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int MESSAGE_FIELD_NUMBER = 3;
+  private volatile java.lang.Object message_;
+  /**
+   * <code>string message = 3;</code>
+   */
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      message_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string message = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getMessageBytes() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      message_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -150,6 +191,9 @@ private static final long serialVersionUID = 0L;
     if (!getDepositConfBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, depositConf_);
     }
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -165,6 +209,9 @@ private static final long serialVersionUID = 0L;
     }
     if (!getDepositConfBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, depositConf_);
+    }
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -186,6 +233,8 @@ private static final long serialVersionUID = 0L;
         == other.getDepositID());
     result = result && getDepositConf()
         .equals(other.getDepositConf());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -201,6 +250,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getDepositID();
     hash = (37 * hash) + DEPOSITCONF_FIELD_NUMBER;
     hash = (53 * hash) + getDepositConf().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -338,6 +389,8 @@ private static final long serialVersionUID = 0L;
 
       depositConf_ = "";
 
+      message_ = "";
+
       return this;
     }
 
@@ -366,6 +419,7 @@ private static final long serialVersionUID = 0L;
       eBankingServices.Transactions.DepositConfirmation result = new eBankingServices.Transactions.DepositConfirmation(this);
       result.depositID_ = depositID_;
       result.depositConf_ = depositConf_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -419,6 +473,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getDepositConf().isEmpty()) {
         depositConf_ = other.depositConf_;
+        onChanged();
+      }
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -541,6 +599,75 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       depositConf_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object message_ = "";
+    /**
+     * <code>string message = 3;</code>
+     */
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder setMessage(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      message_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder clearMessage() {
+      
+      message_ = getDefaultInstance().getMessage();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder setMessageBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      message_ = value;
       onChanged();
       return this;
     }

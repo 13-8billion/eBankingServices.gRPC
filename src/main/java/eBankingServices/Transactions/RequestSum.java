@@ -20,9 +20,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private RequestSum() {
-    fromAccNo_ = "";
-    toAccNo_ = "";
-    sum_ = "";
+    fromAccNo_ = 0;
+    toAccNo_ = 0;
+    sum_ = 0D;
     monthly_ = false;
   }
 
@@ -50,22 +50,19 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            fromAccNo_ = s;
+            fromAccNo_ = input.readInt32();
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
 
-            toAccNo_ = s;
+            toAccNo_ = input.readInt32();
             break;
           }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 25: {
 
-            sum_ = s;
+            sum_ = input.readDouble();
             break;
           }
           case 32: {
@@ -106,105 +103,30 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int FROM_ACCNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object fromAccNo_;
+  private int fromAccNo_;
   /**
-   * <code>string from_accNo = 1;</code>
+   * <code>int32 from_accNo = 1;</code>
    */
-  public java.lang.String getFromAccNo() {
-    java.lang.Object ref = fromAccNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      fromAccNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string from_accNo = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getFromAccNoBytes() {
-    java.lang.Object ref = fromAccNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      fromAccNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getFromAccNo() {
+    return fromAccNo_;
   }
 
   public static final int TO_ACCNO_FIELD_NUMBER = 2;
-  private volatile java.lang.Object toAccNo_;
+  private int toAccNo_;
   /**
-   * <code>string to_accNo = 2;</code>
+   * <code>int32 to_accNo = 2;</code>
    */
-  public java.lang.String getToAccNo() {
-    java.lang.Object ref = toAccNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      toAccNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string to_accNo = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getToAccNoBytes() {
-    java.lang.Object ref = toAccNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      toAccNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getToAccNo() {
+    return toAccNo_;
   }
 
   public static final int SUM_FIELD_NUMBER = 3;
-  private volatile java.lang.Object sum_;
+  private double sum_;
   /**
-   * <code>string sum = 3;</code>
+   * <code>double sum = 3;</code>
    */
-  public java.lang.String getSum() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      sum_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string sum = 3;</code>
-   */
-  public com.google.protobuf.ByteString
-      getSumBytes() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      sum_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public double getSum() {
+    return sum_;
   }
 
   public static final int MONTHLY_FIELD_NUMBER = 4;
@@ -230,14 +152,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getFromAccNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, fromAccNo_);
+    if (fromAccNo_ != 0) {
+      output.writeInt32(1, fromAccNo_);
     }
-    if (!getToAccNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, toAccNo_);
+    if (toAccNo_ != 0) {
+      output.writeInt32(2, toAccNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, sum_);
+    if (sum_ != 0D) {
+      output.writeDouble(3, sum_);
     }
     if (monthly_ != false) {
       output.writeBool(4, monthly_);
@@ -251,14 +173,17 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getFromAccNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, fromAccNo_);
+    if (fromAccNo_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, fromAccNo_);
     }
-    if (!getToAccNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, toAccNo_);
+    if (toAccNo_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, toAccNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, sum_);
+    if (sum_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(3, sum_);
     }
     if (monthly_ != false) {
       size += com.google.protobuf.CodedOutputStream
@@ -280,12 +205,14 @@ private static final long serialVersionUID = 0L;
     eBankingServices.Transactions.RequestSum other = (eBankingServices.Transactions.RequestSum) obj;
 
     boolean result = true;
-    result = result && getFromAccNo()
-        .equals(other.getFromAccNo());
-    result = result && getToAccNo()
-        .equals(other.getToAccNo());
-    result = result && getSum()
-        .equals(other.getSum());
+    result = result && (getFromAccNo()
+        == other.getFromAccNo());
+    result = result && (getToAccNo()
+        == other.getToAccNo());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getSum())
+        == java.lang.Double.doubleToLongBits(
+            other.getSum()));
     result = result && (getMonthly()
         == other.getMonthly());
     result = result && unknownFields.equals(other.unknownFields);
@@ -300,11 +227,12 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + FROM_ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getFromAccNo().hashCode();
+    hash = (53 * hash) + getFromAccNo();
     hash = (37 * hash) + TO_ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getToAccNo().hashCode();
+    hash = (53 * hash) + getToAccNo();
     hash = (37 * hash) + SUM_FIELD_NUMBER;
-    hash = (53 * hash) + getSum().hashCode();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getSum()));
     hash = (37 * hash) + MONTHLY_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getMonthly());
@@ -445,11 +373,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      fromAccNo_ = "";
+      fromAccNo_ = 0;
 
-      toAccNo_ = "";
+      toAccNo_ = 0;
 
-      sum_ = "";
+      sum_ = 0D;
 
       monthly_ = false;
 
@@ -531,17 +459,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.Transactions.RequestSum other) {
       if (other == eBankingServices.Transactions.RequestSum.getDefaultInstance()) return this;
-      if (!other.getFromAccNo().isEmpty()) {
-        fromAccNo_ = other.fromAccNo_;
-        onChanged();
+      if (other.getFromAccNo() != 0) {
+        setFromAccNo(other.getFromAccNo());
       }
-      if (!other.getToAccNo().isEmpty()) {
-        toAccNo_ = other.toAccNo_;
-        onChanged();
+      if (other.getToAccNo() != 0) {
+        setToAccNo(other.getToAccNo());
       }
-      if (!other.getSum().isEmpty()) {
-        sum_ = other.sum_;
-        onChanged();
+      if (other.getSum() != 0D) {
+        setSum(other.getSum());
       }
       if (other.getMonthly() != false) {
         setMonthly(other.getMonthly());
@@ -575,209 +500,80 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object fromAccNo_ = "";
+    private int fromAccNo_ ;
     /**
-     * <code>string from_accNo = 1;</code>
+     * <code>int32 from_accNo = 1;</code>
      */
-    public java.lang.String getFromAccNo() {
-      java.lang.Object ref = fromAccNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        fromAccNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getFromAccNo() {
+      return fromAccNo_;
     }
     /**
-     * <code>string from_accNo = 1;</code>
+     * <code>int32 from_accNo = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getFromAccNoBytes() {
-      java.lang.Object ref = fromAccNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        fromAccNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string from_accNo = 1;</code>
-     */
-    public Builder setFromAccNo(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setFromAccNo(int value) {
+      
       fromAccNo_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string from_accNo = 1;</code>
+     * <code>int32 from_accNo = 1;</code>
      */
     public Builder clearFromAccNo() {
       
-      fromAccNo_ = getDefaultInstance().getFromAccNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string from_accNo = 1;</code>
-     */
-    public Builder setFromAccNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      fromAccNo_ = value;
+      fromAccNo_ = 0;
       onChanged();
       return this;
     }
 
-    private java.lang.Object toAccNo_ = "";
+    private int toAccNo_ ;
     /**
-     * <code>string to_accNo = 2;</code>
+     * <code>int32 to_accNo = 2;</code>
      */
-    public java.lang.String getToAccNo() {
-      java.lang.Object ref = toAccNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        toAccNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getToAccNo() {
+      return toAccNo_;
     }
     /**
-     * <code>string to_accNo = 2;</code>
+     * <code>int32 to_accNo = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getToAccNoBytes() {
-      java.lang.Object ref = toAccNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        toAccNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string to_accNo = 2;</code>
-     */
-    public Builder setToAccNo(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setToAccNo(int value) {
+      
       toAccNo_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string to_accNo = 2;</code>
+     * <code>int32 to_accNo = 2;</code>
      */
     public Builder clearToAccNo() {
       
-      toAccNo_ = getDefaultInstance().getToAccNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string to_accNo = 2;</code>
-     */
-    public Builder setToAccNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      toAccNo_ = value;
+      toAccNo_ = 0;
       onChanged();
       return this;
     }
 
-    private java.lang.Object sum_ = "";
+    private double sum_ ;
     /**
-     * <code>string sum = 3;</code>
+     * <code>double sum = 3;</code>
      */
-    public java.lang.String getSum() {
-      java.lang.Object ref = sum_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sum_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public double getSum() {
+      return sum_;
     }
     /**
-     * <code>string sum = 3;</code>
+     * <code>double sum = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getSumBytes() {
-      java.lang.Object ref = sum_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        sum_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string sum = 3;</code>
-     */
-    public Builder setSum(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setSum(double value) {
+      
       sum_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string sum = 3;</code>
+     * <code>double sum = 3;</code>
      */
     public Builder clearSum() {
       
-      sum_ = getDefaultInstance().getSum();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string sum = 3;</code>
-     */
-    public Builder setSumBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      sum_ = value;
+      sum_ = 0D;
       onChanged();
       return this;
     }

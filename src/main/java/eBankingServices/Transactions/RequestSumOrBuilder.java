@@ -8,34 +8,19 @@ public interface RequestSumOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string from_accNo = 1;</code>
+   * <code>int32 from_accNo = 1;</code>
    */
-  java.lang.String getFromAccNo();
-  /**
-   * <code>string from_accNo = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getFromAccNoBytes();
+  int getFromAccNo();
 
   /**
-   * <code>string to_accNo = 2;</code>
+   * <code>int32 to_accNo = 2;</code>
    */
-  java.lang.String getToAccNo();
-  /**
-   * <code>string to_accNo = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getToAccNoBytes();
+  int getToAccNo();
 
   /**
-   * <code>string sum = 3;</code>
+   * <code>double sum = 3;</code>
    */
-  java.lang.String getSum();
-  /**
-   * <code>string sum = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getSumBytes();
+  double getSum();
 
   /**
    * <code>bool monthly = 4;</code>

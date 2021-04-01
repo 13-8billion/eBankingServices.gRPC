@@ -21,20 +21,21 @@ service Transactions {
 
 // deposit message
 message DepositSum {
-  string accNo = 1;
-  string sum = 2;  
+  int32 accNo = 1;
+  double sum = 2;  
 }
 
 message DepositConfirmation {
   int32 depositID = 1;
   string depositConf = 2;
+  string message = 3;
 }
 
 // transfer message
 message TransferSum {
-  string from_accNo = 1;
-  string to_accNo = 2;
-  string sum = 3; 
+  int32 from_accNo = 1;
+  int32 to_accNo = 2;
+  double sum = 3; 
 }
 
 message TransferConfirmation {
@@ -44,9 +45,9 @@ message TransferConfirmation {
 
 // request message
 message RequestSum {
-  string from_accNo = 1;
-  string to_accNo = 2;
-  string sum = 3;
+  int32 from_accNo = 1;
+  int32 to_accNo = 2;
+  double sum = 3;
   bool monthly = 4;  
 }
 

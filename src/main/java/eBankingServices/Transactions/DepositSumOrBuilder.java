@@ -8,22 +8,12 @@ public interface DepositSumOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string accNo = 1;</code>
+   * <code>int32 accNo = 1;</code>
    */
-  java.lang.String getAccNo();
-  /**
-   * <code>string accNo = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getAccNoBytes();
+  int getAccNo();
 
   /**
-   * <code>string sum = 2;</code>
+   * <code>double sum = 2;</code>
    */
-  java.lang.String getSum();
-  /**
-   * <code>string sum = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getSumBytes();
+  double getSum();
 }

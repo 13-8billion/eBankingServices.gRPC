@@ -20,8 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private DepositSum() {
-    accNo_ = "";
-    sum_ = "";
+    accNo_ = 0;
+    sum_ = 0D;
   }
 
   @java.lang.Override
@@ -48,16 +48,14 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            accNo_ = s;
+            accNo_ = input.readInt32();
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 17: {
 
-            sum_ = s;
+            sum_ = input.readDouble();
             break;
           }
           default: {
@@ -93,71 +91,21 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ACCNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object accNo_;
+  private int accNo_;
   /**
-   * <code>string accNo = 1;</code>
+   * <code>int32 accNo = 1;</code>
    */
-  public java.lang.String getAccNo() {
-    java.lang.Object ref = accNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      accNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string accNo = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getAccNoBytes() {
-    java.lang.Object ref = accNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      accNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getAccNo() {
+    return accNo_;
   }
 
   public static final int SUM_FIELD_NUMBER = 2;
-  private volatile java.lang.Object sum_;
+  private double sum_;
   /**
-   * <code>string sum = 2;</code>
+   * <code>double sum = 2;</code>
    */
-  public java.lang.String getSum() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      sum_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string sum = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getSumBytes() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      sum_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public double getSum() {
+    return sum_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -174,11 +122,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getAccNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accNo_);
+    if (accNo_ != 0) {
+      output.writeInt32(1, accNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, sum_);
+    if (sum_ != 0D) {
+      output.writeDouble(2, sum_);
     }
     unknownFields.writeTo(output);
   }
@@ -189,11 +137,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getAccNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, accNo_);
+    if (accNo_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, accNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, sum_);
+    if (sum_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(2, sum_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -211,10 +161,12 @@ private static final long serialVersionUID = 0L;
     eBankingServices.Transactions.DepositSum other = (eBankingServices.Transactions.DepositSum) obj;
 
     boolean result = true;
-    result = result && getAccNo()
-        .equals(other.getAccNo());
-    result = result && getSum()
-        .equals(other.getSum());
+    result = result && (getAccNo()
+        == other.getAccNo());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getSum())
+        == java.lang.Double.doubleToLongBits(
+            other.getSum()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -227,9 +179,10 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getAccNo().hashCode();
+    hash = (53 * hash) + getAccNo();
     hash = (37 * hash) + SUM_FIELD_NUMBER;
-    hash = (53 * hash) + getSum().hashCode();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getSum()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -367,9 +320,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      accNo_ = "";
+      accNo_ = 0;
 
-      sum_ = "";
+      sum_ = 0D;
 
       return this;
     }
@@ -447,13 +400,11 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.Transactions.DepositSum other) {
       if (other == eBankingServices.Transactions.DepositSum.getDefaultInstance()) return this;
-      if (!other.getAccNo().isEmpty()) {
-        accNo_ = other.accNo_;
-        onChanged();
+      if (other.getAccNo() != 0) {
+        setAccNo(other.getAccNo());
       }
-      if (!other.getSum().isEmpty()) {
-        sum_ = other.sum_;
-        onChanged();
+      if (other.getSum() != 0D) {
+        setSum(other.getSum());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -484,140 +435,54 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object accNo_ = "";
+    private int accNo_ ;
     /**
-     * <code>string accNo = 1;</code>
+     * <code>int32 accNo = 1;</code>
      */
-    public java.lang.String getAccNo() {
-      java.lang.Object ref = accNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        accNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getAccNo() {
+      return accNo_;
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>int32 accNo = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getAccNoBytes() {
-      java.lang.Object ref = accNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        accNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string accNo = 1;</code>
-     */
-    public Builder setAccNo(
-        int i) {
-      if (i == 0) {
-    throw new NullPointerException();
-  }
-  
-      accNo_ = i;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string accNo = 1;</code>
-     */
-    public Builder clearAccNo() {
-      
-      accNo_ = getDefaultInstance().getAccNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string accNo = 1;</code>
-     */
-    public Builder setAccNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public Builder setAccNo(int value) {
       
       accNo_ = value;
       onChanged();
       return this;
     }
+    /**
+     * <code>int32 accNo = 1;</code>
+     */
+    public Builder clearAccNo() {
+      
+      accNo_ = 0;
+      onChanged();
+      return this;
+    }
 
-    private java.lang.Object sum_ = "";
+    private double sum_ ;
     /**
-     * <code>string sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
-    public java.lang.String getSum() {
-      java.lang.Object ref = sum_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sum_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public double getSum() {
+      return sum_;
     }
     /**
-     * <code>string sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getSumBytes() {
-      java.lang.Object ref = sum_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        sum_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string sum = 2;</code>
-     */
-    public Builder setSum(
-        double d) {
-      if (d == 0) {
-    throw new NullPointerException();
-  }
-  
-      sum_ = d;
+    public Builder setSum(double value) {
+      
+      sum_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
     public Builder clearSum() {
       
-      sum_ = getDefaultInstance().getSum();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string sum = 2;</code>
-     */
-    public Builder setSumBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      sum_ = value;
+      sum_ = 0D;
       onChanged();
       return this;
     }

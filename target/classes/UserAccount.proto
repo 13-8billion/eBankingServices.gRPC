@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "eBankingServices.UserAccount";
+option java_outer_classname = "UserAccountImpl";
+
+package UserAccount;
+
+service UserAccount {
+  
+  // Unary gRPC method 1: Login/Logout
+  rpc Login(LoginRequest) returns (LoginConfirmation) {}
+  
+  // Server-Streaming gRPC method 2: View Account
+  rpc ViewAccount(ViewRequest) returns (stream AccountInfo) {}
+  
+  // Unary gRPC method 3: Change Password
+  rpc ChangePassword(PasswordRequest) returns (PasswordConfirmation) {}
+    
+}
+
+// Login message
+message LoginRequest {
+  string username = 1; 
+  string password = 2; 
+}
+
+message LoginConfirmation {
+  string loginConf = 1;
+}
+
+// View account message
+message ViewRequest {
+  int32 accNo = 1;  
+}
+
+message AccountInfo {
+  int32 accNo = 1;
+  double amount = 2;
+  double balance = 3;
+}
+
+// Change password message
+message PasswordRequest {
+  string accNo = 1; 
+  string currPass = 2;
+  string newPass = 3; 
+}
+
+message PasswordConfirmation {
+  string passConf = 1;
+}

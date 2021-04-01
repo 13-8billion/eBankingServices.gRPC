@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "eBankingServices.Transactions";
+option java_outer_classname = "TransactionsImpl";
+
+package Transactions;
+
+service Transactions {
+  
+   // Unary gRPC method 1: Deposit
+  rpc Deposit(DepositSum) returns (DepositConfirmation) {}
+  
+  // Client-Streaming gRPC method 2: Transfer
+  rpc Transfer(stream TransferSum) returns (TransferConfirmation) {}
+  
+  // Bi-Directional gRPC method 3: Request
+  rpc Request(stream RequestSum) returns (stream RequestStatus) {}
+    
+}
+
+// deposit message
+message DepositSum {
+  string accNo = 1;
+  string sum = 2;  
+}
+
+message DepositConfirmation {
+  int32 depositID = 1;
+  string depositConf = 2;
+}
+
+// transfer message
+message TransferSum {
+  string from_accNo = 1;
+  string to_accNo = 2;
+  string sum = 3; 
+}
+
+message TransferConfirmation {
+   int32 transferID = 1;
+  string transferConf = 2;
+}
+
+// request message
+message RequestSum {
+  string from_accNo = 1;
+  string to_accNo = 2;
+  string sum = 3;
+  bool monthly = 4;  
+}
+
+message RequestStatus {
+  int32 requestID = 1;
+  string status = 2;
+  string requestConf = 3;
+}

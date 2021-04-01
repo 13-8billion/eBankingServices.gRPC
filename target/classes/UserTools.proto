@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "eBankingServices.UserTools";
+option java_outer_classname = "UserToolsImpl";
+
+package UserTools;
+
+service UserTools {
+  
+  // gRPC method 1: Help Bot
+  rpc HelpBot(stream HelpRequest) returns (HelpResponse) {}
+  
+  // gRPC method 2: Vaults
+  rpc Vault(ValutAccess) returns (VaultConfirmation) {}
+  
+  // gRPC method 3: Interest Calculator
+  rpc InterestCalc(stream CalcRequest) returns (CalcResponse) {}
+    
+}
+
+// help bot message
+message HelpRequest {
+  int32 problemID = 1;  
+}
+
+message HelpResponse {
+  string solution = 1;
+}
+
+// valut message
+message ValutAccess {
+  string accNo = 1;  
+  string sum = 2;
+  string unlockDate = 3;
+}
+
+message VaultConfirmation {
+  int32 vaultID = 1;
+  string valutConf = 2;
+}
+
+// interest calculator message
+message CalcRequest {
+  int32 sum = 1; 
+  int32 interestRate = 2; 
+}
+
+message CalcResponse {
+  int32 total = 1;
+}

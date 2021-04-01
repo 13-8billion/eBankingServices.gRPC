@@ -15,6 +15,10 @@ import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
+import io.grpc.ClientCall;
+import io.grpc.ManagedChannel;
+import io.grpc.stub.StreamObserver;
+
 /**
  */
 @javax.annotation.Generated(
@@ -242,12 +246,18 @@ public final class TransactionsGrpc {
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(
-        io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferConfirmation> responseObserver) {
+        TransferSum transferSum) {
       return asyncClientStreamingCall(
-          getChannel().newCall(getTransferMethod(), getCallOptions()), responseObserver);
+          getChannel().newCall(getTransferMethod(), getCallOptions()), transferSum);
     }
 
-    /**
+    private StreamObserver<TransferSum> asyncClientStreamingCall(ClientCall<TransferSum, TransferConfirmation> newCall,
+			TransferSum transferSum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
      * <pre>
      * Bi-Directional gRPC method 3: Request
      * </pre>
@@ -257,6 +267,12 @@ public final class TransactionsGrpc {
       return asyncBidiStreamingCall(
           getChannel().newCall(getRequestMethod(), getCallOptions()), responseObserver);
     }
+
+	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
   }
 
   /**

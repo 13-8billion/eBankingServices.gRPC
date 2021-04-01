@@ -3,6 +3,8 @@
 
 package eBankingServices.Transactions;
 
+import io.grpc.ManagedChannelBuilder;
+
 /**
  * Protobuf type {@code Transactions.TransferConfirmation}
  */
@@ -556,6 +558,10 @@ private static final long serialVersionUID = 0L;
       return super.mergeUnknownFields(unknownFields);
     }
 
+	public ManagedChannelBuilder setMessage(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     // @@protoc_insertion_point(builder_scope:Transactions.TransferConfirmation)
   }

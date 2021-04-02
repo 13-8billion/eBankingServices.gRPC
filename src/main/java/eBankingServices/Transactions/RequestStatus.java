@@ -4,6 +4,10 @@
 package eBankingServices.Transactions;
 
 /**
+ * <pre>
+ * request money response
+ * </pre>
+ *
  * Protobuf type {@code Transactions.RequestStatus}
  */
 public  final class RequestStatus extends
@@ -16,7 +20,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private RequestStatus() {
-    requestID_ = 0;
     status_ = "";
     message_ = "";
   }
@@ -45,18 +48,13 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
-
-            requestID_ = input.readInt32();
-            break;
-          }
-          case 18: {
+          case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
             status_ = s;
             break;
           }
-          case 26: {
+          case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             message_ = s;
@@ -94,19 +92,10 @@ private static final long serialVersionUID = 0L;
             eBankingServices.Transactions.RequestStatus.class, eBankingServices.Transactions.RequestStatus.Builder.class);
   }
 
-  public static final int REQUESTID_FIELD_NUMBER = 1;
-  private int requestID_;
-  /**
-   * <code>int32 requestID = 1;</code>
-   */
-  public int getRequestID() {
-    return requestID_;
-  }
-
-  public static final int STATUS_FIELD_NUMBER = 2;
+  public static final int STATUS_FIELD_NUMBER = 1;
   private volatile java.lang.Object status_;
   /**
-   * <code>string status = 2;</code>
+   * <code>string status = 1;</code>
    */
   public java.lang.String getStatus() {
     java.lang.Object ref = status_;
@@ -121,7 +110,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string status = 2;</code>
+   * <code>string status = 1;</code>
    */
   public com.google.protobuf.ByteString
       getStatusBytes() {
@@ -137,10 +126,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int MESSAGE_FIELD_NUMBER = 3;
+  public static final int MESSAGE_FIELD_NUMBER = 2;
   private volatile java.lang.Object message_;
   /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   public java.lang.String getMessage() {
     java.lang.Object ref = message_;
@@ -155,7 +144,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   public com.google.protobuf.ByteString
       getMessageBytes() {
@@ -185,14 +174,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (requestID_ != 0) {
-      output.writeInt32(1, requestID_);
-    }
     if (!getStatusBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, status_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, status_);
     }
     if (!getMessageBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -203,15 +189,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (requestID_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, requestID_);
-    }
     if (!getStatusBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, status_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, status_);
     }
     if (!getMessageBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -229,8 +211,6 @@ private static final long serialVersionUID = 0L;
     eBankingServices.Transactions.RequestStatus other = (eBankingServices.Transactions.RequestStatus) obj;
 
     boolean result = true;
-    result = result && (getRequestID()
-        == other.getRequestID());
     result = result && getStatus()
         .equals(other.getStatus());
     result = result && getMessage()
@@ -246,8 +226,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + REQUESTID_FIELD_NUMBER;
-    hash = (53 * hash) + getRequestID();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + getStatus().hashCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
@@ -348,6 +326,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * request money response
+   * </pre>
+   *
    * Protobuf type {@code Transactions.RequestStatus}
    */
   public static final class Builder extends
@@ -385,8 +367,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      requestID_ = 0;
-
       status_ = "";
 
       message_ = "";
@@ -417,7 +397,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.Transactions.RequestStatus buildPartial() {
       eBankingServices.Transactions.RequestStatus result = new eBankingServices.Transactions.RequestStatus(this);
-      result.requestID_ = requestID_;
       result.status_ = status_;
       result.message_ = message_;
       onBuilt();
@@ -468,9 +447,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.Transactions.RequestStatus other) {
       if (other == eBankingServices.Transactions.RequestStatus.getDefaultInstance()) return this;
-      if (other.getRequestID() != 0) {
-        setRequestID(other.getRequestID());
-      }
       if (!other.getStatus().isEmpty()) {
         status_ = other.status_;
         onChanged();
@@ -508,35 +484,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int requestID_ ;
-    /**
-     * <code>int32 requestID = 1;</code>
-     */
-    public int getRequestID() {
-      return requestID_;
-    }
-    /**
-     * <code>int32 requestID = 1;</code>
-     */
-    public Builder setRequestID(int value) {
-      
-      requestID_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 requestID = 1;</code>
-     */
-    public Builder clearRequestID() {
-      
-      requestID_ = 0;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object status_ = "";
     /**
-     * <code>string status = 2;</code>
+     * <code>string status = 1;</code>
      */
     public java.lang.String getStatus() {
       java.lang.Object ref = status_;
@@ -551,7 +501,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>string status = 1;</code>
      */
     public com.google.protobuf.ByteString
         getStatusBytes() {
@@ -567,7 +517,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>string status = 1;</code>
      */
     public Builder setStatus(
         java.lang.String value) {
@@ -580,7 +530,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>string status = 1;</code>
      */
     public Builder clearStatus() {
       
@@ -589,7 +539,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>string status = 1;</code>
      */
     public Builder setStatusBytes(
         com.google.protobuf.ByteString value) {
@@ -605,7 +555,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object message_ = "";
     /**
-     * <code>string message = 3;</code>
+     * <code>string message = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -620,7 +570,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string message = 3;</code>
+     * <code>string message = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -636,7 +586,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string message = 3;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessage(
         java.lang.String value) {
@@ -649,7 +599,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string message = 3;</code>
+     * <code>string message = 2;</code>
      */
     public Builder clearMessage() {
       
@@ -658,7 +608,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string message = 3;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {

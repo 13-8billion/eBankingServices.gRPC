@@ -42,19 +42,21 @@ public class TransactionsClient {
 	public static void deposit() {
 		
 		// Unary RPC - Deposit money into account
-		System.out.println("Client >>>>>>>>> Sending deposit money request...");
+		System.out.println("Client >>>>>>>>> Requesting to deposit money...");
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
+				.setDepositID(1)
 				.build());
 		
 		System.out.println(response);
 
 	
-		System.out.println("Client >>>>>>>>> Sending deposit money request...");
+		System.out.println("Client >>>>>>>>> Requesting to deposit money...");
 		response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(2)
 				.setSum(100)
+				.setDepositID(2)
 				.build());
 		
 		System.out.println(response);
@@ -84,7 +86,7 @@ public class TransactionsClient {
 
 				@Override
 				public void onCompleted() {
-					System.out.println("Client >>>>>>>>>  Transfer stream completed");
+					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
 				}
 				
 			};
@@ -96,23 +98,23 @@ public class TransactionsClient {
 					.setFromAccNo(1)
 					.setToAccNo(2)
 					.build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(300)
 					.setFromAccNo(2)
 					.setToAccNo(1)
 					.build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(300)
 					.setFromAccNo(0)
 					.setToAccNo(1)
 					.build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 						
-			Thread.sleep(15000);
+			Thread.sleep(2000);
 			
 			responseObserver.onCompleted();	
 		

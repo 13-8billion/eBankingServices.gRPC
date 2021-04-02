@@ -16,4 +16,9 @@ public interface DepositSumOrBuilder extends
    * <code>double sum = 2;</code>
    */
   double getSum();
+
+  /**
+   * <code>int32 depositID = 3;</code>
+   */
+  int getDepositID();
 }

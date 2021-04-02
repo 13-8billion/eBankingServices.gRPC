@@ -21,4 +21,9 @@ public interface TransferSumOrBuilder extends
    * <code>double sum = 3;</code>
    */
   double getSum();
+
+  /**
+   * <code>int32 transferID = 4;</code>
+   */
+  int getTransferID();
 }

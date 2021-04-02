@@ -8,11 +8,6 @@ public interface TransferConfirmationOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 transferID = 1;</code>
-   */
-  int getTransferID();
-
-  /**
    * <code>string message = 2;</code>
    */
   java.lang.String getMessage();

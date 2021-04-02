@@ -8,26 +8,21 @@ public interface RequestStatusOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 requestID = 1;</code>
-   */
-  int getRequestID();
-
-  /**
-   * <code>string status = 2;</code>
+   * <code>string status = 1;</code>
    */
   java.lang.String getStatus();
   /**
-   * <code>string status = 2;</code>
+   * <code>string status = 1;</code>
    */
   com.google.protobuf.ByteString
       getStatusBytes();
 
   /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   java.lang.String getMessage();
   /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   com.google.protobuf.ByteString
       getMessageBytes();

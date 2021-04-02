@@ -43,7 +43,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
 
-				.setMessage("From Sever: €" + request.getSum() + " has been deposited successfully into account no. " + request.getAccNo())
+				.setMessage("From Sever: DepositID. " + request.getDepositID() + ": Euro " + request.getSum() + " has been deposited successfully into account no. " + request.getAccNo())
 				.build();
 
 		responseObserver.onNext(dc);
@@ -71,10 +71,10 @@ public class TransactionsServer extends TransactionsImplBase {
 			
 				
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.println("Server >>>>>>>>> €" + request.getSum() + " transferred successfully to account no.  "+ request.getToAccNo());
+					System.out.println("Server >>>>>>>>> SUCCESS €" + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
 						
 				} else {
-					System.out.println("Server >>>>>>>>> Transaction failed, not enough funds in account no. " + request.getFromAccNo());
+					System.out.println("Server >>>>>>>>> FAILED not enough funds in AccountNo. " + request.getFromAccNo());
 				}
 				
 			}

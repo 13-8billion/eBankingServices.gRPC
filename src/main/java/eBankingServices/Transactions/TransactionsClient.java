@@ -2,8 +2,6 @@ package eBankingServices.Transactions;
 
 import java.util.concurrent.TimeUnit;
 
-import eBankingServices.Transactions.TransferConfirmation;
-import eBankingServices.Transactions.TransferSum;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -14,7 +12,12 @@ import eBankingServices.Transactions.DepositConfirmation;
 import eBankingServices.Transactions.DepositSum;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
+import eBankingServices.Transactions.RequestSum;
+import eBankingServices.Transactions.RequestStatus;
+import eBankingServices.Transactions.TransferConfirmation;
+import eBankingServices.Transactions.TransferSum;
 
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -35,13 +38,16 @@ public class TransactionsClient {
 		blockingStub = TransactionsGrpc.newBlockingStub(channel);
 		asyncStub = TransactionsGrpc.newStub(channel);
 		
-		deposit();
-		transfer();
+//		deposit();
+//		transfer();
+		request();
 	}
+	
+	
+// Unary RPC - Deposit money into account
 	
 	public static void deposit() {
 		
-		// Unary RPC - Deposit money into account
 		System.out.println("Client >>>>>>>>> Requesting to deposit money...");
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
@@ -60,14 +66,14 @@ public class TransactionsClient {
 				.build());
 		
 		System.out.println(response);
-	
-//		
+		
 //	    channel.shutdown()
-//	    	   .awaitTermination(5, TimeUnit.SECONDS);
-				
+//	    	   .awaitTermination(5, TimeUnit.SECONDS);			
 	}
-	      
-	    // Client-streaming RPC - Transfer money between accounts
+	     
+
+// Client-streaming RPC - Transfer money between accounts
+	
 	    public static void transfer() {  	
 	  
 			StreamObserver<TransferConfirmation> responseObserver = new StreamObserver<TransferConfirmation>() {
@@ -75,8 +81,7 @@ public class TransactionsClient {
 				@Override
 				public void onNext(TransferConfirmation response) {
 					
-					System.out.println("Client >>>>>>>>> getting confirmation " + response.getMessage());
-					
+					System.out.println("Client >>>>>>>>> getting confirmation " + response.getMessage());			
 				}
 
 				@Override
@@ -87,8 +92,7 @@ public class TransactionsClient {
 				@Override
 				public void onCompleted() {
 					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
-				}
-				
+				}			
 			};
 			
 			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
@@ -117,16 +121,86 @@ public class TransactionsClient {
 			Thread.sleep(2000);
 			
 			responseObserver.onCompleted();	
-		
-			
+				
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {			
+				e.printStackTrace();
+			}			
+	    };
+	    
+	    
+	    public static void request() {
+
+			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
+
+				@Override
+				public void onNext(RequestStatus response) {
+					System.out.println("Client >>>>>>>>> Requesting status: "+ response.getStatus());
+				}
+
+				@Override
+				public void onError(Throwable t) {
+					t.printStackTrace();
+
+				}
+
+				@Override
+				public void onCompleted() {
+					System.out.println("Client >>>>>>>>> END OF STREAM: Money request completed");
+				}
+
+			};
+
+
+
+			StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
+
+			try {
+
+				requestObserver.onNext(RequestSum.newBuilder()
+						.setSum(10)
+						.setFromAccNo(1)
+						.setToAccNo(2)
+						.build());
+				
+				requestObserver.onNext(RequestSum.newBuilder()
+						.setSum(20)
+						.setFromAccNo(2)
+						.setToAccNo(1)
+						.build());
+				
+				requestObserver.onNext(RequestSum.newBuilder()
+						.setSum(30)
+						.setFromAccNo(2)
+						.setToAccNo(1)
+						.build());
+
+				// Mark the end of requests
+				requestObserver.onCompleted();
+
+
+				// Sleep for a bit before sending the next one.
+				Thread.sleep(new Random().nextInt(1000) + 500);
+
+
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {			
 				e.printStackTrace();
 			}
-			
-	    };
-	}	
+
+
+
+			try {
+				Thread.sleep(15000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}	
+}	
 
 	   
 

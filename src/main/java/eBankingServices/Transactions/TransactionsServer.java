@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import eBankingServices.Transactions.RequestStatus;
+import eBankingServices.Transactions.RequestSum;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -36,7 +38,7 @@ public class TransactionsServer extends TransactionsImplBase {
 		server.awaitTermination();
 	}
 
-// deposit money to account unary method 
+// deposit money to account unary rpc
 
 
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
@@ -50,33 +52,35 @@ public class TransactionsServer extends TransactionsImplBase {
 		responseObserver.onCompleted();
 	}
 
-// transfer money client streaming method 
+	
+// transfer money client streaming rpc
 
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
+		
+		String euro = "\u20ac";
 				
 		return new StreamObserver<TransferSum>() {
 			
 			 ArrayList<Object> acc = new ArrayList<Object>(Arrays.asList(accounts)); 
-
-			 
-				@Override
-				public void onCompleted() {
-
-					System.out.println("Server >>>>>>>>> Transaction process completed" );		
-				}
 		
 				@Override
 			public void onNext(TransferSum request) {
 			
 				
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.println("Server >>>>>>>>> SUCCESS €" + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
+					System.out.println("Server >>>>>>>>> SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
 						
 				} else {
 					System.out.println("Server >>>>>>>>> FAILED not enough funds in AccountNo. " + request.getFromAccNo());
 				}
 				
+			}
+				
+			@Override
+			public void onCompleted() {
+
+				System.out.println("Server >>>>>>>>> Transaction process completed" );		
 			}
 			
 			@Override
@@ -85,6 +89,44 @@ public class TransactionsServer extends TransactionsImplBase {
 			}
 		};
 	}
+	@Override
+	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
+		
+		String euro = "\u20ac";
+		
+		return new StreamObserver<RequestSum> () {
+
+			@Override
+			public void onNext(RequestSum request) {
+				System.out.println("Server >>>>>>>>> Receiving money request:  AccountNo. " + request.getToAccNo() + " is requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
+				
+				String status =  "Server status >>>>>>>>> Money request is pending...";
+				
+				RequestStatus reply = RequestStatus.newBuilder()
+						.setStatus(status)
+						.build();
+				
+				responseObserver.onNext(reply);
+				
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				
+				t.printStackTrace();
+
+			}
+
+			@Override
+			public void onCompleted() {
+				System.out.println("Server >>>>>>>>> Receiving money request completed ");
+				
+				//completed too
+				responseObserver.onCompleted();
+			}
+			
+		};
+}
 
 	private boolean transferSum(int toAccNo, int fromAccNo, double sum) {
 		if (accounts[fromAccNo] < sum) {

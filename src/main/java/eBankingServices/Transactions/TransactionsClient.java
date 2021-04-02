@@ -65,15 +65,14 @@ public class TransactionsClient {
 	}
 	      
 	    // Client-streaming RPC - Transfer money between accounts
-	    public static void transfer() throws InterruptedException {
-	    	
+	    public static void transfer() {  	
 	  
 			StreamObserver<TransferConfirmation> responseObserver = new StreamObserver<TransferConfirmation>() {
 
 				@Override
-				public void onNext(TransferConfirmation msg) {
+				public void onNext(TransferConfirmation response) {
 					
-					System.out.println("Client >>>>>>>>> transferring money.. " + msg.getTransferConf());
+					System.out.println("Client >>>>>>>>> getting confirmation " + response.getTransferConf());
 				}
 
 				@Override
@@ -88,46 +87,29 @@ public class TransactionsClient {
 
 			};
 			
-//			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
-//			
-//			requestObserver.onNext(TransferSum.newBuilder()
-//					.setSum(100)
-//					.setFromAccNo(1)
-//					.setToAccNo(2)
-//					.build());
-//			Thread.sleep(500);
-//			
-//			System.out.println(requestObserver);
-//			responseObserver.onCompleted();	
-//			
-//			Thread.sleep(10000);
-//			
-//	
-			//THIS CODE "WORRKS"
-			StreamObserver<TransferSum> res = asyncStub.transfer(TransferSum.newBuilder()
-						.setSum(100)
-						.setFromAccNo(1)
-						.setToAccNo(2)
-						.build());
-				Thread.sleep(500);
-				
-				System.out.println(res);
-				
-			res = asyncStub.transfer(TransferSum.newBuilder()
-						.setSum(200)
-						.setFromAccNo(1)
+			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
+			try {
+			requestObserver.onNext(TransferSum.newBuilder()
+					.setSum(333)
+					.setFromAccNo(1)
 					.setToAccNo(2)
-						.build());
-				Thread.sleep(500);
-				
-				System.out.println(res);
-					
-				responseObserver.onCompleted();	
-				
+					.build());
+			Thread.sleep(500);
+			
+			System.out.println(responseObserver.toString());
+			responseObserver.onCompleted();	
+			
 			Thread.sleep(10000);
-	    	};
-	    
-		}	
+			
+			
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {			
+				e.printStackTrace();
+			}
+			
+	    };
+	}	
 
 	   
 

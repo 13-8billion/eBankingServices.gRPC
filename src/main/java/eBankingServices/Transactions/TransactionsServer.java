@@ -1,6 +1,8 @@
 package eBankingServices.Transactions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -16,7 +18,7 @@ import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 public class TransactionsServer extends TransactionsImplBase {
 
 	// hard code some account balances
-	private double[] accounts = {0, 300, 3000 };
+	private double[] accounts = {0, 300, 3000};
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -36,7 +38,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 // deposit money to account unary method 
 
-	@Override
+
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
 
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
@@ -50,43 +52,48 @@ public class TransactionsServer extends TransactionsImplBase {
 
 // transfer money client streaming method 
 
-	@Override
+
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
 
 		return new StreamObserver<TransferSum>() {
+			
+			 ArrayList<Object> acc = new ArrayList<Object>(Arrays.asList(accounts)); 
 
-			@Override
+				@Override
+				public void onCompleted() {
+
+					System.out.println("Server: CONFIRED!" );
+					
+				}
+		
+				@Override
 			public void onNext(TransferSum request) {
+			
+				
+				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
+					System.out.printf("Server: Money transferred successfully");
+					
+					TransferConfirmation tc = TransferConfirmation.newBuilder()
+							.setTransferConf("Server: CONFIRMED TOTAL: " + request.getSum())
+							.build();
+					
+						responseObserver.onNext(tc);
+						
+						acc.add(request.getSum());
+						
+						System.out.println("HERE " + acc.toString());
 
-				System.out.println("Server: Receiving money..." + request.getSum());
+						responseObserver.onCompleted();
+				} else {
+					System.out.printf("Server: Transaction failed, not enough funds");
+				
+				}
+				
 			}
-
+			
 			@Override
 			public void onError(Throwable t) {
 				// TODO Auto-generated method stub
-			}
-
-			public void onCompleted(TransferSum request) {
-
-				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.printf("Server: Money transferred successfully");
-				} else {
-					System.out.printf("Server: Transaction failed, not enough funds");
-
-					TransferConfirmation tc = TransferConfirmation.newBuilder()
-							.setTransferConf("Server: TRANSFER CONFIRMED")
-							.build();
-
-					responseObserver.onNext(tc);
-
-					responseObserver.onCompleted();
-				}
-			}
-
-			@Override
-			public void onCompleted() {
-				// TODO Auto-generated method stub
-
 			}
 		};
 	}

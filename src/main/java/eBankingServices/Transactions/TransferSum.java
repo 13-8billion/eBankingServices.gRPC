@@ -3,8 +3,6 @@
 
 package eBankingServices.Transactions;
 
-import io.grpc.ManagedChannelBuilder;
-
 /**
  * <pre>
  * transfer message
@@ -21,7 +19,7 @@ private static final long serialVersionUID = 0L;
   private TransferSum(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private TransferSum() {
+  TransferSum() {
     fromAccNo_ = 0;
     toAccNo_ = 0;
     sum_ = 0D;
@@ -557,11 +555,6 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
-
-	public ManagedChannelBuilder setMessage(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
     // @@protoc_insertion_point(builder_scope:Transactions.TransferSum)

@@ -23,12 +23,12 @@ public interface RequestStatusOrBuilder extends
       getStatusBytes();
 
   /**
-   * <code>string requestConf = 3;</code>
+   * <code>string message = 3;</code>
    */
-  java.lang.String getRequestConf();
+  java.lang.String getMessage();
   /**
-   * <code>string requestConf = 3;</code>
+   * <code>string message = 3;</code>
    */
   com.google.protobuf.ByteString
-      getRequestConfBytes();
+      getMessageBytes();
 }

@@ -42,7 +42,7 @@ public class TransactionsClient {
 	public static void deposit() {
 		
 		// Unary RPC - Deposit money into account
-		System.out.println("Client >>>>>>>>> Deposit money request #1 ");
+		System.out.println("Client >>>>>>>>> Sending deposit money request...");
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
@@ -51,14 +51,15 @@ public class TransactionsClient {
 		System.out.println(response);
 
 	
-		System.out.println("Client >>>>>>>>> Deposit money request #2");
+		System.out.println("Client >>>>>>>>> Sending deposit money request...");
 		response = blockingStub.deposit(DepositSum.newBuilder()
-				.setAccNo(1)
+				.setAccNo(2)
 				.setSum(100)
 				.build());
 		
 		System.out.println(response);
-		
+	
+//		
 //	    channel.shutdown()
 //	    	   .awaitTermination(5, TimeUnit.SECONDS);
 				
@@ -72,7 +73,8 @@ public class TransactionsClient {
 				@Override
 				public void onNext(TransferConfirmation response) {
 					
-					System.out.println("Client >>>>>>>>> getting confirmation " + response.getTransferConf());
+					System.out.println("Client >>>>>>>>> getting confirmation " + response.getMessage());
+					
 				}
 
 				@Override
@@ -82,25 +84,38 @@ public class TransactionsClient {
 
 				@Override
 				public void onCompleted() {
-					System.out.println("Client >>>>>>>>>  Stream is completed ... money transferred");
+					System.out.println("Client >>>>>>>>>  Transfer stream completed");
 				}
-
+				
 			};
 			
 			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
 			try {
 			requestObserver.onNext(TransferSum.newBuilder()
-					.setSum(333)
+					.setSum(30)
 					.setFromAccNo(1)
 					.setToAccNo(2)
 					.build());
 			Thread.sleep(500);
 			
-			System.out.println(responseObserver.toString());
+			requestObserver.onNext(TransferSum.newBuilder()
+					.setSum(300)
+					.setFromAccNo(2)
+					.setToAccNo(1)
+					.build());
+			Thread.sleep(500);
+			
+			requestObserver.onNext(TransferSum.newBuilder()
+					.setSum(300)
+					.setFromAccNo(0)
+					.setToAccNo(1)
+					.build());
+			Thread.sleep(500);
+						
+			Thread.sleep(15000);
+			
 			responseObserver.onCompleted();	
-			
-			Thread.sleep(10000);
-			
+		
 			
 			} catch (RuntimeException e) {
 				e.printStackTrace();

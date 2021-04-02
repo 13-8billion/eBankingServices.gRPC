@@ -18,7 +18,7 @@ import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 public class TransactionsServer extends TransactionsImplBase {
 
 	// hard code some account balances
-	private double[] accounts = {0, 300, 3000};
+	private double[] accounts = {0, 3000, 30000};
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -43,7 +43,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
 
-				.setMessage("Sever: Money has deposited successfully")
+				.setMessage("From Sever: €" + request.getSum() + " has been deposited successfully into account no. " + request.getAccNo())
 				.build();
 
 		responseObserver.onNext(dc);
@@ -54,16 +54,16 @@ public class TransactionsServer extends TransactionsImplBase {
 
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
-
+				
 		return new StreamObserver<TransferSum>() {
 			
 			 ArrayList<Object> acc = new ArrayList<Object>(Arrays.asList(accounts)); 
 
+			 
 				@Override
 				public void onCompleted() {
 
-					System.out.println("Server: CONFIRED!" );
-					
+					System.out.println("Server >>>>>>>>> Transaction process completed" );		
 				}
 		
 				@Override
@@ -71,22 +71,10 @@ public class TransactionsServer extends TransactionsImplBase {
 			
 				
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.printf("Server: Money transferred successfully");
-					
-					TransferConfirmation tc = TransferConfirmation.newBuilder()
-							.setTransferConf("Server: CONFIRMED TOTAL: " + request.getSum())
-							.build();
-					
-						responseObserver.onNext(tc);
+					System.out.println("Server >>>>>>>>> €" + request.getSum() + " transferred successfully to account no.  "+ request.getToAccNo());
 						
-						acc.add(request.getSum());
-						
-						System.out.println("HERE " + acc.toString());
-
-						responseObserver.onCompleted();
 				} else {
-					System.out.printf("Server: Transaction failed, not enough funds");
-				
+					System.out.println("Server >>>>>>>>> Transaction failed, not enough funds in account no. " + request.getFromAccNo());
 				}
 				
 			}

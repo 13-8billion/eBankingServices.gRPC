@@ -26,7 +26,7 @@ message LoginRequest {
 }
 
 message LoginConfirmation {
-  string loginConf = 1;
+  string message = 1;
 }
 
 // View account message
@@ -48,5 +48,5 @@ message PasswordRequest {
 }
 
 message PasswordConfirmation {
-  string passConf = 1;
+  string message = 1;
 }

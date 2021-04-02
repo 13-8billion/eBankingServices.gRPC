@@ -18,7 +18,7 @@ private static final long serialVersionUID = 0L;
   private RequestStatus() {
     requestID_ = 0;
     status_ = "";
-    requestConf_ = "";
+    message_ = "";
   }
 
   @java.lang.Override
@@ -59,7 +59,7 @@ private static final long serialVersionUID = 0L;
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            requestConf_ = s;
+            message_ = s;
             break;
           }
           default: {
@@ -137,34 +137,34 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int REQUESTCONF_FIELD_NUMBER = 3;
-  private volatile java.lang.Object requestConf_;
+  public static final int MESSAGE_FIELD_NUMBER = 3;
+  private volatile java.lang.Object message_;
   /**
-   * <code>string requestConf = 3;</code>
+   * <code>string message = 3;</code>
    */
-  public java.lang.String getRequestConf() {
-    java.lang.Object ref = requestConf_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      requestConf_ = s;
+      message_ = s;
       return s;
     }
   }
   /**
-   * <code>string requestConf = 3;</code>
+   * <code>string message = 3;</code>
    */
   public com.google.protobuf.ByteString
-      getRequestConfBytes() {
-    java.lang.Object ref = requestConf_;
+      getMessageBytes() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      requestConf_ = b;
+      message_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -191,8 +191,8 @@ private static final long serialVersionUID = 0L;
     if (!getStatusBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, status_);
     }
-    if (!getRequestConfBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, requestConf_);
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -210,8 +210,8 @@ private static final long serialVersionUID = 0L;
     if (!getStatusBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, status_);
     }
-    if (!getRequestConfBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, requestConf_);
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -233,8 +233,8 @@ private static final long serialVersionUID = 0L;
         == other.getRequestID());
     result = result && getStatus()
         .equals(other.getStatus());
-    result = result && getRequestConf()
-        .equals(other.getRequestConf());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -250,8 +250,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getRequestID();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + getStatus().hashCode();
-    hash = (37 * hash) + REQUESTCONF_FIELD_NUMBER;
-    hash = (53 * hash) + getRequestConf().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -389,7 +389,7 @@ private static final long serialVersionUID = 0L;
 
       status_ = "";
 
-      requestConf_ = "";
+      message_ = "";
 
       return this;
     }
@@ -419,7 +419,7 @@ private static final long serialVersionUID = 0L;
       eBankingServices.Transactions.RequestStatus result = new eBankingServices.Transactions.RequestStatus(this);
       result.requestID_ = requestID_;
       result.status_ = status_;
-      result.requestConf_ = requestConf_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -475,8 +475,8 @@ private static final long serialVersionUID = 0L;
         status_ = other.status_;
         onChanged();
       }
-      if (!other.getRequestConf().isEmpty()) {
-        requestConf_ = other.requestConf_;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -603,71 +603,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object requestConf_ = "";
+    private java.lang.Object message_ = "";
     /**
-     * <code>string requestConf = 3;</code>
+     * <code>string message = 3;</code>
      */
-    public java.lang.String getRequestConf() {
-      java.lang.Object ref = requestConf_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        requestConf_ = s;
+        message_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string requestConf = 3;</code>
+     * <code>string message = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getRequestConfBytes() {
-      java.lang.Object ref = requestConf_;
+        getMessageBytes() {
+      java.lang.Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        requestConf_ = b;
+        message_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string requestConf = 3;</code>
+     * <code>string message = 3;</code>
      */
-    public Builder setRequestConf(
+    public Builder setMessage(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      requestConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string requestConf = 3;</code>
+     * <code>string message = 3;</code>
      */
-    public Builder clearRequestConf() {
+    public Builder clearMessage() {
       
-      requestConf_ = getDefaultInstance().getRequestConf();
+      message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
     }
     /**
-     * <code>string requestConf = 3;</code>
+     * <code>string message = 3;</code>
      */
-    public Builder setRequestConfBytes(
+    public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      requestConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }

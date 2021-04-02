@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private TransferConfirmation() {
     transferID_ = 0;
-    transferConf_ = "";
+    message_ = "";
   }
 
   @java.lang.Override
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            transferConf_ = s;
+            message_ = s;
             break;
           }
           default: {
@@ -96,34 +96,34 @@ private static final long serialVersionUID = 0L;
     return transferID_;
   }
 
-  public static final int TRANSFERCONF_FIELD_NUMBER = 2;
-  private volatile java.lang.Object transferConf_;
+  public static final int MESSAGE_FIELD_NUMBER = 2;
+  private volatile java.lang.Object message_;
   /**
-   * <code>string transferConf = 2;</code>
+   * <code>string message = 2;</code>
    */
-  public java.lang.String getTransferConf() {
-    java.lang.Object ref = transferConf_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      transferConf_ = s;
+      message_ = s;
       return s;
     }
   }
   /**
-   * <code>string transferConf = 2;</code>
+   * <code>string message = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getTransferConfBytes() {
-    java.lang.Object ref = transferConf_;
+      getMessageBytes() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      transferConf_ = b;
+      message_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -147,8 +147,8 @@ private static final long serialVersionUID = 0L;
     if (transferID_ != 0) {
       output.writeInt32(1, transferID_);
     }
-    if (!getTransferConfBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, transferConf_);
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,8 +163,8 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, transferID_);
     }
-    if (!getTransferConfBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, transferConf_);
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -184,8 +184,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getTransferID()
         == other.getTransferID());
-    result = result && getTransferConf()
-        .equals(other.getTransferConf());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -199,8 +199,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TRANSFERID_FIELD_NUMBER;
     hash = (53 * hash) + getTransferID();
-    hash = (37 * hash) + TRANSFERCONF_FIELD_NUMBER;
-    hash = (53 * hash) + getTransferConf().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       transferID_ = 0;
 
-      transferConf_ = "";
+      message_ = "";
 
       return this;
     }
@@ -365,7 +365,7 @@ private static final long serialVersionUID = 0L;
     public eBankingServices.Transactions.TransferConfirmation buildPartial() {
       eBankingServices.Transactions.TransferConfirmation result = new eBankingServices.Transactions.TransferConfirmation(this);
       result.transferID_ = transferID_;
-      result.transferConf_ = transferConf_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -417,8 +417,8 @@ private static final long serialVersionUID = 0L;
       if (other.getTransferID() != 0) {
         setTransferID(other.getTransferID());
       }
-      if (!other.getTransferConf().isEmpty()) {
-        transferConf_ = other.transferConf_;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -476,71 +476,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object transferConf_ = "";
+    private java.lang.Object message_ = "";
     /**
-     * <code>string transferConf = 2;</code>
+     * <code>string message = 2;</code>
      */
-    public java.lang.String getTransferConf() {
-      java.lang.Object ref = transferConf_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        transferConf_ = s;
+        message_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string transferConf = 2;</code>
+     * <code>string message = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getTransferConfBytes() {
-      java.lang.Object ref = transferConf_;
+        getMessageBytes() {
+      java.lang.Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        transferConf_ = b;
+        message_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string transferConf = 2;</code>
+     * <code>string message = 2;</code>
      */
-    public Builder setTransferConf(
+    public Builder setMessage(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      transferConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string transferConf = 2;</code>
+     * <code>string message = 2;</code>
      */
-    public Builder clearTransferConf() {
+    public Builder clearMessage() {
       
-      transferConf_ = getDefaultInstance().getTransferConf();
+      message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
     }
     /**
-     * <code>string transferConf = 2;</code>
+     * <code>string message = 2;</code>
      */
-    public Builder setTransferConfBytes(
+    public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      transferConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }

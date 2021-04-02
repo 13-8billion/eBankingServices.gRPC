@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private LoginConfirmation() {
-    loginConf_ = "";
+    message_ = "";
   }
 
   @java.lang.Override
@@ -46,7 +46,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            loginConf_ = s;
+            message_ = s;
             break;
           }
           default: {
@@ -81,34 +81,34 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserAccount.LoginConfirmation.class, eBankingServices.UserAccount.LoginConfirmation.Builder.class);
   }
 
-  public static final int LOGINCONF_FIELD_NUMBER = 1;
-  private volatile java.lang.Object loginConf_;
+  public static final int MESSAGE_FIELD_NUMBER = 1;
+  private volatile java.lang.Object message_;
   /**
-   * <code>string loginConf = 1;</code>
+   * <code>string message = 1;</code>
    */
-  public java.lang.String getLoginConf() {
-    java.lang.Object ref = loginConf_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      loginConf_ = s;
+      message_ = s;
       return s;
     }
   }
   /**
-   * <code>string loginConf = 1;</code>
+   * <code>string message = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getLoginConfBytes() {
-    java.lang.Object ref = loginConf_;
+      getMessageBytes() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      loginConf_ = b;
+      message_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -129,8 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getLoginConfBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, loginConf_);
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getLoginConfBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, loginConf_);
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,8 +160,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserAccount.LoginConfirmation other = (eBankingServices.UserAccount.LoginConfirmation) obj;
 
     boolean result = true;
-    result = result && getLoginConf()
-        .equals(other.getLoginConf());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,8 +173,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + LOGINCONF_FIELD_NUMBER;
-    hash = (53 * hash) + getLoginConf().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -308,7 +308,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      loginConf_ = "";
+      message_ = "";
 
       return this;
     }
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserAccount.LoginConfirmation buildPartial() {
       eBankingServices.UserAccount.LoginConfirmation result = new eBankingServices.UserAccount.LoginConfirmation(this);
-      result.loginConf_ = loginConf_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -385,8 +385,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserAccount.LoginConfirmation other) {
       if (other == eBankingServices.UserAccount.LoginConfirmation.getDefaultInstance()) return this;
-      if (!other.getLoginConf().isEmpty()) {
-        loginConf_ = other.loginConf_;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -418,71 +418,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object loginConf_ = "";
+    private java.lang.Object message_ = "";
     /**
-     * <code>string loginConf = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public java.lang.String getLoginConf() {
-      java.lang.Object ref = loginConf_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        loginConf_ = s;
+        message_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string loginConf = 1;</code>
+     * <code>string message = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getLoginConfBytes() {
-      java.lang.Object ref = loginConf_;
+        getMessageBytes() {
+      java.lang.Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        loginConf_ = b;
+        message_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string loginConf = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder setLoginConf(
+    public Builder setMessage(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      loginConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string loginConf = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder clearLoginConf() {
+    public Builder clearMessage() {
       
-      loginConf_ = getDefaultInstance().getLoginConf();
+      message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
     }
     /**
-     * <code>string loginConf = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder setLoginConfBytes(
+    public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      loginConf_ = value;
+      message_ = value;
       onChanged();
       return this;
     }

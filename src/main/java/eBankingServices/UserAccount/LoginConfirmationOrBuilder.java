@@ -8,12 +8,12 @@ public interface LoginConfirmationOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string loginConf = 1;</code>
+   * <code>string message = 1;</code>
    */
-  java.lang.String getLoginConf();
+  java.lang.String getMessage();
   /**
-   * <code>string loginConf = 1;</code>
+   * <code>string message = 1;</code>
    */
   com.google.protobuf.ByteString
-      getLoginConfBytes();
+      getMessageBytes();
 }

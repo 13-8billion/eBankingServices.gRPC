@@ -19,7 +19,7 @@ private static final long serialVersionUID = 0L;
   private TransferSum(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  TransferSum() {
+  private TransferSum() {
     fromAccNo_ = 0;
     toAccNo_ = 0;
     sum_ = 0D;

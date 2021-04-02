@@ -27,8 +27,7 @@ message DepositSum {
 
 message DepositConfirmation {
   int32 depositID = 1;
-  string depositConf = 2;
-  string message = 3;
+  string message = 2;
 }
 
 // transfer message
@@ -40,7 +39,7 @@ message TransferSum {
 
 message TransferConfirmation {
    int32 transferID = 1;
-  string transferConf = 2;
+  string message = 2;
 }
 
 // request message
@@ -54,5 +53,5 @@ message RequestSum {
 message RequestStatus {
   int32 requestID = 1;
   string status = 2;
-  string requestConf = 3;
+  string message = 3;
 }

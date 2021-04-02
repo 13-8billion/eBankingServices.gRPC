@@ -13,21 +13,11 @@ public interface DepositConfirmationOrBuilder extends
   int getDepositID();
 
   /**
-   * <code>string depositConf = 2;</code>
-   */
-  java.lang.String getDepositConf();
-  /**
-   * <code>string depositConf = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getDepositConfBytes();
-
-  /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   java.lang.String getMessage();
   /**
-   * <code>string message = 3;</code>
+   * <code>string message = 2;</code>
    */
   com.google.protobuf.ByteString
       getMessageBytes();

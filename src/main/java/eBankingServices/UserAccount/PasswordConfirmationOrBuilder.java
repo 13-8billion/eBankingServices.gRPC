@@ -8,12 +8,12 @@ public interface PasswordConfirmationOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string passConf = 1;</code>
+   * <code>string message = 1;</code>
    */
-  java.lang.String getPassConf();
+  java.lang.String getMessage();
   /**
-   * <code>string passConf = 1;</code>
+   * <code>string message = 1;</code>
    */
   com.google.protobuf.ByteString
-      getPassConfBytes();
+      getMessageBytes();
 }

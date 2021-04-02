@@ -54,24 +54,23 @@ public final class TransactionsImpl {
   static {
     java.lang.String[] descriptorData = {
       "\n\022Transactions.proto\022\014Transactions\"(\n\nDe" +
-      "positSum\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\"N\n\023" +
-      "DepositConfirmation\022\021\n\tdepositID\030\001 \001(\005\022\023" +
-      "\n\013depositConf\030\002 \001(\t\022\017\n\007message\030\003 \001(\t\"@\n\013" +
-      "TransferSum\022\022\n\nfrom_accNo\030\001 \001(\005\022\020\n\010to_ac" +
-      "cNo\030\002 \001(\005\022\013\n\003sum\030\003 \001(\001\"@\n\024TransferConfir" +
-      "mation\022\022\n\ntransferID\030\001 \001(\005\022\024\n\014transferCo" +
-      "nf\030\002 \001(\t\"P\n\nRequestSum\022\022\n\nfrom_accNo\030\001 \001" +
-      "(\005\022\020\n\010to_accNo\030\002 \001(\005\022\013\n\003sum\030\003 \001(\001\022\017\n\007mon" +
-      "thly\030\004 \001(\010\"G\n\rRequestStatus\022\021\n\trequestID" +
-      "\030\001 \001(\005\022\016\n\006status\030\002 \001(\t\022\023\n\013requestConf\030\003 " +
-      "\001(\t2\357\001\n\014Transactions\022H\n\007Deposit\022\030.Transa" +
-      "ctions.DepositSum\032!.Transactions.Deposit" +
-      "Confirmation\"\000\022M\n\010Transfer\022\031.Transaction" +
-      "s.TransferSum\032\".Transactions.TransferCon" +
-      "firmation\"\000(\001\022F\n\007Request\022\030.Transactions." +
-      "RequestSum\032\033.Transactions.RequestStatus\"" +
-      "\000(\0010\001B3\n\035eBankingServices.TransactionsB\020" +
-      "TransactionsImplP\001b\006proto3"
+      "positSum\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\"9\n\023" +
+      "DepositConfirmation\022\021\n\tdepositID\030\001 \001(\005\022\017" +
+      "\n\007message\030\002 \001(\t\"@\n\013TransferSum\022\022\n\nfrom_a" +
+      "ccNo\030\001 \001(\005\022\020\n\010to_accNo\030\002 \001(\005\022\013\n\003sum\030\003 \001(" +
+      "\001\";\n\024TransferConfirmation\022\022\n\ntransferID\030" +
+      "\001 \001(\005\022\017\n\007message\030\002 \001(\t\"P\n\nRequestSum\022\022\n\n" +
+      "from_accNo\030\001 \001(\005\022\020\n\010to_accNo\030\002 \001(\005\022\013\n\003su" +
+      "m\030\003 \001(\001\022\017\n\007monthly\030\004 \001(\010\"C\n\rRequestStatu" +
+      "s\022\021\n\trequestID\030\001 \001(\005\022\016\n\006status\030\002 \001(\t\022\017\n\007" +
+      "message\030\003 \001(\t2\357\001\n\014Transactions\022H\n\007Deposi" +
+      "t\022\030.Transactions.DepositSum\032!.Transactio" +
+      "ns.DepositConfirmation\"\000\022M\n\010Transfer\022\031.T" +
+      "ransactions.TransferSum\032\".Transactions.T" +
+      "ransferConfirmation\"\000(\001\022F\n\007Request\022\030.Tra" +
+      "nsactions.RequestSum\032\033.Transactions.Requ" +
+      "estStatus\"\000(\0010\001B3\n\035eBankingServices.Tran" +
+      "sactionsB\020TransactionsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -96,7 +95,7 @@ public final class TransactionsImpl {
     internal_static_Transactions_DepositConfirmation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Transactions_DepositConfirmation_descriptor,
-        new java.lang.String[] { "DepositID", "DepositConf", "Message", });
+        new java.lang.String[] { "DepositID", "Message", });
     internal_static_Transactions_TransferSum_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_Transactions_TransferSum_fieldAccessorTable = new
@@ -108,7 +107,7 @@ public final class TransactionsImpl {
     internal_static_Transactions_TransferConfirmation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Transactions_TransferConfirmation_descriptor,
-        new java.lang.String[] { "TransferID", "TransferConf", });
+        new java.lang.String[] { "TransferID", "Message", });
     internal_static_Transactions_RequestSum_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_Transactions_RequestSum_fieldAccessorTable = new
@@ -120,7 +119,7 @@ public final class TransactionsImpl {
     internal_static_Transactions_RequestStatus_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Transactions_RequestStatus_descriptor,
-        new java.lang.String[] { "RequestID", "Status", "RequestConf", });
+        new java.lang.String[] { "RequestID", "Status", "Message", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

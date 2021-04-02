@@ -13,12 +13,12 @@ public interface TransferConfirmationOrBuilder extends
   int getTransferID();
 
   /**
-   * <code>string transferConf = 2;</code>
+   * <code>string message = 2;</code>
    */
-  java.lang.String getTransferConf();
+  java.lang.String getMessage();
   /**
-   * <code>string transferConf = 2;</code>
+   * <code>string message = 2;</code>
    */
   com.google.protobuf.ByteString
-      getTransferConfBytes();
+      getMessageBytes();
 }

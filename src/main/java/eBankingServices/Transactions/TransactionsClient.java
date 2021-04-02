@@ -38,8 +38,9 @@ public class TransactionsClient {
 		blockingStub = TransactionsGrpc.newBlockingStub(channel);
 		asyncStub = TransactionsGrpc.newStub(channel);
 		
-//		deposit();
-//		transfer();
+		// call methods in transactions client class
+		deposit();
+		transfer();
 		request();
 	}
 	

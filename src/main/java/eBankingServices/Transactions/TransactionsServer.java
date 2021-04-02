@@ -9,8 +9,6 @@ import eBankingServices.Transactions.RequestSum;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import eBankingServices.Transactions.TransferSum;
-import eBankingServices.Transactions.TransferConfirmation;
 import eBankingServices.Transactions.TransferConfirmation;
 import eBankingServices.Transactions.TransferSum;
 import eBankingServices.Transactions.DepositSum;
@@ -69,10 +67,10 @@ public class TransactionsServer extends TransactionsImplBase {
 			
 				
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.println("Server >>>>>>>>> SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
+					System.out.println("Server >>>>>>>>> Transfer request SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
 						
 				} else {
-					System.out.println("Server >>>>>>>>> FAILED not enough funds in AccountNo. " + request.getFromAccNo());
+					System.out.println("Server >>>>>>>>> Transfer request FAILED not enough funds in AccountNo. " + request.getFromAccNo());
 				}
 				
 			}

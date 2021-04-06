@@ -17,6 +17,10 @@ private static final long serialVersionUID = 0L;
   }
   private AccountInfo() {
     message_ = "";
+    accNo_ = 0;
+    firstName_ = "";
+    lastName_ = "";
+    balance_ = 0D;
   }
 
   @java.lang.Override
@@ -47,6 +51,28 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             message_ = s;
+            break;
+          }
+          case 16: {
+
+            accNo_ = input.readInt32();
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            firstName_ = s;
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            lastName_ = s;
+            break;
+          }
+          case 41: {
+
+            balance_ = input.readDouble();
             break;
           }
           default: {
@@ -115,6 +141,92 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int ACCNO_FIELD_NUMBER = 2;
+  private int accNo_;
+  /**
+   * <code>int32 accNo = 2;</code>
+   */
+  public int getAccNo() {
+    return accNo_;
+  }
+
+  public static final int FIRSTNAME_FIELD_NUMBER = 3;
+  private volatile java.lang.Object firstName_;
+  /**
+   * <code>string firstName = 3;</code>
+   */
+  public java.lang.String getFirstName() {
+    java.lang.Object ref = firstName_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      firstName_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string firstName = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getFirstNameBytes() {
+    java.lang.Object ref = firstName_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      firstName_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int LASTNAME_FIELD_NUMBER = 4;
+  private volatile java.lang.Object lastName_;
+  /**
+   * <code>string lastName = 4;</code>
+   */
+  public java.lang.String getLastName() {
+    java.lang.Object ref = lastName_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      lastName_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string lastName = 4;</code>
+   */
+  public com.google.protobuf.ByteString
+      getLastNameBytes() {
+    java.lang.Object ref = lastName_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      lastName_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int BALANCE_FIELD_NUMBER = 5;
+  private double balance_;
+  /**
+   * <code>double balance = 5;</code>
+   */
+  public double getBalance() {
+    return balance_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -132,6 +244,18 @@ private static final long serialVersionUID = 0L;
     if (!getMessageBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
     }
+    if (accNo_ != 0) {
+      output.writeInt32(2, accNo_);
+    }
+    if (!getFirstNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, firstName_);
+    }
+    if (!getLastNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, lastName_);
+    }
+    if (balance_ != 0D) {
+      output.writeDouble(5, balance_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -143,6 +267,20 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getMessageBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
+    }
+    if (accNo_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, accNo_);
+    }
+    if (!getFirstNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, firstName_);
+    }
+    if (!getLastNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, lastName_);
+    }
+    if (balance_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(5, balance_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -162,6 +300,16 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getMessage()
         .equals(other.getMessage());
+    result = result && (getAccNo()
+        == other.getAccNo());
+    result = result && getFirstName()
+        .equals(other.getFirstName());
+    result = result && getLastName()
+        .equals(other.getLastName());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getBalance())
+        == java.lang.Double.doubleToLongBits(
+            other.getBalance()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -175,6 +323,15 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
     hash = (53 * hash) + getMessage().hashCode();
+    hash = (37 * hash) + ACCNO_FIELD_NUMBER;
+    hash = (53 * hash) + getAccNo();
+    hash = (37 * hash) + FIRSTNAME_FIELD_NUMBER;
+    hash = (53 * hash) + getFirstName().hashCode();
+    hash = (37 * hash) + LASTNAME_FIELD_NUMBER;
+    hash = (53 * hash) + getLastName().hashCode();
+    hash = (37 * hash) + BALANCE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getBalance()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -310,6 +467,14 @@ private static final long serialVersionUID = 0L;
       super.clear();
       message_ = "";
 
+      accNo_ = 0;
+
+      firstName_ = "";
+
+      lastName_ = "";
+
+      balance_ = 0D;
+
       return this;
     }
 
@@ -337,6 +502,10 @@ private static final long serialVersionUID = 0L;
     public eBankingServices.UserAccount.AccountInfo buildPartial() {
       eBankingServices.UserAccount.AccountInfo result = new eBankingServices.UserAccount.AccountInfo(this);
       result.message_ = message_;
+      result.accNo_ = accNo_;
+      result.firstName_ = firstName_;
+      result.lastName_ = lastName_;
+      result.balance_ = balance_;
       onBuilt();
       return result;
     }
@@ -388,6 +557,20 @@ private static final long serialVersionUID = 0L;
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
         onChanged();
+      }
+      if (other.getAccNo() != 0) {
+        setAccNo(other.getAccNo());
+      }
+      if (!other.getFirstName().isEmpty()) {
+        firstName_ = other.firstName_;
+        onChanged();
+      }
+      if (!other.getLastName().isEmpty()) {
+        lastName_ = other.lastName_;
+        onChanged();
+      }
+      if (other.getBalance() != 0D) {
+        setBalance(other.getBalance());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -483,6 +666,196 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       message_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int accNo_ ;
+    /**
+     * <code>int32 accNo = 2;</code>
+     */
+    public int getAccNo() {
+      return accNo_;
+    }
+    /**
+     * <code>int32 accNo = 2;</code>
+     */
+    public Builder setAccNo(int value) {
+      
+      accNo_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 accNo = 2;</code>
+     */
+    public Builder clearAccNo() {
+      
+      accNo_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object firstName_ = "";
+    /**
+     * <code>string firstName = 3;</code>
+     */
+    public java.lang.String getFirstName() {
+      java.lang.Object ref = firstName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        firstName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string firstName = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFirstNameBytes() {
+      java.lang.Object ref = firstName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        firstName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string firstName = 3;</code>
+     */
+    public Builder setFirstName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      firstName_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string firstName = 3;</code>
+     */
+    public Builder clearFirstName() {
+      
+      firstName_ = getDefaultInstance().getFirstName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string firstName = 3;</code>
+     */
+    public Builder setFirstNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      firstName_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object lastName_ = "";
+    /**
+     * <code>string lastName = 4;</code>
+     */
+    public java.lang.String getLastName() {
+      java.lang.Object ref = lastName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        lastName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string lastName = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLastNameBytes() {
+      java.lang.Object ref = lastName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        lastName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string lastName = 4;</code>
+     */
+    public Builder setLastName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      lastName_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string lastName = 4;</code>
+     */
+    public Builder clearLastName() {
+      
+      lastName_ = getDefaultInstance().getLastName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string lastName = 4;</code>
+     */
+    public Builder setLastNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      lastName_ = value;
+      onChanged();
+      return this;
+    }
+
+    private double balance_ ;
+    /**
+     * <code>double balance = 5;</code>
+     */
+    public double getBalance() {
+      return balance_;
+    }
+    /**
+     * <code>double balance = 5;</code>
+     */
+    public Builder setBalance(double value) {
+      
+      balance_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double balance = 5;</code>
+     */
+    public Builder clearBalance() {
+      
+      balance_ = 0D;
       onChanged();
       return this;
     }

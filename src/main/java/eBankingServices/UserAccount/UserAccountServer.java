@@ -2,6 +2,7 @@ package eBankingServices.UserAccount;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -23,7 +24,7 @@ public class UserAccountServer extends UserAccountImplBase {
 		// initiate server
 		UserAccountServer userAccounts = new UserAccountServer();
 
-		int port = 50051;
+		int port = 50052;
 
 		Server server = ServerBuilder.forPort(port).addService(userAccounts)
 				.build()
@@ -45,12 +46,12 @@ public class UserAccountServer extends UserAccountImplBase {
 				if (authenticateUser(request.getUsername(), request.getPassword())) {
 						
 					lc = LoginConfirmation.newBuilder()	
-							.setMessage("Sever >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
+							.setMessage("Server >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
 							.build();
 					
 				} else {	
 					lc = LoginConfirmation.newBuilder()	
-							.setMessage("Sever >>>>>>>>> Username or Password Incorrect!" )
+							.setMessage("Server >>>>>>>>> Username or Password Incorrect!" )
 							.build();
 				}
 				
@@ -65,23 +66,34 @@ public class UserAccountServer extends UserAccountImplBase {
 			
 		AccountInfo reply;
 		
-		ArrayList<Customer> cust = new ArrayList<Customer>();
+		Customer[] cArray = new Customer[3];
 		
-		cust.add(new Customer(1, "Arthur", "Morgan", 27000));
-		cust.add(new Customer(2, "Sadie", "Adler", 5900));
-		cust.add(new Customer(3, "Amy", "Percival", 33333));
+		cArray[0] = new Customer(1, "Arthur", "Morgan", 27000);
+		cArray[1] = new Customer(2, "Sadie", "Adler", 5900);
+		cArray[2] = new Customer(3, "Amy", "Percival", 33333);
 		
-		
-		if (request.getAccNo() == 1) 
+				
+		for(int i=0; i<cArray.length;i++)
 		{
-			reply = AccountInfo.newBuilder()
-					.setMessage("Sever >>>>>>>>> AccNo. " + request.getAccNo() + c.getFirstName()) 		
-					.build();	
+			Customer c = cArray[i];
+			
+			if (request.getAccNo() == c.getAccNo()) 
+			{
+				reply = AccountInfo.newBuilder()
+						.setMessage("Server >>>>>>>>> Streaming details for Account No: " + request.getAccNo() + " ...") 
+						.setAccNo(request.getAccNo())
+						.setFirstName(c.getFirstName())
+						.setLastName(c.getLastName())
+						.setBalance(c.getBalance())
+						.build();	
+				responseObserver.onNext(reply);
+			}
 			
 		}
-		responseObserver.onNext(reply);
+		
 		responseObserver.onCompleted();
 	}
+
 
 //		else if (request.getAccNo() == 2)
 //		{

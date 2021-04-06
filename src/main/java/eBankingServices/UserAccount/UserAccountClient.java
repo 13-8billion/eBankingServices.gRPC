@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 
 public class UserAccountClient {
-
 	
+
 	private static UserAccountBlockingStub blockingStub;
 	private static UserAccountStub asyncStub;
 
@@ -28,7 +28,7 @@ public class UserAccountClient {
 	public static void main(String args[]) throws InterruptedException {
 		
 		final ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("localhost", 50051)
+				.forAddress("localhost", 50052)
 				.usePlaintext()
 				.build();
 		
@@ -74,6 +74,7 @@ public class UserAccountClient {
 		
 		Scanner in = new Scanner(System.in);
 		int accountNo;
+		String euro = "\u20ac";
 		
 		System.out.println("Client >>>>>>>>> Enter account number to view (1, 2 or 3): ");
 		accountNo = in.nextInt();
@@ -87,9 +88,11 @@ public class UserAccountClient {
 
 			@Override
 			public void onNext(AccountInfo value) {
-				System.out.println("Client >>>>>>>>> Recieveing account infomation for Account No: " + accountNo);
-				System.out.println("Client >>>>>>>>> Account Info: " + value.getMessage());
-				
+				System.out.println("Client >>>>>>>>> Requesting details for Account No: " + accountNo);
+				System.out.println(value.getMessage());
+				System.out.println("Account No:  " + value.getAccNo());
+				System.out.println("Full Name:  " + value.getFirstName() + " " + value.getLastName());
+				System.out.println("Balance:  " + euro + value.getBalance());			
 			}
 
 			@Override
@@ -100,7 +103,7 @@ public class UserAccountClient {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("Client >>>>>>>>> Stream is completed ");
+				System.out.println("Client >>>>>>>>> Server stream complete");
 			}
 
 		};

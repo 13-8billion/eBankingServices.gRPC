@@ -16,4 +16,34 @@ public interface AccountInfoOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMessageBytes();
+
+  /**
+   * <code>int32 accNo = 2;</code>
+   */
+  int getAccNo();
+
+  /**
+   * <code>string firstName = 3;</code>
+   */
+  java.lang.String getFirstName();
+  /**
+   * <code>string firstName = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getFirstNameBytes();
+
+  /**
+   * <code>string lastName = 4;</code>
+   */
+  java.lang.String getLastName();
+  /**
+   * <code>string lastName = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getLastNameBytes();
+
+  /**
+   * <code>double balance = 5;</code>
+   */
+  double getBalance();
 }

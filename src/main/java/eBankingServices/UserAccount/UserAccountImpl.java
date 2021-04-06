@@ -56,18 +56,20 @@ public final class UserAccountImpl {
       "\n\021UserAccount.proto\022\013UserAccount\"2\n\014Logi" +
       "nRequest\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002" +
       " \001(\t\"$\n\021LoginConfirmation\022\017\n\007message\030\001 \001" +
-      "(\t\"\034\n\013ViewRequest\022\r\n\005accNo\030\001 \001(\005\"\036\n\013Acco" +
-      "untInfo\022\017\n\007message\030\001 \001(\t\"C\n\017PasswordRequ" +
-      "est\022\r\n\005accNo\030\001 \001(\t\022\020\n\010currPass\030\002 \001(\t\022\017\n\007" +
-      "newPass\030\003 \001(\t\"\'\n\024PasswordConfirmation\022\017\n" +
-      "\007message\030\001 \001(\t2\357\001\n\013UserAccount\022D\n\005Login\022" +
-      "\031.UserAccount.LoginRequest\032\036.UserAccount" +
-      ".LoginConfirmation\"\000\022E\n\013ViewAccount\022\030.Us" +
-      "erAccount.ViewRequest\032\030.UserAccount.Acco" +
-      "untInfo\"\0000\001\022S\n\016ChangePassword\022\034.UserAcco" +
-      "unt.PasswordRequest\032!.UserAccount.Passwo" +
-      "rdConfirmation\"\000B1\n\034eBankingServices.Use" +
-      "rAccountB\017UserAccountImplP\001b\006proto3"
+      "(\t\"\034\n\013ViewRequest\022\r\n\005accNo\030\001 \001(\005\"c\n\013Acco" +
+      "untInfo\022\017\n\007message\030\001 \001(\t\022\r\n\005accNo\030\002 \001(\005\022" +
+      "\021\n\tfirstName\030\003 \001(\t\022\020\n\010lastName\030\004 \001(\t\022\017\n\007" +
+      "balance\030\005 \001(\001\"C\n\017PasswordRequest\022\r\n\005accN" +
+      "o\030\001 \001(\t\022\020\n\010currPass\030\002 \001(\t\022\017\n\007newPass\030\003 \001" +
+      "(\t\"\'\n\024PasswordConfirmation\022\017\n\007message\030\001 " +
+      "\001(\t2\357\001\n\013UserAccount\022D\n\005Login\022\031.UserAccou" +
+      "nt.LoginRequest\032\036.UserAccount.LoginConfi" +
+      "rmation\"\000\022E\n\013ViewAccount\022\030.UserAccount.V" +
+      "iewRequest\032\030.UserAccount.AccountInfo\"\0000\001" +
+      "\022S\n\016ChangePassword\022\034.UserAccount.Passwor" +
+      "dRequest\032!.UserAccount.PasswordConfirmat" +
+      "ion\"\000B1\n\034eBankingServices.UserAccountB\017U" +
+      "serAccountImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -104,7 +106,7 @@ public final class UserAccountImpl {
     internal_static_UserAccount_AccountInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserAccount_AccountInfo_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Message", "AccNo", "FirstName", "LastName", "Balance", });
     internal_static_UserAccount_PasswordRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_UserAccount_PasswordRequest_fieldAccessorTable = new

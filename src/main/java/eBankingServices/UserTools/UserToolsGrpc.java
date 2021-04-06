@@ -152,7 +152,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 1: Help Bot
+     * Client-streaming gRPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
@@ -162,7 +162,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 2: Vaults
+     * Unary gRPC method 2: Vaults
      * </pre>
      */
     public void vault(eBankingServices.UserTools.ValutAccess request,
@@ -172,7 +172,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 3: Interest Calculator
+     * Client-streaming gRPC method 3: Interest Calculator
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcRequest> interestCalc(
@@ -227,7 +227,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 1: Help Bot
+     * Client-streaming gRPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
@@ -238,7 +238,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 2: Vaults
+     * Unary gRPC method 2: Vaults
      * </pre>
      */
     public void vault(eBankingServices.UserTools.ValutAccess request,
@@ -249,7 +249,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 3: Interest Calculator
+     * Client-streaming gRPC method 3: Interest Calculator
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcRequest> interestCalc(
@@ -279,7 +279,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 2: Vaults
+     * Unary gRPC method 2: Vaults
      * </pre>
      */
     public eBankingServices.UserTools.VaultConfirmation vault(eBankingServices.UserTools.ValutAccess request) {
@@ -308,7 +308,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * gRPC method 2: Vaults
+     * Unary gRPC method 2: Vaults
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.VaultConfirmation> vault(

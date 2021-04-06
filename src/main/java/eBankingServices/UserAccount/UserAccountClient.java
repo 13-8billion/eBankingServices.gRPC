@@ -37,13 +37,13 @@ public class UserAccountClient {
 		asyncStub = UserAccountGrpc.newStub(channel);
 		
 		// call methods in transactions client class
-		login();
-//		viewAccount();
+//		login();
+		viewAccount();
 //		changePassword();
 	}
 	
 	
-// Unary RPC - Deposit money into account
+// Unary RPC - Login to account
 	
 	public static void login() {
 		
@@ -64,71 +64,61 @@ public class UserAccountClient {
 				.build());
 		
 		System.out.println(response.getMessage());
-
-		
-//	    channel.shutdown()
-//	    	   .awaitTermination(5, TimeUnit.SECONDS);			
+				
 	}
 	     
 
-//// Client-streaming RPC - Transfer money between accounts
-//	
-//	    public static void transfer() {  	
-//	  
-//			StreamObserver<TransferConfirmation> responseObserver = new StreamObserver<TransferConfirmation>() {
-//
-//				@Override
-//				public void onNext(TransferConfirmation response) {
-//					
-//					System.out.println("Client >>>>>>>>> getting confirmation " + response.getMessage());			
-//				}
-//
-//				@Override
-//				public void onError(Throwable t) {
-//					t.printStackTrace();
-//				}
-//
-//				@Override
-//				public void onCompleted() {
-//					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
-//				}			
-//			};
-//			
-//			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
-//			try {
-//			requestObserver.onNext(TransferSum.newBuilder()
-//					.setSum(30)
-//					.setFromAccNo(1)
-//					.setToAccNo(2)
-//					.build());
-//			Thread.sleep(1000);
-//			
-//			requestObserver.onNext(TransferSum.newBuilder()
-//					.setSum(300)
-//					.setFromAccNo(2)
-//					.setToAccNo(1)
-//					.build());
-//			Thread.sleep(1000);
-//			
-//			requestObserver.onNext(TransferSum.newBuilder()
-//					.setSum(300)
-//					.setFromAccNo(0)
-//					.setToAccNo(1)
-//					.build());
-//			Thread.sleep(1000);
-//						
-//			Thread.sleep(2000);
-//			
-//			responseObserver.onCompleted();	
-//				
-//			} catch (RuntimeException e) {
-//				e.printStackTrace();
-//			} catch (InterruptedException e) {			
-//				e.printStackTrace();
-//			}			
-//	    };
-//	    
-//	    
+// Server-streaming RPC - View account info
+	
+	public static void viewAccount() {
+		
+		Scanner in = new Scanner(System.in);
+		int accountNo;
+		
+		System.out.println("Client >>>>>>>>> Enter account number to view (1, 2 or 3): ");
+		accountNo = in.nextInt();
+
+		ViewRequest request = ViewRequest.newBuilder()
+				.setAccNo(accountNo)
+				.build();
+
+
+		StreamObserver<AccountInfo> responseObserver = new StreamObserver<AccountInfo>() {
+
+			@Override
+			public void onNext(AccountInfo value) {
+				System.out.println("Client >>>>>>>>> Recieveing account infomation for Account No: " + accountNo);
+				System.out.println("Client >>>>>>>>> Account Info: " + value.getMessage());
+				
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				t.printStackTrace();
+
+			}
+
+			@Override
+			public void onCompleted() {
+				System.out.println("Client >>>>>>>>> Stream is completed ");
+			}
+
+		};
+
+		asyncStub.viewAccount(request, responseObserver);
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	  
+//BI DIRECTIONAL - REUQEST MONEY	    
+//	   
 //	    public static void request() {
 //
 //			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {

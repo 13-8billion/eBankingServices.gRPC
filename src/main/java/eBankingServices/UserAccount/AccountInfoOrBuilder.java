@@ -8,17 +8,12 @@ public interface AccountInfoOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 accNo = 1;</code>
+   * <code>string message = 1;</code>
    */
-  int getAccNo();
-
+  java.lang.String getMessage();
   /**
-   * <code>double amount = 2;</code>
+   * <code>string message = 1;</code>
    */
-  double getAmount();
-
-  /**
-   * <code>double balance = 3;</code>
-   */
-  double getBalance();
+  com.google.protobuf.ByteString
+      getMessageBytes();
 }

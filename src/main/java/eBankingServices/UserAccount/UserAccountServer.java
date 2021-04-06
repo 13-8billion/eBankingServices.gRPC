@@ -1,20 +1,22 @@
 package eBankingServices.UserAccount;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountImplBase;
 import eBankingServices.UserAccount.LoginRequest;
 import eBankingServices.UserAccount.LoginConfirmation;
-//import eBankingServices.UserAccount.ViewRequest;
-//import eBankingServices.UserAccount.AccountInfo;
+import eBankingServices.UserAccount.ViewRequest;
+import eBankingServices.UserAccount.AccountInfo;
 //import eBankingServices.UserAccount.PasswordRequest;
 //import eBankingServices.UserAccount.PasswordConfirmation;
 
 
 public class UserAccountServer extends UserAccountImplBase {
-
+	
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -32,10 +34,11 @@ public class UserAccountServer extends UserAccountImplBase {
 		server.awaitTermination();
 	}
 
+	
 // login to account unary rpc
 
-
 	public void login(LoginRequest request, StreamObserver<LoginConfirmation> responseObserver) {
+		
 		LoginConfirmation lc;
 		
 
@@ -56,42 +59,60 @@ public class UserAccountServer extends UserAccountImplBase {
 	}
 
 	
-// transfer money client streaming rpc
+// Server-streaming RPC - View Account info
+	
+	public void viewAccount(ViewRequest request, StreamObserver<AccountInfo> responseObserver) {
+			
+		AccountInfo reply;
+		
+		ArrayList<Customer> cust = new ArrayList<Customer>();
+		
+		cust.add(new Customer(1, "Arthur", "Morgan", 27000));
+		cust.add(new Customer(2, "Sadie", "Adler", 5900));
+		cust.add(new Customer(3, "Amy", "Percival", 33333));
+		
+		
+		if (request.getAccNo() == 1) 
+		{
+			reply = AccountInfo.newBuilder()
+					.setMessage("Sever >>>>>>>>> AccNo. " + request.getAccNo() + c.getFirstName()) 		
+					.build();	
+			
+		}
+		responseObserver.onNext(reply);
+		responseObserver.onCompleted();
+	}
 
+//		else if (request.getAccNo() == 2)
+//		{
+//			reply = AccountInfo.newBuilder()
+//					.setMessage("Account info for AccNo: " + request.getAccNo() + c2) 
+//					.build();
+//		}
+//		else if (request.getAccNo() == 2)
+//		{
+//			reply = AccountInfo.newBuilder()
+//					.setMessage("Account info for AccNo: " + request.getAccNo() + c3) 
+//					.build();
+//		}
 
-//	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
+//		responseObserver.onNext(reply);	
+//		responseObserver.onCompleted();
 //		
-//		String euro = "\u20ac";
-//				
-//		return new StreamObserver<TransferSum>() {
-//			
-//			 ArrayList<Object> acc = new ArrayList<Object>(Arrays.asList(accounts)); 
-//		
-//				@Override
-//			public void onNext(TransferSum request) {
-//			
-//				
-//				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-//					System.out.println("Server >>>>>>>>> SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
-//						
-//				} else {
-//					System.out.println("Server >>>>>>>>> FAILED not enough funds in AccountNo. " + request.getFromAccNo());
-//				}
-//				
-//			}
-//				
-//			@Override
-//			public void onCompleted() {
-//
-//				System.out.println("Server >>>>>>>>> Transaction process completed" );		
-//			}
-//			
-//			@Override
-//			public void onError(Throwable t) {
-//				// TODO Auto-generated method stub
-//			}
-//		};
-//	}
+//		try {
+//			//wait for a second
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//}
+
+	
+	
+	
+	
+
 //	@Override
 //	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
 //		
@@ -137,6 +158,61 @@ public class UserAccountServer extends UserAccountImplBase {
 		} else {
 			return false;
 		}
+	}
+	
+	private class Customer {
+
+		private int accNo;
+		private String firstName;
+		private String lastName;
+		private double balance;
+
+		// constructor
+		public Customer(int accNo, String firstName, String lastName, double balance)
+		{
+			this.accNo = accNo;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.balance = balance;
+		}
+		
+		public Customer()
+		{
+		}
+
+		public int getAccNo() {
+			return accNo;
+		}
+
+		public void setEmpNo(int accNo) {
+			this.accNo = accNo;
+		}
+
+	
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public double getBalance() {
+			return balance;
+		}
+
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
+
 	}
 }
 

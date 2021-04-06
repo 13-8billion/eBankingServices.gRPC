@@ -35,9 +35,7 @@ message ViewRequest {
 }
 
 message AccountInfo {
-  int32 accNo = 1;
-  double amount = 2;
-  double balance = 3;
+  string message = 1;
 }
 
 // Change password message

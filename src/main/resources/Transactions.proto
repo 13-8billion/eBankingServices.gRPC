@@ -8,7 +8,7 @@ package Transactions;
 
 service Transactions {
   
-   // Unary gRPC method 1: Deposit
+  // Unary gRPC method 1: Deposit
   rpc Deposit(DepositSum) returns (DepositConfirmation) {}
   
   // Client-Streaming gRPC method 2: Transfer

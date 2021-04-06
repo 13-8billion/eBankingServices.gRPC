@@ -16,9 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private AccountInfo() {
-    accNo_ = 0;
-    amount_ = 0D;
-    balance_ = 0D;
+    message_ = "";
   }
 
   @java.lang.Override
@@ -45,19 +43,10 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            accNo_ = input.readInt32();
-            break;
-          }
-          case 17: {
-
-            amount_ = input.readDouble();
-            break;
-          }
-          case 25: {
-
-            balance_ = input.readDouble();
+            message_ = s;
             break;
           }
           default: {
@@ -92,31 +81,38 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserAccount.AccountInfo.class, eBankingServices.UserAccount.AccountInfo.Builder.class);
   }
 
-  public static final int ACCNO_FIELD_NUMBER = 1;
-  private int accNo_;
+  public static final int MESSAGE_FIELD_NUMBER = 1;
+  private volatile java.lang.Object message_;
   /**
-   * <code>int32 accNo = 1;</code>
+   * <code>string message = 1;</code>
    */
-  public int getAccNo() {
-    return accNo_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      message_ = s;
+      return s;
+    }
   }
-
-  public static final int AMOUNT_FIELD_NUMBER = 2;
-  private double amount_;
   /**
-   * <code>double amount = 2;</code>
+   * <code>string message = 1;</code>
    */
-  public double getAmount() {
-    return amount_;
-  }
-
-  public static final int BALANCE_FIELD_NUMBER = 3;
-  private double balance_;
-  /**
-   * <code>double balance = 3;</code>
-   */
-  public double getBalance() {
-    return balance_;
+  public com.google.protobuf.ByteString
+      getMessageBytes() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      message_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -133,14 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (accNo_ != 0) {
-      output.writeInt32(1, accNo_);
-    }
-    if (amount_ != 0D) {
-      output.writeDouble(2, amount_);
-    }
-    if (balance_ != 0D) {
-      output.writeDouble(3, balance_);
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -151,17 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (accNo_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, accNo_);
-    }
-    if (amount_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(2, amount_);
-    }
-    if (balance_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(3, balance_);
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -179,16 +160,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserAccount.AccountInfo other = (eBankingServices.UserAccount.AccountInfo) obj;
 
     boolean result = true;
-    result = result && (getAccNo()
-        == other.getAccNo());
-    result = result && (
-        java.lang.Double.doubleToLongBits(getAmount())
-        == java.lang.Double.doubleToLongBits(
-            other.getAmount()));
-    result = result && (
-        java.lang.Double.doubleToLongBits(getBalance())
-        == java.lang.Double.doubleToLongBits(
-            other.getBalance()));
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -200,14 +173,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getAccNo();
-    hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getAmount()));
-    hash = (37 * hash) + BALANCE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getBalance()));
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -341,11 +308,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      accNo_ = 0;
-
-      amount_ = 0D;
-
-      balance_ = 0D;
+      message_ = "";
 
       return this;
     }
@@ -373,9 +336,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserAccount.AccountInfo buildPartial() {
       eBankingServices.UserAccount.AccountInfo result = new eBankingServices.UserAccount.AccountInfo(this);
-      result.accNo_ = accNo_;
-      result.amount_ = amount_;
-      result.balance_ = balance_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -424,14 +385,9 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserAccount.AccountInfo other) {
       if (other == eBankingServices.UserAccount.AccountInfo.getDefaultInstance()) return this;
-      if (other.getAccNo() != 0) {
-        setAccNo(other.getAccNo());
-      }
-      if (other.getAmount() != 0D) {
-        setAmount(other.getAmount());
-      }
-      if (other.getBalance() != 0D) {
-        setBalance(other.getBalance());
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -462,80 +418,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int accNo_ ;
+    private java.lang.Object message_ = "";
     /**
-     * <code>int32 accNo = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public int getAccNo() {
-      return accNo_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>int32 accNo = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder setAccNo(int value) {
-      
-      accNo_ = value;
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string message = 1;</code>
+     */
+    public Builder setMessage(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      message_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 accNo = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder clearAccNo() {
+    public Builder clearMessage() {
       
-      accNo_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private double amount_ ;
-    /**
-     * <code>double amount = 2;</code>
-     */
-    public double getAmount() {
-      return amount_;
-    }
-    /**
-     * <code>double amount = 2;</code>
-     */
-    public Builder setAmount(double value) {
-      
-      amount_ = value;
+      message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
     }
     /**
-     * <code>double amount = 2;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder clearAmount() {
+    public Builder setMessageBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
       
-      amount_ = 0D;
-      onChanged();
-      return this;
-    }
-
-    private double balance_ ;
-    /**
-     * <code>double balance = 3;</code>
-     */
-    public double getBalance() {
-      return balance_;
-    }
-    /**
-     * <code>double balance = 3;</code>
-     */
-    public Builder setBalance(double value) {
-      
-      balance_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>double balance = 3;</code>
-     */
-    public Builder clearBalance() {
-      
-      balance_ = 0D;
+      message_ = value;
       onChanged();
       return this;
     }

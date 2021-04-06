@@ -4,7 +4,6 @@ import java.io.IOException;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountImplBase;
 import eBankingServices.UserAccount.LoginRequest;
 import eBankingServices.UserAccount.LoginConfirmation;
@@ -37,22 +36,22 @@ public class UserAccountServer extends UserAccountImplBase {
 
 
 	public void login(LoginRequest request, StreamObserver<LoginConfirmation> responseObserver) {
-
+		LoginConfirmation lc;
 		
 
 				if (authenticateUser(request.getUsername(), request.getPassword())) {
 						
-				LoginConfirmation lc = LoginConfirmation.newBuilder()	
-				.setMessage("Sever >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
-				.build();
-				
-				responseObserver.onNext(lc);
-				
-				} else {
+					lc = LoginConfirmation.newBuilder()	
+							.setMessage("Sever >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
+							.build();
 					
-					System.out.println("Sever >>>>>>>>> Username or Password Incorrect!" );	
+				} else {	
+					lc = LoginConfirmation.newBuilder()	
+							.setMessage("Sever >>>>>>>>> Username or Password Incorrect!" )
+							.build();
 				}
-
+				
+		responseObserver.onNext(lc);
 		responseObserver.onCompleted();
 	}
 

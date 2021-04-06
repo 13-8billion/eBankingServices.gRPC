@@ -15,6 +15,7 @@ import eBankingServices.UserAccount.PasswordRequest;
 import eBankingServices.UserAccount.PasswordConfirmation;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountBlockingStub;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountStub;
+import java.util.Scanner;
 
 
 public class UserAccountClient {
@@ -46,13 +47,23 @@ public class UserAccountClient {
 	
 	public static void login() {
 		
+		Scanner in = new Scanner(System.in);
+		String username;
+		String password;
+		
 		System.out.println("Client >>>>>>>>> Requesting login...");
+		System.out.println("Client >>>>>>>>> Enter username (Amy): ");
+		username = in.next();
+		System.out.println("Client >>>>>>>>> Enter password (123): ");
+		password = in.next();
+		
+		
 		LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder()
-				.setUsername("Amy")
-				.setPassword("123")
+				.setUsername(username)
+				.setPassword(password)
 				.build());
 		
-		System.out.println(response);
+		System.out.println(response.getMessage());
 
 		
 //	    channel.shutdown()

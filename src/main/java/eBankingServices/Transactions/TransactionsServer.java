@@ -16,6 +16,8 @@ import eBankingServices.Transactions.DepositConfirmation;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 
 public class TransactionsServer extends TransactionsImplBase {
+	
+	String euro = "\u20ac";
 
 	// hard code some account balances
 	private double[] accounts = {0, 3000, 30000};
@@ -40,10 +42,10 @@ public class TransactionsServer extends TransactionsImplBase {
 
 
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
-
+		
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
 
-				.setMessage("From Sever: DepositID. " + request.getDepositID() + ": Euro " + request.getSum() + " has been deposited successfully into account no. " + request.getAccNo())
+				.setMessage("Server >>>>>>>>> Deposit ID. " + request.getDepositID() + ": " + euro + request.getSum() +  " has been deposited successfully into Account No. " + request.getAccNo())
 				.build();
 
 		responseObserver.onNext(dc);
@@ -55,8 +57,6 @@ public class TransactionsServer extends TransactionsImplBase {
 
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
-		
-		String euro = "\u20ac";
 				
 		return new StreamObserver<TransferSum>() {
 			
@@ -89,8 +89,6 @@ public class TransactionsServer extends TransactionsImplBase {
 	}
 	@Override
 	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
-		
-		String euro = "\u20ac";
 		
 		return new StreamObserver<RequestSum> () {
 

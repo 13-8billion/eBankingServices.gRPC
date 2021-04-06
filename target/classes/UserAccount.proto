@@ -44,7 +44,7 @@ message AccountInfo {
 
 // Change password message
 message PasswordRequest {
-  string accNo = 1; 
+  string username = 1; 
   string currPass = 2;
   string newPass = 3; 
 }

@@ -8,14 +8,14 @@ public interface PasswordRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string accNo = 1;</code>
+   * <code>string username = 1;</code>
    */
-  java.lang.String getAccNo();
+  java.lang.String getUsername();
   /**
-   * <code>string accNo = 1;</code>
+   * <code>string username = 1;</code>
    */
   com.google.protobuf.ByteString
-      getAccNoBytes();
+      getUsernameBytes();
 
   /**
    * <code>string currPass = 2;</code>

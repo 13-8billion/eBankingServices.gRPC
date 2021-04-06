@@ -37,13 +37,13 @@ public class UserAccountClient {
 		asyncStub = UserAccountGrpc.newStub(channel);
 		
 		// call methods in transactions client class
-//		login();
+		login();
 		viewAccount();
-//		changePassword();
+		changePassword();
 	}
 	
 	
-// Unary RPC - Login to account
+// Login - Unary gRPC
 	
 	public static void login() {
 		
@@ -52,9 +52,9 @@ public class UserAccountClient {
 		String password;
 		
 		System.out.println("Client >>>>>>>>> Requesting login...");
-		System.out.println("Client >>>>>>>>> Enter username (Amy): ");
+		System.out.println("Enter username (Amy): ");
 		username = in.next();
-		System.out.println("Client >>>>>>>>> Enter password (123): ");
+		System.out.println("Enter password (123): ");
 		password = in.next();
 		
 		
@@ -68,7 +68,7 @@ public class UserAccountClient {
 	}
 	     
 
-// Server-streaming RPC - View account info
+//  View Account Info - Server-streaming gRPC
 	
 	public static void viewAccount() {
 		
@@ -120,78 +120,33 @@ public class UserAccountClient {
 	}
 	
 	  
-//BI DIRECTIONAL - REUQEST MONEY	    
-//	   
-//	    public static void request() {
-//
-//			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
-//
-//				@Override
-//				public void onNext(RequestStatus response) {
-//					System.out.println("Client >>>>>>>>> Requesting status: "+ response.getStatus());
-//				}
-//
-//				@Override
-//				public void onError(Throwable t) {
-//					t.printStackTrace();
-//
-//				}
-//
-//				@Override
-//				public void onCompleted() {
-//					System.out.println("Client >>>>>>>>> END OF STREAM: Money request completed");
-//				}
-//
-//			};
-//
-//
-//
-//			StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
-//
-//			try {
-//
-//				requestObserver.onNext(RequestSum.newBuilder()
-//						.setSum(10)
-//						.setFromAccNo(1)
-//						.setToAccNo(2)
-//						.build());
-//				
-//				requestObserver.onNext(RequestSum.newBuilder()
-//						.setSum(20)
-//						.setFromAccNo(2)
-//						.setToAccNo(1)
-//						.build());
-//				
-//				requestObserver.onNext(RequestSum.newBuilder()
-//						.setSum(30)
-//						.setFromAccNo(2)
-//						.setToAccNo(1)
-//						.build());
-//
-//				// Mark the end of requests
-//				requestObserver.onCompleted();
-//
-//
-//				// Sleep for a bit before sending the next one.
-//				Thread.sleep(new Random().nextInt(1000) + 500);
-//
-//
-//			} catch (RuntimeException e) {
-//				e.printStackTrace();
-//			} catch (InterruptedException e) {			
-//				e.printStackTrace();
-//			}
-//
-//
-//
-//			try {
-//				Thread.sleep(15000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//
-//		}	
+// Change Password - Unary gRPC
+	
+	public static void changePassword() {
+		
+		Scanner in = new Scanner(System.in);
+		String username;
+		String currPass;
+		String newPass;
+		
+		System.out.println("Client >>>>>>>>> Requesting to change password...");
+		System.out.println("Enter username (Amy): ");
+		username = in.next();
+		System.out.println("Enter current password (123): ");
+		currPass = in.next();
+		System.out.println("Enter new password: ");
+		newPass = in.next();
+		
+		
+		PasswordConfirmation response = blockingStub.changePassword(PasswordRequest.newBuilder()
+				.setUsername(username)
+				.setCurrPass(currPass)
+				.setNewPass(newPass)
+				.build());
+		
+		System.out.println(response.getMessage());
+				
+	}	
 }	
 
 	   

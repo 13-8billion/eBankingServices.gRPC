@@ -1,7 +1,6 @@
 package eBankingServices.UserAccount;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import io.grpc.Server;
@@ -12,8 +11,8 @@ import eBankingServices.UserAccount.LoginRequest;
 import eBankingServices.UserAccount.LoginConfirmation;
 import eBankingServices.UserAccount.ViewRequest;
 import eBankingServices.UserAccount.AccountInfo;
-//import eBankingServices.UserAccount.PasswordRequest;
-//import eBankingServices.UserAccount.PasswordConfirmation;
+import eBankingServices.UserAccount.PasswordRequest;
+import eBankingServices.UserAccount.PasswordConfirmation;
 
 
 public class UserAccountServer extends UserAccountImplBase {
@@ -36,7 +35,7 @@ public class UserAccountServer extends UserAccountImplBase {
 	}
 
 	
-// login to account unary rpc
+// Login - Unary gRPC
 
 	public void login(LoginRequest request, StreamObserver<LoginConfirmation> responseObserver) {
 		
@@ -60,7 +59,7 @@ public class UserAccountServer extends UserAccountImplBase {
 	}
 
 	
-// Server-streaming RPC - View Account info
+// View Account Info - Server-streaming gRPC
 	
 	public void viewAccount(ViewRequest request, StreamObserver<AccountInfo> responseObserver) {
 			
@@ -94,83 +93,57 @@ public class UserAccountServer extends UserAccountImplBase {
 		responseObserver.onCompleted();
 	}
 
+	
+// Change Password - Unary gRPC
 
-//		else if (request.getAccNo() == 2)
-//		{
-//			reply = AccountInfo.newBuilder()
-//					.setMessage("Account info for AccNo: " + request.getAccNo() + c2) 
-//					.build();
-//		}
-//		else if (request.getAccNo() == 2)
-//		{
-//			reply = AccountInfo.newBuilder()
-//					.setMessage("Account info for AccNo: " + request.getAccNo() + c3) 
-//					.build();
-//		}
+	public void changePassword(PasswordRequest request, StreamObserver<PasswordConfirmation> responseObserver) {
+		
+		PasswordConfirmation pc;
+		
 
-//		responseObserver.onNext(reply);	
-//		responseObserver.onCompleted();
-//		
-//		try {
-//			//wait for a second
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//}
-
+				if (changePass(request.getUsername(), request.getCurrPass(), request.getNewPass())) {
+						
+					pc = PasswordConfirmation.newBuilder()	
+							.setMessage("Server >>>>>>>>> Password for " + request.getUsername() + " has been changed to " + request.getNewPass())
+							.build();
+					
+				} else {	
+					pc = PasswordConfirmation.newBuilder()	
+							.setMessage("Server >>>>>>>>> Username or Password Incorrect!" )
+							.build();
+				}
+				
+		responseObserver.onNext(pc);
+		responseObserver.onCompleted();
+	}
 	
 	
+// Change password method
 	
-	
-
-//	@Override
-//	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
-//		
-//		String euro = "\u20ac";
-//		
-//		return new StreamObserver<RequestSum> () {
-//
-//			@Override
-//			public void onNext(RequestSum request) {
-//				System.out.println("Server >>>>>>>>> Receiving money request:  AccountNo. " + request.getToAccNo() + " is requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
-//				
-//				String status =  "Server status >>>>>>>>> Money request is pending...";
-//				
-//				RequestStatus reply = RequestStatus.newBuilder()
-//						.setStatus(status)
-//						.build();
-//				
-//				responseObserver.onNext(reply);
-//				
-//			}
-//
-//			@Override
-//			public void onError(Throwable t) {
-//				
-//				t.printStackTrace();
-//
-//			}
-//
-//			@Override
-//			public void onCompleted() {
-//				System.out.println("Server >>>>>>>>> Receiving money request completed ");
-//				
-//				//completed too
-//				responseObserver.onCompleted();
-//			}
-//			
-//		};
-//}
-
-	private boolean authenticateUser(String username, String password) {
-		if (username.equals("Amy") && password.equals("123")) {
+	private boolean changePass(String username, String currPass, String newPass)
+	{
+		if (username.equals("Amy") && currPass.equals("123"))
+			currPass = newPass;
 			return true;
-		} else {
+	}
+	
+	
+// Authenticate user method
+	
+	private boolean authenticateUser(String username, String password) 
+	{
+		if (username.equals("Amy") && password.equals("123")) 
+		{
+			return true;
+		} 
+		else 
+		{
 			return false;
 		}
 	}
+	
+	
+// Customer class 
 	
 	private class Customer {
 
@@ -224,7 +197,6 @@ public class UserAccountServer extends UserAccountImplBase {
 		public void setBalance(double balance) {
 			this.balance = balance;
 		}
-
 	}
 }
 

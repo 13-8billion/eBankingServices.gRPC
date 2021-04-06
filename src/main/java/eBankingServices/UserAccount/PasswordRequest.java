@@ -20,7 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private PasswordRequest() {
-    accNo_ = "";
+    username_ = "";
     currPass_ = "";
     newPass_ = "";
   }
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            accNo_ = s;
+            username_ = s;
             break;
           }
           case 18: {
@@ -99,34 +99,34 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserAccount.PasswordRequest.class, eBankingServices.UserAccount.PasswordRequest.Builder.class);
   }
 
-  public static final int ACCNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object accNo_;
+  public static final int USERNAME_FIELD_NUMBER = 1;
+  private volatile java.lang.Object username_;
   /**
-   * <code>string accNo = 1;</code>
+   * <code>string username = 1;</code>
    */
-  public java.lang.String getAccNo() {
-    java.lang.Object ref = accNo_;
+  public java.lang.String getUsername() {
+    java.lang.Object ref = username_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      accNo_ = s;
+      username_ = s;
       return s;
     }
   }
   /**
-   * <code>string accNo = 1;</code>
+   * <code>string username = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getAccNoBytes() {
-    java.lang.Object ref = accNo_;
+      getUsernameBytes() {
+    java.lang.Object ref = username_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      accNo_ = b;
+      username_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -215,8 +215,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getAccNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accNo_);
+    if (!getUsernameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
     }
     if (!getCurrPassBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, currPass_);
@@ -233,8 +233,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getAccNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, accNo_);
+    if (!getUsernameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
     }
     if (!getCurrPassBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, currPass_);
@@ -258,8 +258,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserAccount.PasswordRequest other = (eBankingServices.UserAccount.PasswordRequest) obj;
 
     boolean result = true;
-    result = result && getAccNo()
-        .equals(other.getAccNo());
+    result = result && getUsername()
+        .equals(other.getUsername());
     result = result && getCurrPass()
         .equals(other.getCurrPass());
     result = result && getNewPass()
@@ -275,8 +275,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getAccNo().hashCode();
+    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+    hash = (53 * hash) + getUsername().hashCode();
     hash = (37 * hash) + CURRPASS_FIELD_NUMBER;
     hash = (53 * hash) + getCurrPass().hashCode();
     hash = (37 * hash) + NEWPASS_FIELD_NUMBER;
@@ -418,7 +418,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      accNo_ = "";
+      username_ = "";
 
       currPass_ = "";
 
@@ -450,7 +450,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserAccount.PasswordRequest buildPartial() {
       eBankingServices.UserAccount.PasswordRequest result = new eBankingServices.UserAccount.PasswordRequest(this);
-      result.accNo_ = accNo_;
+      result.username_ = username_;
       result.currPass_ = currPass_;
       result.newPass_ = newPass_;
       onBuilt();
@@ -501,8 +501,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserAccount.PasswordRequest other) {
       if (other == eBankingServices.UserAccount.PasswordRequest.getDefaultInstance()) return this;
-      if (!other.getAccNo().isEmpty()) {
-        accNo_ = other.accNo_;
+      if (!other.getUsername().isEmpty()) {
+        username_ = other.username_;
         onChanged();
       }
       if (!other.getCurrPass().isEmpty()) {
@@ -542,71 +542,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object accNo_ = "";
+    private java.lang.Object username_ = "";
     /**
-     * <code>string accNo = 1;</code>
+     * <code>string username = 1;</code>
      */
-    public java.lang.String getAccNo() {
-      java.lang.Object ref = accNo_;
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        accNo_ = s;
+        username_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>string username = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getAccNoBytes() {
-      java.lang.Object ref = accNo_;
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        accNo_ = b;
+        username_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>string username = 1;</code>
      */
-    public Builder setAccNo(
+    public Builder setUsername(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      accNo_ = value;
+      username_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>string username = 1;</code>
      */
-    public Builder clearAccNo() {
+    public Builder clearUsername() {
       
-      accNo_ = getDefaultInstance().getAccNo();
+      username_ = getDefaultInstance().getUsername();
       onChanged();
       return this;
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>string username = 1;</code>
      */
-    public Builder setAccNoBytes(
+    public Builder setUsernameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      accNo_ = value;
+      username_ = value;
       onChanged();
       return this;
     }

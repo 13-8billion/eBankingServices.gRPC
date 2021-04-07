@@ -8,7 +8,7 @@ public interface CalcResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 total = 1;</code>
+   * <code>double interest = 1;</code>
    */
-  int getTotal();
+  double getInterest();
 }

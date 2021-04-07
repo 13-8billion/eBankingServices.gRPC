@@ -15,7 +15,7 @@ service UserTools {
   rpc Vault(VaultAccess) returns (VaultConfirmation) {}
   
   // Client-streaming gRPC method 3: Interest Calculator
-  rpc InterestCalc(stream CalcRequest) returns (CalcResponse) {}
+  rpc InterestCalc(CalcRequest) returns (CalcResponse) {}
     
 }
 
@@ -40,7 +40,7 @@ message HelpResponse {
 // valut message
 message VaultAccess {
   int32 accNo = 1;  
-  int32 sum = 2;
+  double sum = 2;
   string unlockDate = 3;
   int32 vaultID = 4;
   string username = 5;
@@ -53,10 +53,11 @@ message VaultConfirmation {
 
 // interest calculator message
 message CalcRequest {
-  int32 sum = 1; 
-  int32 interestRate = 2; 
+  string accType = 1;
+  double sum = 2; 
+  string access = 3; 
 }
 
 message CalcResponse {
-  int32 total = 1;
+  double interest = 1;
 }

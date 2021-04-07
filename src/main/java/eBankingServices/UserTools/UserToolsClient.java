@@ -3,8 +3,6 @@ package eBankingServices.UserTools;
 import java.util.Random;
 import java.util.Scanner;
 
-import eBankingServices.Transactions.DepositConfirmation;
-import eBankingServices.Transactions.DepositSum;
 //import eBankingServices.Transactions.RequestStatus;
 //import eBankingServices.Transactions.RequestSum;
 //import eBankingServices.UserTools.UserToolsGrpc;
@@ -33,8 +31,8 @@ public class UserToolsClient {
 		
 		// call methods in transactions client class
 //		helpBot();
-		vault();
-//		interestCalc();
+//		vault();
+		interestCalc();
 	}
 	
 // HelpBot method - Bi-directional streaming gRPC
@@ -144,6 +142,31 @@ public class UserToolsClient {
 				.build());
 		
 		System.out.println(response);
+	}
+	
+// Interest calculator method - Unary gRPC
+	
+	public static void interestCalc() {
+		
+		String accType;
+		String access;
+		double sum;
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter account type (12, 24 or 36 months term): ");
+		accType = in.next();
+		System.out.println("Allowed access? (yes/no): ");
+		access = in.next();
+		System.out.println("Enter total sum: ");
+		sum = in.nextDouble();
+
+		CalcResponse response = blockingStub.interestCalc(CalcRequest.newBuilder()
+				.setAccType(accType)
+				.setAccess(access)
+				.setSum(sum)
+				.build());
+
+		System.out.println("Total payable" + response + " euro");
 	}
 	
 }

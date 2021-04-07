@@ -21,7 +21,7 @@ private static final long serialVersionUID = 0L;
   }
   private VaultAccess() {
     accNo_ = 0;
-    sum_ = 0;
+    sum_ = 0D;
     unlockDate_ = "";
     vaultID_ = 0;
     username_ = "";
@@ -57,9 +57,9 @@ private static final long serialVersionUID = 0L;
             accNo_ = input.readInt32();
             break;
           }
-          case 16: {
+          case 17: {
 
-            sum_ = input.readInt32();
+            sum_ = input.readDouble();
             break;
           }
           case 26: {
@@ -127,11 +127,11 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int SUM_FIELD_NUMBER = 2;
-  private int sum_;
+  private double sum_;
   /**
-   * <code>int32 sum = 2;</code>
+   * <code>double sum = 2;</code>
    */
-  public int getSum() {
+  public double getSum() {
     return sum_;
   }
 
@@ -263,8 +263,8 @@ private static final long serialVersionUID = 0L;
     if (accNo_ != 0) {
       output.writeInt32(1, accNo_);
     }
-    if (sum_ != 0) {
-      output.writeInt32(2, sum_);
+    if (sum_ != 0D) {
+      output.writeDouble(2, sum_);
     }
     if (!getUnlockDateBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, unlockDate_);
@@ -291,9 +291,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, accNo_);
     }
-    if (sum_ != 0) {
+    if (sum_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, sum_);
+        .computeDoubleSize(2, sum_);
     }
     if (!getUnlockDateBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, unlockDate_);
@@ -326,8 +326,10 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getAccNo()
         == other.getAccNo());
-    result = result && (getSum()
-        == other.getSum());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getSum())
+        == java.lang.Double.doubleToLongBits(
+            other.getSum()));
     result = result && getUnlockDate()
         .equals(other.getUnlockDate());
     result = result && (getVaultID()
@@ -350,7 +352,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + ACCNO_FIELD_NUMBER;
     hash = (53 * hash) + getAccNo();
     hash = (37 * hash) + SUM_FIELD_NUMBER;
-    hash = (53 * hash) + getSum();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getSum()));
     hash = (37 * hash) + UNLOCKDATE_FIELD_NUMBER;
     hash = (53 * hash) + getUnlockDate().hashCode();
     hash = (37 * hash) + VAULTID_FIELD_NUMBER;
@@ -498,7 +501,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       accNo_ = 0;
 
-      sum_ = 0;
+      sum_ = 0D;
 
       unlockDate_ = "";
 
@@ -591,7 +594,7 @@ private static final long serialVersionUID = 0L;
       if (other.getAccNo() != 0) {
         setAccNo(other.getAccNo());
       }
-      if (other.getSum() != 0) {
+      if (other.getSum() != 0D) {
         setSum(other.getSum());
       }
       if (!other.getUnlockDate().isEmpty()) {
@@ -664,28 +667,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int sum_ ;
+    private double sum_ ;
     /**
-     * <code>int32 sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
-    public int getSum() {
+    public double getSum() {
       return sum_;
     }
     /**
-     * <code>int32 sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
-    public Builder setSum(int value) {
+    public Builder setSum(double value) {
       
       sum_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 sum = 2;</code>
+     * <code>double sum = 2;</code>
      */
     public Builder clearSum() {
       
-      sum_ = 0;
+      sum_ = 0D;
       onChanged();
       return this;
     }

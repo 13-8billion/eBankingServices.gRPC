@@ -3,8 +3,6 @@ package eBankingServices.UserTools;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.*;
-import java.lang.*;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -125,6 +123,8 @@ public class UserToolsServer extends UserToolsImplBase {
 		};
 	}
 	
+// Vault method - Unary gRPC
+	
 public void vault(VaultAccess request, StreamObserver<VaultConfirmation> responseObserver) {
 		
 		VaultConfirmation vc;
@@ -132,7 +132,6 @@ public void vault(VaultAccess request, StreamObserver<VaultConfirmation> respons
 		if (authenticateUser(request.getUsername(), request.getPassword())) {
 			
 			vc = VaultConfirmation.newBuilder()	
-					.setVaultConf("Server >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
 					.setVaultConf("Server >>>>>>>>> Vault ID. " + request.getVaultID() + ": " + euro + request.getSum() +  
 							" has been stored successfully into Account No. " + request.getAccNo() 
 							+ ". The money can not be accessed until " + request.getUnlockDate())
@@ -147,6 +146,50 @@ public void vault(VaultAccess request, StreamObserver<VaultConfirmation> respons
 		responseObserver.onNext(vc);
 		responseObserver.onCompleted();
 	}
+
+// Interest calculator method - Unary streaming gRPC
+
+public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
+
+	System.out.println("Calculating interest...");
+
+
+	String accType = request.getAccType();
+	String access = request.getAccess();
+	double sum = request.getSum();
+	double interest = 0;
+	
+
+		if (accType.equals("12")){ // if..else statement for "12 month term" account type
+			if (access.equals("yes")){ // if money access allowed
+				interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
+			}else if (access.equals("no")){ // else if money access is not allowed
+				interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
+			}
+		}else if (accType.equals("24")){ // if..else statement for "24 month term" account type
+			if (access.equals("yes")){
+				interest = sum * 0.002;
+			}else if (access.equals("no")){
+				interest = sum * 0.003;
+			}
+		}else if (accType.equals("36")){ // if..else statement for "36 month term" account type
+			if (access.equals("yes")){
+				interest = sum * 0.0025;
+			}else if (access.equals("no")){
+				interest = sum * 0.05;
+			}
+		} else { 
+			interest = -1; // if account type is invalid
+		}	
+
+		CalcResponse reply = CalcResponse.newBuilder()
+				.setInterest(interest)
+				.build();
+	
+		responseObserver.onNext(reply);
+	
+		responseObserver.onCompleted();
+}
 
 
 //Authenticate user method

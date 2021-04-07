@@ -59,19 +59,19 @@ public final class UserToolsImpl {
       "Solutions\022\022\n\016PASSWORD_RESET\020\000\022\016\n\nREPORT_" +
       "BUG\020\001\022\n\n\006VAULTS\020\002\022\014\n\010PAYMENTS\020\003\" \n\014HelpR" +
       "esponse\022\020\n\010solution\030\001 \001(\t\"r\n\013VaultAccess" +
-      "\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\005\022\022\n\nunlockDa" +
+      "\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\022\022\n\nunlockDa" +
       "te\030\003 \001(\t\022\017\n\007vaultID\030\004 \001(\005\022\020\n\010username\030\005 " +
       "\001(\t\022\020\n\010password\030\006 \001(\t\"&\n\021VaultConfirmati" +
-      "on\022\021\n\tvaultConf\030\003 \001(\t\"0\n\013CalcRequest\022\013\n\003" +
-      "sum\030\001 \001(\005\022\024\n\014interestRate\030\002 \001(\005\"\035\n\014CalcR" +
-      "esponse\022\r\n\005total\030\001 \001(\0052\323\001\n\tUserTools\022@\n\007" +
-      "HelpBot\022\026.UserTools.HelpRequest\032\027.UserTo" +
-      "ols.HelpResponse\"\000(\0010\001\022?\n\005Vault\022\026.UserTo" +
-      "ols.VaultAccess\032\034.UserTools.VaultConfirm" +
-      "ation\"\000\022C\n\014InterestCalc\022\026.UserTools.Calc" +
-      "Request\032\027.UserTools.CalcResponse\"\000(\001B-\n\032" +
-      "eBankingServices.UserToolsB\rUserToolsImp" +
-      "lP\001b\006proto3"
+      "on\022\021\n\tvaultConf\030\003 \001(\t\";\n\013CalcRequest\022\017\n\007" +
+      "accType\030\001 \001(\t\022\013\n\003sum\030\002 \001(\001\022\016\n\006access\030\003 \001" +
+      "(\t\" \n\014CalcResponse\022\020\n\010interest\030\001 \001(\0012\321\001\n" +
+      "\tUserTools\022@\n\007HelpBot\022\026.UserTools.HelpRe" +
+      "quest\032\027.UserTools.HelpResponse\"\000(\0010\001\022?\n\005" +
+      "Vault\022\026.UserTools.VaultAccess\032\034.UserTool" +
+      "s.VaultConfirmation\"\000\022A\n\014InterestCalc\022\026." +
+      "UserTools.CalcRequest\032\027.UserTools.CalcRe" +
+      "sponse\"\000B-\n\032eBankingServices.UserToolsB\r" +
+      "UserToolsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -114,13 +114,13 @@ public final class UserToolsImpl {
     internal_static_UserTools_CalcRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_CalcRequest_descriptor,
-        new java.lang.String[] { "Sum", "InterestRate", });
+        new java.lang.String[] { "AccType", "Sum", "Access", });
     internal_static_UserTools_CalcResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_UserTools_CalcResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_CalcResponse_descriptor,
-        new java.lang.String[] { "Total", });
+        new java.lang.String[] { "Interest", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

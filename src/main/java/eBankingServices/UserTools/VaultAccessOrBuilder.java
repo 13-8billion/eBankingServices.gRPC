@@ -13,9 +13,9 @@ public interface VaultAccessOrBuilder extends
   int getAccNo();
 
   /**
-   * <code>int32 sum = 2;</code>
+   * <code>double sum = 2;</code>
    */
-  int getSum();
+  double getSum();
 
   /**
    * <code>string unlockDate = 3;</code>

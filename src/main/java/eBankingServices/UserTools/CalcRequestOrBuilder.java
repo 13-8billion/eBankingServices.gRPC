@@ -8,12 +8,27 @@ public interface CalcRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 sum = 1;</code>
+   * <code>string accType = 1;</code>
    */
-  int getSum();
+  java.lang.String getAccType();
+  /**
+   * <code>string accType = 1;</code>
+   */
+  com.google.protobuf.ByteString
+      getAccTypeBytes();
 
   /**
-   * <code>int32 interestRate = 2;</code>
+   * <code>double sum = 2;</code>
    */
-  int getInterestRate();
+  double getSum();
+
+  /**
+   * <code>string access = 3;</code>
+   */
+  java.lang.String getAccess();
+  /**
+   * <code>string access = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getAccessBytes();
 }

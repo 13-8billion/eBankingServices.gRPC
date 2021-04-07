@@ -98,7 +98,7 @@ public final class UserToolsGrpc {
       fullMethodName = SERVICE_NAME + '/' + "InterestCalc",
       requestType = eBankingServices.UserTools.CalcRequest.class,
       responseType = eBankingServices.UserTools.CalcResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<eBankingServices.UserTools.CalcRequest,
       eBankingServices.UserTools.CalcResponse> getInterestCalcMethod() {
     io.grpc.MethodDescriptor<eBankingServices.UserTools.CalcRequest, eBankingServices.UserTools.CalcResponse> getInterestCalcMethod;
@@ -107,7 +107,7 @@ public final class UserToolsGrpc {
         if ((getInterestCalcMethod = UserToolsGrpc.getInterestCalcMethod) == null) {
           UserToolsGrpc.getInterestCalcMethod = getInterestCalcMethod = 
               io.grpc.MethodDescriptor.<eBankingServices.UserTools.CalcRequest, eBankingServices.UserTools.CalcResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "UserTools.UserTools", "InterestCalc"))
               .setSampledToLocalTracing(true)
@@ -175,9 +175,9 @@ public final class UserToolsGrpc {
      * Client-streaming gRPC method 3: Interest Calculator
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcRequest> interestCalc(
+    public void interestCalc(eBankingServices.UserTools.CalcRequest request,
         io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getInterestCalcMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getInterestCalcMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -198,7 +198,7 @@ public final class UserToolsGrpc {
                   this, METHODID_VAULT)))
           .addMethod(
             getInterestCalcMethod(),
-            asyncClientStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 eBankingServices.UserTools.CalcRequest,
                 eBankingServices.UserTools.CalcResponse>(
@@ -252,10 +252,10 @@ public final class UserToolsGrpc {
      * Client-streaming gRPC method 3: Interest Calculator
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcRequest> interestCalc(
+    public void interestCalc(eBankingServices.UserTools.CalcRequest request,
         io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcResponse> responseObserver) {
-      return asyncClientStreamingCall(
-          getChannel().newCall(getInterestCalcMethod(), getCallOptions()), responseObserver);
+      asyncUnaryCall(
+          getChannel().newCall(getInterestCalcMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -285,6 +285,16 @@ public final class UserToolsGrpc {
     public eBankingServices.UserTools.VaultConfirmation vault(eBankingServices.UserTools.VaultAccess request) {
       return blockingUnaryCall(
           getChannel(), getVaultMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Client-streaming gRPC method 3: Interest Calculator
+     * </pre>
+     */
+    public eBankingServices.UserTools.CalcResponse interestCalc(eBankingServices.UserTools.CalcRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getInterestCalcMethod(), getCallOptions(), request);
     }
   }
 
@@ -316,11 +326,22 @@ public final class UserToolsGrpc {
       return futureUnaryCall(
           getChannel().newCall(getVaultMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * Client-streaming gRPC method 3: Interest Calculator
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.CalcResponse> interestCalc(
+        eBankingServices.UserTools.CalcRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getInterestCalcMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_VAULT = 0;
-  private static final int METHODID_HELP_BOT = 1;
-  private static final int METHODID_INTEREST_CALC = 2;
+  private static final int METHODID_INTEREST_CALC = 1;
+  private static final int METHODID_HELP_BOT = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -343,6 +364,10 @@ public final class UserToolsGrpc {
           serviceImpl.vault((eBankingServices.UserTools.VaultAccess) request,
               (io.grpc.stub.StreamObserver<eBankingServices.UserTools.VaultConfirmation>) responseObserver);
           break;
+        case METHODID_INTEREST_CALC:
+          serviceImpl.interestCalc((eBankingServices.UserTools.CalcRequest) request,
+              (io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcResponse>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -356,9 +381,6 @@ public final class UserToolsGrpc {
         case METHODID_HELP_BOT:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.helpBot(
               (io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpResponse>) responseObserver);
-        case METHODID_INTEREST_CALC:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.interestCalc(
-              (io.grpc.stub.StreamObserver<eBankingServices.UserTools.CalcResponse>) responseObserver);
         default:
           throw new AssertionError();
       }

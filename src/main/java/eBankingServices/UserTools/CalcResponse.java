@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CalcResponse() {
-    total_ = 0;
+    interest_ = 0D;
   }
 
   @java.lang.Override
@@ -43,9 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 9: {
 
-            total_ = input.readInt32();
+            interest_ = input.readDouble();
             break;
           }
           default: {
@@ -80,13 +80,13 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.CalcResponse.class, eBankingServices.UserTools.CalcResponse.Builder.class);
   }
 
-  public static final int TOTAL_FIELD_NUMBER = 1;
-  private int total_;
+  public static final int INTEREST_FIELD_NUMBER = 1;
+  private double interest_;
   /**
-   * <code>int32 total = 1;</code>
+   * <code>double interest = 1;</code>
    */
-  public int getTotal() {
-    return total_;
+  public double getInterest() {
+    return interest_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -103,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (total_ != 0) {
-      output.writeInt32(1, total_);
+    if (interest_ != 0D) {
+      output.writeDouble(1, interest_);
     }
     unknownFields.writeTo(output);
   }
@@ -115,9 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (total_ != 0) {
+    if (interest_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, total_);
+        .computeDoubleSize(1, interest_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -135,8 +135,10 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.CalcResponse other = (eBankingServices.UserTools.CalcResponse) obj;
 
     boolean result = true;
-    result = result && (getTotal()
-        == other.getTotal());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getInterest())
+        == java.lang.Double.doubleToLongBits(
+            other.getInterest()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -148,8 +150,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TOTAL_FIELD_NUMBER;
-    hash = (53 * hash) + getTotal();
+    hash = (37 * hash) + INTEREST_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getInterest()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -283,7 +286,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      total_ = 0;
+      interest_ = 0D;
 
       return this;
     }
@@ -311,7 +314,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.CalcResponse buildPartial() {
       eBankingServices.UserTools.CalcResponse result = new eBankingServices.UserTools.CalcResponse(this);
-      result.total_ = total_;
+      result.interest_ = interest_;
       onBuilt();
       return result;
     }
@@ -360,8 +363,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.CalcResponse other) {
       if (other == eBankingServices.UserTools.CalcResponse.getDefaultInstance()) return this;
-      if (other.getTotal() != 0) {
-        setTotal(other.getTotal());
+      if (other.getInterest() != 0D) {
+        setInterest(other.getInterest());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -392,28 +395,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int total_ ;
+    private double interest_ ;
     /**
-     * <code>int32 total = 1;</code>
+     * <code>double interest = 1;</code>
      */
-    public int getTotal() {
-      return total_;
+    public double getInterest() {
+      return interest_;
     }
     /**
-     * <code>int32 total = 1;</code>
+     * <code>double interest = 1;</code>
      */
-    public Builder setTotal(int value) {
+    public Builder setInterest(double value) {
       
-      total_ = value;
+      interest_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 total = 1;</code>
+     * <code>double interest = 1;</code>
      */
-    public Builder clearTotal() {
+    public Builder clearInterest() {
       
-      total_ = 0;
+      interest_ = 0D;
       onChanged();
       return this;
     }

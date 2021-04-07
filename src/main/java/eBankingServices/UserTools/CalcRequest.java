@@ -20,8 +20,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CalcRequest() {
-    sum_ = 0;
-    interestRate_ = 0;
+    accType_ = "";
+    sum_ = 0D;
+    access_ = "";
   }
 
   @java.lang.Override
@@ -48,14 +49,21 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            sum_ = input.readInt32();
+            accType_ = s;
             break;
           }
-          case 16: {
+          case 17: {
 
-            interestRate_ = input.readInt32();
+            sum_ = input.readDouble();
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            access_ = s;
             break;
           }
           default: {
@@ -90,22 +98,81 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.CalcRequest.class, eBankingServices.UserTools.CalcRequest.Builder.class);
   }
 
-  public static final int SUM_FIELD_NUMBER = 1;
-  private int sum_;
+  public static final int ACCTYPE_FIELD_NUMBER = 1;
+  private volatile java.lang.Object accType_;
   /**
-   * <code>int32 sum = 1;</code>
+   * <code>string accType = 1;</code>
    */
-  public int getSum() {
+  public java.lang.String getAccType() {
+    java.lang.Object ref = accType_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      accType_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string accType = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAccTypeBytes() {
+    java.lang.Object ref = accType_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      accType_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SUM_FIELD_NUMBER = 2;
+  private double sum_;
+  /**
+   * <code>double sum = 2;</code>
+   */
+  public double getSum() {
     return sum_;
   }
 
-  public static final int INTERESTRATE_FIELD_NUMBER = 2;
-  private int interestRate_;
+  public static final int ACCESS_FIELD_NUMBER = 3;
+  private volatile java.lang.Object access_;
   /**
-   * <code>int32 interestRate = 2;</code>
+   * <code>string access = 3;</code>
    */
-  public int getInterestRate() {
-    return interestRate_;
+  public java.lang.String getAccess() {
+    java.lang.Object ref = access_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      access_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string access = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAccessBytes() {
+    java.lang.Object ref = access_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      access_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -122,11 +189,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (sum_ != 0) {
-      output.writeInt32(1, sum_);
+    if (!getAccTypeBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accType_);
     }
-    if (interestRate_ != 0) {
-      output.writeInt32(2, interestRate_);
+    if (sum_ != 0D) {
+      output.writeDouble(2, sum_);
+    }
+    if (!getAccessBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, access_);
     }
     unknownFields.writeTo(output);
   }
@@ -137,13 +207,15 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (sum_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, sum_);
+    if (!getAccTypeBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, accType_);
     }
-    if (interestRate_ != 0) {
+    if (sum_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, interestRate_);
+        .computeDoubleSize(2, sum_);
+    }
+    if (!getAccessBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, access_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -161,10 +233,14 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.CalcRequest other = (eBankingServices.UserTools.CalcRequest) obj;
 
     boolean result = true;
-    result = result && (getSum()
-        == other.getSum());
-    result = result && (getInterestRate()
-        == other.getInterestRate());
+    result = result && getAccType()
+        .equals(other.getAccType());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getSum())
+        == java.lang.Double.doubleToLongBits(
+            other.getSum()));
+    result = result && getAccess()
+        .equals(other.getAccess());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -176,10 +252,13 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + ACCTYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getAccType().hashCode();
     hash = (37 * hash) + SUM_FIELD_NUMBER;
-    hash = (53 * hash) + getSum();
-    hash = (37 * hash) + INTERESTRATE_FIELD_NUMBER;
-    hash = (53 * hash) + getInterestRate();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getSum()));
+    hash = (37 * hash) + ACCESS_FIELD_NUMBER;
+    hash = (53 * hash) + getAccess().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -317,9 +396,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      sum_ = 0;
+      accType_ = "";
 
-      interestRate_ = 0;
+      sum_ = 0D;
+
+      access_ = "";
 
       return this;
     }
@@ -347,8 +428,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.CalcRequest buildPartial() {
       eBankingServices.UserTools.CalcRequest result = new eBankingServices.UserTools.CalcRequest(this);
+      result.accType_ = accType_;
       result.sum_ = sum_;
-      result.interestRate_ = interestRate_;
+      result.access_ = access_;
       onBuilt();
       return result;
     }
@@ -397,11 +479,16 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.CalcRequest other) {
       if (other == eBankingServices.UserTools.CalcRequest.getDefaultInstance()) return this;
-      if (other.getSum() != 0) {
+      if (!other.getAccType().isEmpty()) {
+        accType_ = other.accType_;
+        onChanged();
+      }
+      if (other.getSum() != 0D) {
         setSum(other.getSum());
       }
-      if (other.getInterestRate() != 0) {
-        setInterestRate(other.getInterestRate());
+      if (!other.getAccess().isEmpty()) {
+        access_ = other.access_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -432,54 +519,166 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int sum_ ;
+    private java.lang.Object accType_ = "";
     /**
-     * <code>int32 sum = 1;</code>
+     * <code>string accType = 1;</code>
      */
-    public int getSum() {
+    public java.lang.String getAccType() {
+      java.lang.Object ref = accType_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        accType_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string accType = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAccTypeBytes() {
+      java.lang.Object ref = accType_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        accType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string accType = 1;</code>
+     */
+    public Builder setAccType(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      accType_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string accType = 1;</code>
+     */
+    public Builder clearAccType() {
+      
+      accType_ = getDefaultInstance().getAccType();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string accType = 1;</code>
+     */
+    public Builder setAccTypeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      accType_ = value;
+      onChanged();
+      return this;
+    }
+
+    private double sum_ ;
+    /**
+     * <code>double sum = 2;</code>
+     */
+    public double getSum() {
       return sum_;
     }
     /**
-     * <code>int32 sum = 1;</code>
+     * <code>double sum = 2;</code>
      */
-    public Builder setSum(int value) {
+    public Builder setSum(double value) {
       
       sum_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 sum = 1;</code>
+     * <code>double sum = 2;</code>
      */
     public Builder clearSum() {
       
-      sum_ = 0;
+      sum_ = 0D;
       onChanged();
       return this;
     }
 
-    private int interestRate_ ;
+    private java.lang.Object access_ = "";
     /**
-     * <code>int32 interestRate = 2;</code>
+     * <code>string access = 3;</code>
      */
-    public int getInterestRate() {
-      return interestRate_;
+    public java.lang.String getAccess() {
+      java.lang.Object ref = access_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        access_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>int32 interestRate = 2;</code>
+     * <code>string access = 3;</code>
      */
-    public Builder setInterestRate(int value) {
-      
-      interestRate_ = value;
+    public com.google.protobuf.ByteString
+        getAccessBytes() {
+      java.lang.Object ref = access_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        access_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string access = 3;</code>
+     */
+    public Builder setAccess(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      access_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 interestRate = 2;</code>
+     * <code>string access = 3;</code>
      */
-    public Builder clearInterestRate() {
+    public Builder clearAccess() {
       
-      interestRate_ = 0;
+      access_ = getDefaultInstance().getAccess();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string access = 3;</code>
+     */
+    public Builder setAccessBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      access_ = value;
       onChanged();
       return this;
     }

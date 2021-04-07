@@ -7,12 +7,6 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
-import eBankingServices.UserAccount.LoginRequest;
-import eBankingServices.UserAccount.LoginConfirmation;
-import eBankingServices.UserAccount.ViewRequest;
-import eBankingServices.UserAccount.AccountInfo;
-import eBankingServices.UserAccount.PasswordRequest;
-import eBankingServices.UserAccount.PasswordConfirmation;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountBlockingStub;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountStub;
 import java.util.Scanner;
@@ -32,18 +26,18 @@ public class UserAccountClient {
 				.usePlaintext()
 				.build();
 		
-		//stubs -- generate from .proto
+		//stubs -- generated from .proto file
 		blockingStub = UserAccountGrpc.newBlockingStub(channel);
 		asyncStub = UserAccountGrpc.newStub(channel);
 		
-		// call methods in transactions client class
+		// call methods 
 		login();
 		viewAccount();
 		changePassword();
 	}
 	
 	
-// Login - Unary gRPC
+// Login method - Unary
 	
 	public static void login() {
 		
@@ -68,7 +62,7 @@ public class UserAccountClient {
 	}
 	     
 
-//  View Account Info - Server-streaming gRPC
+//  View Account Info method - Server-streaming
 	
 	public static void viewAccount() {
 		
@@ -120,8 +114,7 @@ public class UserAccountClient {
 	}
 	
 	  
-// Change Password - Unary gRPC
-	
+// Change Password method - Unary
 	public static void changePassword() {
 		
 		Scanner in = new Scanner(System.in);

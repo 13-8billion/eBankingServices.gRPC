@@ -8,13 +8,13 @@ package UserTools;
 
 service UserTools {
   
-  // Bi-directional streaming gRPC method 1: Help Bot
+  // Bi-directional streaming RPC method 1: Help Bot
   rpc HelpBot(stream HelpRequest) returns (stream HelpResponse) {}
   
-  // Unary gRPC method 2: Vaults
+  // Unary RPC method 2: Vaults
   rpc Vault(VaultAccess) returns (VaultConfirmation) {}
   
-  // Client-streaming gRPC method 3: Interest Calculator
+  // Client-streaming RPC method 3: Interest Calculator
   rpc InterestCalc(CalcRequest) returns (CalcResponse) {}
     
 }

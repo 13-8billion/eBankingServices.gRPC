@@ -3,9 +3,6 @@ package eBankingServices.UserTools;
 import java.util.Random;
 import java.util.Scanner;
 
-//import eBankingServices.Transactions.RequestStatus;
-//import eBankingServices.Transactions.RequestSum;
-//import eBankingServices.UserTools.UserToolsGrpc;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsBlockingStub;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsStub;
 import io.grpc.ManagedChannel;
@@ -25,17 +22,17 @@ public class UserToolsClient {
 				.usePlaintext()
 				.build();
 		
-		//stubs -- generate from .proto
+		//stubs -- generated from .proto file
 		blockingStub = UserToolsGrpc.newBlockingStub(channel);
 		asyncStub = UserToolsGrpc.newStub(channel);
 		
-		// call methods in transactions client class
-//		helpBot();
-//		vault();
+		// call methods 
+		helpBot();
+		vault();
 		interestCalc();
 	}
 	
-// HelpBot method - Bi-directional streaming gRPC
+// HelpBot method - Bi-directional streaming
 	public static void helpBot() {
 
 		StreamObserver<HelpResponse> responseObserver = new StreamObserver<HelpResponse>() {
@@ -109,7 +106,7 @@ public class UserToolsClient {
 
 	}
 	
-// Vault method - Unary gRPC
+// Vault method - Unary
 
 	public static void vault() {
 		
@@ -144,7 +141,7 @@ public class UserToolsClient {
 		System.out.println(response);
 	}
 	
-// Interest calculator method - Unary gRPC
+// Interest calculator method - Unary
 	
 	public static void interestCalc() {
 		
@@ -166,7 +163,7 @@ public class UserToolsClient {
 				.setSum(sum)
 				.build());
 
-		System.out.println("Total payable" + response + " euro");
+		System.out.println("Total payable " + response + "euro");
 	}
 	
 }

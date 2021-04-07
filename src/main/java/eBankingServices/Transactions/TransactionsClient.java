@@ -7,18 +7,9 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
-import eBankingServices.Transactions.TransactionsGrpc;
-import eBankingServices.Transactions.DepositConfirmation;
-import eBankingServices.Transactions.DepositSum;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
-import eBankingServices.Transactions.RequestSum;
-import eBankingServices.Transactions.RequestStatus;
-import eBankingServices.Transactions.TransferConfirmation;
-import eBankingServices.Transactions.TransferSum;
-
 import java.util.Random;
-import java.util.Scanner;
 
 
 public class TransactionsClient {
@@ -30,22 +21,22 @@ public class TransactionsClient {
 	public static void main(String args[]) throws InterruptedException {
 		
 		final ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("localhost", 50051)
+				.forAddress("localhost", 50054)
 				.usePlaintext()
 				.build();
 		
-		//stubs -- generate from .proto
+		//stubs -- generated from .proto files
 		blockingStub = TransactionsGrpc.newBlockingStub(channel);
 		asyncStub = TransactionsGrpc.newStub(channel);
 		
-		// call methods in transactions client class
+		// call methods
 		deposit();
 		transfer();
 		request();
 	}
 	
 	
-// Unary RPC - Deposit money into account
+// Deposit money into account method - Unary RPC
 	
 	public static void deposit() {
 		
@@ -73,7 +64,7 @@ public class TransactionsClient {
 	}
 	     
 
-// Client-streaming RPC - Transfer money between accounts
+// Transfer money between accounts method - Client-streaming RPC
 	
 	    public static void transfer() {  	
 	  
@@ -130,6 +121,8 @@ public class TransactionsClient {
 			}			
 	    };
 	    
+
+// Request money method - Bi-directional streaming 
 	    
 	    public static void request() {
 

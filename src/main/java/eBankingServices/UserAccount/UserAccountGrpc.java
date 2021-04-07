@@ -152,7 +152,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Login/Logout
+     * Unary RPC method 1: Login/Logout
      * </pre>
      */
     public void login(eBankingServices.UserAccount.LoginRequest request,
@@ -162,7 +162,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Server-Streaming gRPC method 2: View Account
+     * Server-Streaming RPC method 2: View Account
      * </pre>
      */
     public void viewAccount(eBankingServices.UserAccount.ViewRequest request,
@@ -172,7 +172,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 3: Change Password
+     * Unary RPC method 3: Change Password
      * </pre>
      */
     public void changePassword(eBankingServices.UserAccount.PasswordRequest request,
@@ -227,7 +227,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Login/Logout
+     * Unary RPC method 1: Login/Logout
      * </pre>
      */
     public void login(eBankingServices.UserAccount.LoginRequest request,
@@ -238,7 +238,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Server-Streaming gRPC method 2: View Account
+     * Server-Streaming RPC method 2: View Account
      * </pre>
      */
     public void viewAccount(eBankingServices.UserAccount.ViewRequest request,
@@ -249,7 +249,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 3: Change Password
+     * Unary RPC method 3: Change Password
      * </pre>
      */
     public void changePassword(eBankingServices.UserAccount.PasswordRequest request,
@@ -279,7 +279,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Login/Logout
+     * Unary RPC method 1: Login/Logout
      * </pre>
      */
     public eBankingServices.UserAccount.LoginConfirmation login(eBankingServices.UserAccount.LoginRequest request) {
@@ -289,7 +289,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Server-Streaming gRPC method 2: View Account
+     * Server-Streaming RPC method 2: View Account
      * </pre>
      */
     public java.util.Iterator<eBankingServices.UserAccount.AccountInfo> viewAccount(
@@ -300,7 +300,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 3: Change Password
+     * Unary RPC method 3: Change Password
      * </pre>
      */
     public eBankingServices.UserAccount.PasswordConfirmation changePassword(eBankingServices.UserAccount.PasswordRequest request) {
@@ -329,7 +329,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Login/Logout
+     * Unary RPC method 1: Login/Logout
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserAccount.LoginConfirmation> login(
@@ -340,7 +340,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 3: Change Password
+     * Unary RPC method 3: Change Password
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserAccount.PasswordConfirmation> changePassword(

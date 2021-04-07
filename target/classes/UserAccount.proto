@@ -8,13 +8,13 @@ package UserAccount;
 
 service UserAccount {
   
-  // Unary gRPC method 1: Login/Logout
+  // Unary RPC method 1: Login/Logout
   rpc Login(LoginRequest) returns (LoginConfirmation) {}
   
-  // Server-Streaming gRPC method 2: View Account
+  // Server-Streaming RPC method 2: View Account
   rpc ViewAccount(ViewRequest) returns (stream AccountInfo) {}
   
-  // Unary gRPC method 3: Change Password
+  // Unary RPC method 3: Change Password
   rpc ChangePassword(PasswordRequest) returns (PasswordConfirmation) {}
     
 }

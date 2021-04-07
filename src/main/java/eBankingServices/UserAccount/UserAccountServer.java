@@ -1,18 +1,19 @@
 package eBankingServices.UserAccount;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Properties;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import eBankingServices.UserAccount.UserAccountGrpc.UserAccountImplBase;
-import eBankingServices.UserAccount.LoginRequest;
-import eBankingServices.UserAccount.LoginConfirmation;
-import eBankingServices.UserAccount.ViewRequest;
-import eBankingServices.UserAccount.AccountInfo;
-import eBankingServices.UserAccount.PasswordRequest;
-import eBankingServices.UserAccount.PasswordConfirmation;
 
 
 public class UserAccountServer extends UserAccountImplBase {
@@ -22,20 +23,100 @@ public class UserAccountServer extends UserAccountImplBase {
 
 		// initiate server
 		UserAccountServer userAccounts = new UserAccountServer();
+		
+		Properties prop = userAccounts.getProperties();
+		
+		// register the service 
+		userAccounts.registerService(prop);
 
-		int port = 50052;
+		int port = Integer.valueOf( prop.getProperty("service_port") );
+		
+		try {
+			
+			Server server = ServerBuilder.forPort(port).addService(userAccounts)
+					.build()
+					.start();
+	
+			System.out.println("User Account server started, listening on " + port);
+	
+			server.awaitTermination();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+// register service method
+	
+private void registerService(Properties prop) {
+		
+	try {
+        // Create a JmDNS instance
+        JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+        
+        String service_type = prop.getProperty("service_type");
+        String service_name = prop.getProperty("service_name")  ;
 
-		Server server = ServerBuilder.forPort(port).addService(userAccounts)
-				.build()
-				.start();
+        int service_port = Integer.valueOf( prop.getProperty("service_port") );
+        
+        String service_description_properties = prop.getProperty("service_description");
+        
+        // Register a service
+        ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_description_properties);
+        jmdns.registerService(serviceInfo);
+        
+        System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+        
+        // Wait a bit
+        Thread.sleep(1000);
 
-		System.out.println("User Account server started, listening on " + port);
+        // Unregister all services
+        //jmdns.unregisterAllServices();
 
-		server.awaitTermination();
+    } catch (IOException e) {
+        System.out.println(e.getMessage());
+    } catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
+
+//get service properties method
+
+private Properties getProperties() {
+		
+	Properties prop = null;		
 	
-// Login - Unary gRPC
+	 try (InputStream input = new FileInputStream("src/main/resources/UserAccount.properties")) {
+
+          prop = new Properties();
+
+          // load a properties file
+          prop.load(input);
+
+          // get the property value and print it out
+          System.out.println("User Account Service properies ...");
+          System.out.println("\t service_type: " + prop.getProperty("service_type"));
+          System.out.println("\t service_name: " +prop.getProperty("service_name"));
+          System.out.println("\t service_description: " +prop.getProperty("service_description"));
+	       System.out.println("\t service_port: " +prop.getProperty("service_port"));
+
+      } catch (IOException ex) {
+          ex.printStackTrace();
+      }
+
+	 return prop;
+	}
+
+
+// Login method - Unary
 
 	public void login(LoginRequest request, StreamObserver<LoginConfirmation> responseObserver) {
 		
@@ -59,7 +140,7 @@ public class UserAccountServer extends UserAccountImplBase {
 	}
 
 	
-// View Account Info - Server-streaming gRPC
+// View Account Info method - Server-streaming
 	
 	public void viewAccount(ViewRequest request, StreamObserver<AccountInfo> responseObserver) {
 			
@@ -94,7 +175,7 @@ public class UserAccountServer extends UserAccountImplBase {
 	}
 
 	
-// Change Password - Unary gRPC
+// Change Password method - Unary
 
 	public void changePassword(PasswordRequest request, StreamObserver<PasswordConfirmation> responseObserver) {
 		

@@ -152,7 +152,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Bi-directional streaming gRPC method 1: Help Bot
+     * Bi-directional streaming RPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
@@ -162,7 +162,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 2: Vaults
+     * Unary RPC method 2: Vaults
      * </pre>
      */
     public void vault(eBankingServices.UserTools.VaultAccess request,
@@ -172,7 +172,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 3: Interest Calculator
+     * Client-streaming RPC method 3: Interest Calculator
      * </pre>
      */
     public void interestCalc(eBankingServices.UserTools.CalcRequest request,
@@ -227,7 +227,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Bi-directional streaming gRPC method 1: Help Bot
+     * Bi-directional streaming RPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
@@ -238,7 +238,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 2: Vaults
+     * Unary RPC method 2: Vaults
      * </pre>
      */
     public void vault(eBankingServices.UserTools.VaultAccess request,
@@ -249,7 +249,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 3: Interest Calculator
+     * Client-streaming RPC method 3: Interest Calculator
      * </pre>
      */
     public void interestCalc(eBankingServices.UserTools.CalcRequest request,
@@ -279,7 +279,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 2: Vaults
+     * Unary RPC method 2: Vaults
      * </pre>
      */
     public eBankingServices.UserTools.VaultConfirmation vault(eBankingServices.UserTools.VaultAccess request) {
@@ -289,7 +289,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 3: Interest Calculator
+     * Client-streaming RPC method 3: Interest Calculator
      * </pre>
      */
     public eBankingServices.UserTools.CalcResponse interestCalc(eBankingServices.UserTools.CalcRequest request) {
@@ -318,7 +318,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 2: Vaults
+     * Unary RPC method 2: Vaults
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.VaultConfirmation> vault(
@@ -329,7 +329,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 3: Interest Calculator
+     * Client-streaming RPC method 3: Interest Calculator
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.CalcResponse> interestCalc(

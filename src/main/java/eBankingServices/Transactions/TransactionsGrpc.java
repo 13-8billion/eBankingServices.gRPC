@@ -152,7 +152,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Deposit
+     * Unary RPC method 1: Deposit
      * </pre>
      */
     public void deposit(eBankingServices.Transactions.DepositSum request,
@@ -162,7 +162,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Client-Streaming gRPC method 2: Transfer
+     * Client-Streaming RPC method 2: Transfer
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(
@@ -172,7 +172,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Bi-Directional gRPC method 3: Request
+     * Bi-Directional RPC method 3: Request
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.RequestSum> request(
@@ -227,7 +227,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Deposit
+     * Unary RPC method 1: Deposit
      * </pre>
      */
     public void deposit(eBankingServices.Transactions.DepositSum request,
@@ -238,7 +238,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Client-Streaming gRPC method 2: Transfer
+     * Client-Streaming RPC method 2: Transfer
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(
@@ -249,7 +249,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Bi-Directional gRPC method 3: Request
+     * Bi-Directional RPC method 3: Request
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.RequestSum> request(
@@ -279,7 +279,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Deposit
+     * Unary RPC method 1: Deposit
      * </pre>
      */
     public eBankingServices.Transactions.DepositConfirmation deposit(eBankingServices.Transactions.DepositSum request) {
@@ -308,7 +308,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Unary gRPC method 1: Deposit
+     * Unary RPC method 1: Deposit
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.Transactions.DepositConfirmation> deposit(

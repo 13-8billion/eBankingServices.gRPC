@@ -8,11 +8,11 @@ package UserTools;
 
 service UserTools {
   
-  // Client-streaming gRPC method 1: Help Bot
-  rpc HelpBot(stream HelpRequest) returns (HelpResponse) {}
+  // Bi-directional streaming gRPC method 1: Help Bot
+  rpc HelpBot(stream HelpRequest) returns (stream HelpResponse) {}
   
   // Unary gRPC method 2: Vaults
-  rpc Vault(ValutAccess) returns (VaultConfirmation) {}
+  rpc Vault(VaultAccess) returns (VaultConfirmation) {}
   
   // Client-streaming gRPC method 3: Interest Calculator
   rpc InterestCalc(stream CalcRequest) returns (CalcResponse) {}
@@ -21,15 +21,24 @@ service UserTools {
 
 // help bot message
 message HelpRequest {
-  int32 problemID = 1;  
+  int32 problemID = 1; 
+  
+    enum Solutions{
+
+  	PASSWORD_RESET =0;
+  	REPORT_BUG=1;
+  	VAULTS=2;
+  	PAYMENTS=3;
+  }
+  Solutions solutions = 2;
 }
 
 message HelpResponse {
   string solution = 1;
-}
-
+  }
+  
 // valut message
-message ValutAccess {
+message VaultAccess {
   string accNo = 1;  
   string sum = 2;
   string unlockDate = 3;
@@ -37,7 +46,7 @@ message ValutAccess {
 
 message VaultConfirmation {
   int32 vaultID = 1;
-  string valutConf = 2;
+  string vaultConf = 2;
 }
 
 // interest calculator message

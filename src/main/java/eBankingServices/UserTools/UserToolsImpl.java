@@ -25,10 +25,10 @@ public final class UserToolsImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_UserTools_HelpResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_UserTools_ValutAccess_descriptor;
+    internal_static_UserTools_VaultAccess_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_UserTools_ValutAccess_fieldAccessorTable;
+      internal_static_UserTools_VaultAccess_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_UserTools_VaultConfirmation_descriptor;
   static final 
@@ -53,21 +53,24 @@ public final class UserToolsImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017UserTools.proto\022\tUserTools\" \n\013HelpRequ" +
-      "est\022\021\n\tproblemID\030\001 \001(\005\" \n\014HelpResponse\022\020" +
-      "\n\010solution\030\001 \001(\t\"=\n\013ValutAccess\022\r\n\005accNo" +
-      "\030\001 \001(\t\022\013\n\003sum\030\002 \001(\t\022\022\n\nunlockDate\030\003 \001(\t\"" +
-      "7\n\021VaultConfirmation\022\017\n\007vaultID\030\001 \001(\005\022\021\n" +
-      "\tvalutConf\030\002 \001(\t\"0\n\013CalcRequest\022\013\n\003sum\030\001" +
-      " \001(\005\022\024\n\014interestRate\030\002 \001(\005\"\035\n\014CalcRespon" +
-      "se\022\r\n\005total\030\001 \001(\0052\321\001\n\tUserTools\022>\n\007HelpB" +
-      "ot\022\026.UserTools.HelpRequest\032\027.UserTools.H" +
-      "elpResponse\"\000(\001\022?\n\005Vault\022\026.UserTools.Val" +
-      "utAccess\032\034.UserTools.VaultConfirmation\"\000" +
-      "\022C\n\014InterestCalc\022\026.UserTools.CalcRequest" +
-      "\032\027.UserTools.CalcResponse\"\000(\001B-\n\032eBankin" +
-      "gServices.UserToolsB\rUserToolsImplP\001b\006pr" +
-      "oto3"
+      "\n\017UserTools.proto\022\tUserTools\"\240\001\n\013HelpReq" +
+      "uest\022\021\n\tproblemID\030\001 \001(\005\0223\n\tsolutions\030\002 \001" +
+      "(\0162 .UserTools.HelpRequest.Solutions\"I\n\t" +
+      "Solutions\022\022\n\016PASSWORD_RESET\020\000\022\016\n\nREPORT_" +
+      "BUG\020\001\022\n\n\006VAULTS\020\002\022\014\n\010PAYMENTS\020\003\" \n\014HelpR" +
+      "esponse\022\020\n\010solution\030\001 \001(\t\"=\n\013VaultAccess" +
+      "\022\r\n\005accNo\030\001 \001(\t\022\013\n\003sum\030\002 \001(\t\022\022\n\nunlockDa" +
+      "te\030\003 \001(\t\"7\n\021VaultConfirmation\022\017\n\007vaultID" +
+      "\030\001 \001(\005\022\021\n\tvaultConf\030\002 \001(\t\"0\n\013CalcRequest" +
+      "\022\013\n\003sum\030\001 \001(\005\022\024\n\014interestRate\030\002 \001(\005\"\035\n\014C" +
+      "alcResponse\022\r\n\005total\030\001 \001(\0052\323\001\n\tUserTools" +
+      "\022@\n\007HelpBot\022\026.UserTools.HelpRequest\032\027.Us" +
+      "erTools.HelpResponse\"\000(\0010\001\022?\n\005Vault\022\026.Us" +
+      "erTools.VaultAccess\032\034.UserTools.VaultCon" +
+      "firmation\"\000\022C\n\014InterestCalc\022\026.UserTools." +
+      "CalcRequest\032\027.UserTools.CalcResponse\"\000(\001" +
+      "B-\n\032eBankingServices.UserToolsB\rUserTool" +
+      "sImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -86,25 +89,25 @@ public final class UserToolsImpl {
     internal_static_UserTools_HelpRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_HelpRequest_descriptor,
-        new java.lang.String[] { "ProblemID", });
+        new java.lang.String[] { "ProblemID", "Solutions", });
     internal_static_UserTools_HelpResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_UserTools_HelpResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_HelpResponse_descriptor,
         new java.lang.String[] { "Solution", });
-    internal_static_UserTools_ValutAccess_descriptor =
+    internal_static_UserTools_VaultAccess_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_UserTools_ValutAccess_fieldAccessorTable = new
+    internal_static_UserTools_VaultAccess_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_UserTools_ValutAccess_descriptor,
+        internal_static_UserTools_VaultAccess_descriptor,
         new java.lang.String[] { "AccNo", "Sum", "UnlockDate", });
     internal_static_UserTools_VaultConfirmation_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_UserTools_VaultConfirmation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_VaultConfirmation_descriptor,
-        new java.lang.String[] { "VaultID", "ValutConf", });
+        new java.lang.String[] { "VaultID", "VaultConf", });
     internal_static_UserTools_CalcRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_UserTools_CalcRequest_fieldAccessorTable = new

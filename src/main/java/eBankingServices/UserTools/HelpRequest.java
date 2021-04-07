@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
   }
   private HelpRequest() {
     problemID_ = 0;
+    solutions_ = 0;
   }
 
   @java.lang.Override
@@ -50,6 +51,12 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             problemID_ = input.readInt32();
+            break;
+          }
+          case 16: {
+            int rawValue = input.readEnum();
+
+            solutions_ = rawValue;
             break;
           }
           default: {
@@ -84,6 +91,122 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.HelpRequest.class, eBankingServices.UserTools.HelpRequest.Builder.class);
   }
 
+  /**
+   * Protobuf enum {@code UserTools.HelpRequest.Solutions}
+   */
+  public enum Solutions
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>PASSWORD_RESET = 0;</code>
+     */
+    PASSWORD_RESET(0),
+    /**
+     * <code>REPORT_BUG = 1;</code>
+     */
+    REPORT_BUG(1),
+    /**
+     * <code>VAULTS = 2;</code>
+     */
+    VAULTS(2),
+    /**
+     * <code>PAYMENTS = 3;</code>
+     */
+    PAYMENTS(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>PASSWORD_RESET = 0;</code>
+     */
+    public static final int PASSWORD_RESET_VALUE = 0;
+    /**
+     * <code>REPORT_BUG = 1;</code>
+     */
+    public static final int REPORT_BUG_VALUE = 1;
+    /**
+     * <code>VAULTS = 2;</code>
+     */
+    public static final int VAULTS_VALUE = 2;
+    /**
+     * <code>PAYMENTS = 3;</code>
+     */
+    public static final int PAYMENTS_VALUE = 3;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Solutions valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Solutions forNumber(int value) {
+      switch (value) {
+        case 0: return PASSWORD_RESET;
+        case 1: return REPORT_BUG;
+        case 2: return VAULTS;
+        case 3: return PAYMENTS;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Solutions>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Solutions> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Solutions>() {
+            public Solutions findValueByNumber(int number) {
+              return Solutions.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return eBankingServices.UserTools.HelpRequest.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Solutions[] VALUES = values();
+
+    public static Solutions valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Solutions(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:UserTools.HelpRequest.Solutions)
+  }
+
   public static final int PROBLEMID_FIELD_NUMBER = 1;
   private int problemID_;
   /**
@@ -91,6 +214,23 @@ private static final long serialVersionUID = 0L;
    */
   public int getProblemID() {
     return problemID_;
+  }
+
+  public static final int SOLUTIONS_FIELD_NUMBER = 2;
+  private int solutions_;
+  /**
+   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   */
+  public int getSolutionsValue() {
+    return solutions_;
+  }
+  /**
+   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   */
+  public eBankingServices.UserTools.HelpRequest.Solutions getSolutions() {
+    @SuppressWarnings("deprecation")
+    eBankingServices.UserTools.HelpRequest.Solutions result = eBankingServices.UserTools.HelpRequest.Solutions.valueOf(solutions_);
+    return result == null ? eBankingServices.UserTools.HelpRequest.Solutions.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -110,6 +250,9 @@ private static final long serialVersionUID = 0L;
     if (problemID_ != 0) {
       output.writeInt32(1, problemID_);
     }
+    if (solutions_ != eBankingServices.UserTools.HelpRequest.Solutions.PASSWORD_RESET.getNumber()) {
+      output.writeEnum(2, solutions_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -122,6 +265,10 @@ private static final long serialVersionUID = 0L;
     if (problemID_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, problemID_);
+    }
+    if (solutions_ != eBankingServices.UserTools.HelpRequest.Solutions.PASSWORD_RESET.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(2, solutions_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -141,6 +288,7 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getProblemID()
         == other.getProblemID());
+    result = result && solutions_ == other.solutions_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -154,6 +302,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PROBLEMID_FIELD_NUMBER;
     hash = (53 * hash) + getProblemID();
+    hash = (37 * hash) + SOLUTIONS_FIELD_NUMBER;
+    hash = (53 * hash) + solutions_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -293,6 +443,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       problemID_ = 0;
 
+      solutions_ = 0;
+
       return this;
     }
 
@@ -320,6 +472,7 @@ private static final long serialVersionUID = 0L;
     public eBankingServices.UserTools.HelpRequest buildPartial() {
       eBankingServices.UserTools.HelpRequest result = new eBankingServices.UserTools.HelpRequest(this);
       result.problemID_ = problemID_;
+      result.solutions_ = solutions_;
       onBuilt();
       return result;
     }
@@ -370,6 +523,9 @@ private static final long serialVersionUID = 0L;
       if (other == eBankingServices.UserTools.HelpRequest.getDefaultInstance()) return this;
       if (other.getProblemID() != 0) {
         setProblemID(other.getProblemID());
+      }
+      if (other.solutions_ != 0) {
+        setSolutionsValue(other.getSolutionsValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -422,6 +578,51 @@ private static final long serialVersionUID = 0L;
     public Builder clearProblemID() {
       
       problemID_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int solutions_ = 0;
+    /**
+     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     */
+    public int getSolutionsValue() {
+      return solutions_;
+    }
+    /**
+     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     */
+    public Builder setSolutionsValue(int value) {
+      solutions_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     */
+    public eBankingServices.UserTools.HelpRequest.Solutions getSolutions() {
+      @SuppressWarnings("deprecation")
+      eBankingServices.UserTools.HelpRequest.Solutions result = eBankingServices.UserTools.HelpRequest.Solutions.valueOf(solutions_);
+      return result == null ? eBankingServices.UserTools.HelpRequest.Solutions.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     */
+    public Builder setSolutions(eBankingServices.UserTools.HelpRequest.Solutions value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      solutions_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     */
+    public Builder clearSolutions() {
+      
+      solutions_ = 0;
       onChanged();
       return this;
     }

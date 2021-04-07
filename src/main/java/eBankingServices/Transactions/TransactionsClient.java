@@ -164,18 +164,21 @@ public class TransactionsClient {
 						.setFromAccNo(1)
 						.setToAccNo(2)
 						.build());
+				Thread.sleep(500);
 				
 				requestObserver.onNext(RequestSum.newBuilder()
 						.setSum(20)
 						.setFromAccNo(2)
 						.setToAccNo(1)
 						.build());
+				Thread.sleep(500);
 				
 				requestObserver.onNext(RequestSum.newBuilder()
 						.setSum(30)
 						.setFromAccNo(2)
 						.setToAccNo(1)
 						.build());
+				Thread.sleep(500);
 
 				// Mark the end of requests
 				requestObserver.onCompleted();

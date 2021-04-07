@@ -11,4 +11,13 @@ public interface HelpRequestOrBuilder extends
    * <code>int32 problemID = 1;</code>
    */
   int getProblemID();
+
+  /**
+   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   */
+  int getSolutionsValue();
+  /**
+   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   */
+  eBankingServices.UserTools.HelpRequest.Solutions getSolutions();
 }

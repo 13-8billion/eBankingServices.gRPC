@@ -34,7 +34,7 @@ public final class UserToolsGrpc {
       fullMethodName = SERVICE_NAME + '/' + "HelpBot",
       requestType = eBankingServices.UserTools.HelpRequest.class,
       responseType = eBankingServices.UserTools.HelpResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
   public static io.grpc.MethodDescriptor<eBankingServices.UserTools.HelpRequest,
       eBankingServices.UserTools.HelpResponse> getHelpBotMethod() {
     io.grpc.MethodDescriptor<eBankingServices.UserTools.HelpRequest, eBankingServices.UserTools.HelpResponse> getHelpBotMethod;
@@ -43,7 +43,7 @@ public final class UserToolsGrpc {
         if ((getHelpBotMethod = UserToolsGrpc.getHelpBotMethod) == null) {
           UserToolsGrpc.getHelpBotMethod = getHelpBotMethod = 
               io.grpc.MethodDescriptor.<eBankingServices.UserTools.HelpRequest, eBankingServices.UserTools.HelpResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "UserTools.UserTools", "HelpBot"))
               .setSampledToLocalTracing(true)
@@ -59,28 +59,28 @@ public final class UserToolsGrpc {
      return getHelpBotMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<eBankingServices.UserTools.ValutAccess,
+  private static volatile io.grpc.MethodDescriptor<eBankingServices.UserTools.VaultAccess,
       eBankingServices.UserTools.VaultConfirmation> getVaultMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "Vault",
-      requestType = eBankingServices.UserTools.ValutAccess.class,
+      requestType = eBankingServices.UserTools.VaultAccess.class,
       responseType = eBankingServices.UserTools.VaultConfirmation.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<eBankingServices.UserTools.ValutAccess,
+  public static io.grpc.MethodDescriptor<eBankingServices.UserTools.VaultAccess,
       eBankingServices.UserTools.VaultConfirmation> getVaultMethod() {
-    io.grpc.MethodDescriptor<eBankingServices.UserTools.ValutAccess, eBankingServices.UserTools.VaultConfirmation> getVaultMethod;
+    io.grpc.MethodDescriptor<eBankingServices.UserTools.VaultAccess, eBankingServices.UserTools.VaultConfirmation> getVaultMethod;
     if ((getVaultMethod = UserToolsGrpc.getVaultMethod) == null) {
       synchronized (UserToolsGrpc.class) {
         if ((getVaultMethod = UserToolsGrpc.getVaultMethod) == null) {
           UserToolsGrpc.getVaultMethod = getVaultMethod = 
-              io.grpc.MethodDescriptor.<eBankingServices.UserTools.ValutAccess, eBankingServices.UserTools.VaultConfirmation>newBuilder()
+              io.grpc.MethodDescriptor.<eBankingServices.UserTools.VaultAccess, eBankingServices.UserTools.VaultConfirmation>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "UserTools.UserTools", "Vault"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  eBankingServices.UserTools.ValutAccess.getDefaultInstance()))
+                  eBankingServices.UserTools.VaultAccess.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   eBankingServices.UserTools.VaultConfirmation.getDefaultInstance()))
                   .setSchemaDescriptor(new UserToolsMethodDescriptorSupplier("Vault"))
@@ -152,7 +152,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 1: Help Bot
+     * Bi-directional streaming gRPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
@@ -165,7 +165,7 @@ public final class UserToolsGrpc {
      * Unary gRPC method 2: Vaults
      * </pre>
      */
-    public void vault(eBankingServices.UserTools.ValutAccess request,
+    public void vault(eBankingServices.UserTools.VaultAccess request,
         io.grpc.stub.StreamObserver<eBankingServices.UserTools.VaultConfirmation> responseObserver) {
       asyncUnimplementedUnaryCall(getVaultMethod(), responseObserver);
     }
@@ -184,7 +184,7 @@ public final class UserToolsGrpc {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getHelpBotMethod(),
-            asyncClientStreamingCall(
+            asyncBidiStreamingCall(
               new MethodHandlers<
                 eBankingServices.UserTools.HelpRequest,
                 eBankingServices.UserTools.HelpResponse>(
@@ -193,7 +193,7 @@ public final class UserToolsGrpc {
             getVaultMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                eBankingServices.UserTools.ValutAccess,
+                eBankingServices.UserTools.VaultAccess,
                 eBankingServices.UserTools.VaultConfirmation>(
                   this, METHODID_VAULT)))
           .addMethod(
@@ -227,12 +227,12 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming gRPC method 1: Help Bot
+     * Bi-directional streaming gRPC method 1: Help Bot
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpRequest> helpBot(
         io.grpc.stub.StreamObserver<eBankingServices.UserTools.HelpResponse> responseObserver) {
-      return asyncClientStreamingCall(
+      return asyncBidiStreamingCall(
           getChannel().newCall(getHelpBotMethod(), getCallOptions()), responseObserver);
     }
 
@@ -241,7 +241,7 @@ public final class UserToolsGrpc {
      * Unary gRPC method 2: Vaults
      * </pre>
      */
-    public void vault(eBankingServices.UserTools.ValutAccess request,
+    public void vault(eBankingServices.UserTools.VaultAccess request,
         io.grpc.stub.StreamObserver<eBankingServices.UserTools.VaultConfirmation> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getVaultMethod(), getCallOptions()), request, responseObserver);
@@ -282,7 +282,7 @@ public final class UserToolsGrpc {
      * Unary gRPC method 2: Vaults
      * </pre>
      */
-    public eBankingServices.UserTools.VaultConfirmation vault(eBankingServices.UserTools.ValutAccess request) {
+    public eBankingServices.UserTools.VaultConfirmation vault(eBankingServices.UserTools.VaultAccess request) {
       return blockingUnaryCall(
           getChannel(), getVaultMethod(), getCallOptions(), request);
     }
@@ -312,7 +312,7 @@ public final class UserToolsGrpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.VaultConfirmation> vault(
-        eBankingServices.UserTools.ValutAccess request) {
+        eBankingServices.UserTools.VaultAccess request) {
       return futureUnaryCall(
           getChannel().newCall(getVaultMethod(), getCallOptions()), request);
     }
@@ -340,7 +340,7 @@ public final class UserToolsGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_VAULT:
-          serviceImpl.vault((eBankingServices.UserTools.ValutAccess) request,
+          serviceImpl.vault((eBankingServices.UserTools.VaultAccess) request,
               (io.grpc.stub.StreamObserver<eBankingServices.UserTools.VaultConfirmation>) responseObserver);
           break;
         default:

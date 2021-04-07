@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import eBankingServices.Transactions.RequestStatus;
-import eBankingServices.Transactions.RequestSum;
+//import eBankingServices.Transactions.RequestStatus;
+//import eBankingServices.Transactions.RequestSum;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import eBankingServices.Transactions.TransferConfirmation;
-import eBankingServices.Transactions.TransferSum;
-import eBankingServices.Transactions.DepositSum;
-import eBankingServices.Transactions.DepositConfirmation;
+//import eBankingServices.Transactions.TransferConfirmation;
+//import eBankingServices.Transactions.TransferSum;
+//import eBankingServices.Transactions.DepositSum;
+//import eBankingServices.Transactions.DepositConfirmation;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 
 public class TransactionsServer extends TransactionsImplBase {
@@ -37,9 +37,9 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		server.awaitTermination();
 	}
+	
 
-// deposit money to account unary rpc
-
+// Deposit money method - Unary gRPC
 
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
 		
@@ -53,8 +53,7 @@ public class TransactionsServer extends TransactionsImplBase {
 	}
 
 	
-// transfer money client streaming rpc
-
+// Transfer money method - Client streaming gRPC
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
 				
@@ -87,6 +86,10 @@ public class TransactionsServer extends TransactionsImplBase {
 			}
 		};
 	}
+	
+	
+// Request money from another account - Bi-directional streaming gRPC
+	
 	@Override
 	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
 		
@@ -122,8 +125,9 @@ public class TransactionsServer extends TransactionsImplBase {
 			}
 			
 		};
-}
+	}
 
+// method to check sufficient funds for transfers
 	private boolean transferSum(int toAccNo, int fromAccNo, double sum) {
 		if (accounts[fromAccNo] < sum) {
 			return false;

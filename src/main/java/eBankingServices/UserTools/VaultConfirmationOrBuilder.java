@@ -13,12 +13,12 @@ public interface VaultConfirmationOrBuilder extends
   int getVaultID();
 
   /**
-   * <code>string valutConf = 2;</code>
+   * <code>string vaultConf = 2;</code>
    */
-  java.lang.String getValutConf();
+  java.lang.String getVaultConf();
   /**
-   * <code>string valutConf = 2;</code>
+   * <code>string vaultConf = 2;</code>
    */
   com.google.protobuf.ByteString
-      getValutConfBytes();
+      getVaultConfBytes();
 }

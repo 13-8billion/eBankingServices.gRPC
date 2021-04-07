@@ -8,18 +8,18 @@ package eBankingServices.UserTools;
  * valut message
  * </pre>
  *
- * Protobuf type {@code UserTools.ValutAccess}
+ * Protobuf type {@code UserTools.VaultAccess}
  */
-public  final class ValutAccess extends
+public  final class VaultAccess extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:UserTools.ValutAccess)
-    ValutAccessOrBuilder {
+    // @@protoc_insertion_point(message_implements:UserTools.VaultAccess)
+    VaultAccessOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use ValutAccess.newBuilder() to construct.
-  private ValutAccess(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use VaultAccess.newBuilder() to construct.
+  private VaultAccess(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private ValutAccess() {
+  private VaultAccess() {
     accNo_ = "";
     sum_ = "";
     unlockDate_ = "";
@@ -30,7 +30,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private ValutAccess(
+  private VaultAccess(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -88,15 +88,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_ValutAccess_descriptor;
+    return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_VaultAccess_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_ValutAccess_fieldAccessorTable
+    return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_VaultAccess_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            eBankingServices.UserTools.ValutAccess.class, eBankingServices.UserTools.ValutAccess.Builder.class);
+            eBankingServices.UserTools.VaultAccess.class, eBankingServices.UserTools.VaultAccess.Builder.class);
   }
 
   public static final int ACCNO_FIELD_NUMBER = 1;
@@ -252,10 +252,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof eBankingServices.UserTools.ValutAccess)) {
+    if (!(obj instanceof eBankingServices.UserTools.VaultAccess)) {
       return super.equals(obj);
     }
-    eBankingServices.UserTools.ValutAccess other = (eBankingServices.UserTools.ValutAccess) obj;
+    eBankingServices.UserTools.VaultAccess other = (eBankingServices.UserTools.VaultAccess) obj;
 
     boolean result = true;
     result = result && getAccNo()
@@ -286,69 +286,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(byte[] data)
+  public static eBankingServices.UserTools.VaultAccess parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(java.io.InputStream input)
+  public static eBankingServices.UserTools.VaultAccess parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static eBankingServices.UserTools.ValutAccess parseDelimitedFrom(java.io.InputStream input)
+  public static eBankingServices.UserTools.VaultAccess parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static eBankingServices.UserTools.ValutAccess parseDelimitedFrom(
+  public static eBankingServices.UserTools.VaultAccess parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static eBankingServices.UserTools.ValutAccess parseFrom(
+  public static eBankingServices.UserTools.VaultAccess parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -361,7 +361,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(eBankingServices.UserTools.ValutAccess prototype) {
+  public static Builder newBuilder(eBankingServices.UserTools.VaultAccess prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -381,26 +381,26 @@ private static final long serialVersionUID = 0L;
    * valut message
    * </pre>
    *
-   * Protobuf type {@code UserTools.ValutAccess}
+   * Protobuf type {@code UserTools.VaultAccess}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:UserTools.ValutAccess)
-      eBankingServices.UserTools.ValutAccessOrBuilder {
+      // @@protoc_insertion_point(builder_implements:UserTools.VaultAccess)
+      eBankingServices.UserTools.VaultAccessOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_ValutAccess_descriptor;
+      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_VaultAccess_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_ValutAccess_fieldAccessorTable
+      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_VaultAccess_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              eBankingServices.UserTools.ValutAccess.class, eBankingServices.UserTools.ValutAccess.Builder.class);
+              eBankingServices.UserTools.VaultAccess.class, eBankingServices.UserTools.VaultAccess.Builder.class);
     }
 
-    // Construct using eBankingServices.UserTools.ValutAccess.newBuilder()
+    // Construct using eBankingServices.UserTools.VaultAccess.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -430,17 +430,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_ValutAccess_descriptor;
+      return eBankingServices.UserTools.UserToolsImpl.internal_static_UserTools_VaultAccess_descriptor;
     }
 
     @java.lang.Override
-    public eBankingServices.UserTools.ValutAccess getDefaultInstanceForType() {
-      return eBankingServices.UserTools.ValutAccess.getDefaultInstance();
+    public eBankingServices.UserTools.VaultAccess getDefaultInstanceForType() {
+      return eBankingServices.UserTools.VaultAccess.getDefaultInstance();
     }
 
     @java.lang.Override
-    public eBankingServices.UserTools.ValutAccess build() {
-      eBankingServices.UserTools.ValutAccess result = buildPartial();
+    public eBankingServices.UserTools.VaultAccess build() {
+      eBankingServices.UserTools.VaultAccess result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -448,8 +448,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public eBankingServices.UserTools.ValutAccess buildPartial() {
-      eBankingServices.UserTools.ValutAccess result = new eBankingServices.UserTools.ValutAccess(this);
+    public eBankingServices.UserTools.VaultAccess buildPartial() {
+      eBankingServices.UserTools.VaultAccess result = new eBankingServices.UserTools.VaultAccess(this);
       result.accNo_ = accNo_;
       result.sum_ = sum_;
       result.unlockDate_ = unlockDate_;
@@ -491,16 +491,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof eBankingServices.UserTools.ValutAccess) {
-        return mergeFrom((eBankingServices.UserTools.ValutAccess)other);
+      if (other instanceof eBankingServices.UserTools.VaultAccess) {
+        return mergeFrom((eBankingServices.UserTools.VaultAccess)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(eBankingServices.UserTools.ValutAccess other) {
-      if (other == eBankingServices.UserTools.ValutAccess.getDefaultInstance()) return this;
+    public Builder mergeFrom(eBankingServices.UserTools.VaultAccess other) {
+      if (other == eBankingServices.UserTools.VaultAccess.getDefaultInstance()) return this;
       if (!other.getAccNo().isEmpty()) {
         accNo_ = other.accNo_;
         onChanged();
@@ -528,11 +528,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      eBankingServices.UserTools.ValutAccess parsedMessage = null;
+      eBankingServices.UserTools.VaultAccess parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (eBankingServices.UserTools.ValutAccess) e.getUnfinishedMessage();
+        parsedMessage = (eBankingServices.UserTools.VaultAccess) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -761,41 +761,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:UserTools.ValutAccess)
+    // @@protoc_insertion_point(builder_scope:UserTools.VaultAccess)
   }
 
-  // @@protoc_insertion_point(class_scope:UserTools.ValutAccess)
-  private static final eBankingServices.UserTools.ValutAccess DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:UserTools.VaultAccess)
+  private static final eBankingServices.UserTools.VaultAccess DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new eBankingServices.UserTools.ValutAccess();
+    DEFAULT_INSTANCE = new eBankingServices.UserTools.VaultAccess();
   }
 
-  public static eBankingServices.UserTools.ValutAccess getDefaultInstance() {
+  public static eBankingServices.UserTools.VaultAccess getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ValutAccess>
-      PARSER = new com.google.protobuf.AbstractParser<ValutAccess>() {
+  private static final com.google.protobuf.Parser<VaultAccess>
+      PARSER = new com.google.protobuf.AbstractParser<VaultAccess>() {
     @java.lang.Override
-    public ValutAccess parsePartialFrom(
+    public VaultAccess parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new ValutAccess(input, extensionRegistry);
+      return new VaultAccess(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<ValutAccess> parser() {
+  public static com.google.protobuf.Parser<VaultAccess> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<ValutAccess> getParserForType() {
+  public com.google.protobuf.Parser<VaultAccess> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public eBankingServices.UserTools.ValutAccess getDefaultInstanceForType() {
+  public eBankingServices.UserTools.VaultAccess getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

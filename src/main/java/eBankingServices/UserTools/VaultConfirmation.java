@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private VaultConfirmation() {
     vaultID_ = 0;
-    valutConf_ = "";
+    vaultConf_ = "";
   }
 
   @java.lang.Override
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            valutConf_ = s;
+            vaultConf_ = s;
             break;
           }
           default: {
@@ -96,34 +96,34 @@ private static final long serialVersionUID = 0L;
     return vaultID_;
   }
 
-  public static final int VALUTCONF_FIELD_NUMBER = 2;
-  private volatile java.lang.Object valutConf_;
+  public static final int VAULTCONF_FIELD_NUMBER = 2;
+  private volatile java.lang.Object vaultConf_;
   /**
-   * <code>string valutConf = 2;</code>
+   * <code>string vaultConf = 2;</code>
    */
-  public java.lang.String getValutConf() {
-    java.lang.Object ref = valutConf_;
+  public java.lang.String getVaultConf() {
+    java.lang.Object ref = vaultConf_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      valutConf_ = s;
+      vaultConf_ = s;
       return s;
     }
   }
   /**
-   * <code>string valutConf = 2;</code>
+   * <code>string vaultConf = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getValutConfBytes() {
-    java.lang.Object ref = valutConf_;
+      getVaultConfBytes() {
+    java.lang.Object ref = vaultConf_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      valutConf_ = b;
+      vaultConf_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -147,8 +147,8 @@ private static final long serialVersionUID = 0L;
     if (vaultID_ != 0) {
       output.writeInt32(1, vaultID_);
     }
-    if (!getValutConfBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, valutConf_);
+    if (!getVaultConfBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, vaultConf_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,8 +163,8 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, vaultID_);
     }
-    if (!getValutConfBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, valutConf_);
+    if (!getVaultConfBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, vaultConf_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -184,8 +184,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getVaultID()
         == other.getVaultID());
-    result = result && getValutConf()
-        .equals(other.getValutConf());
+    result = result && getVaultConf()
+        .equals(other.getVaultConf());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -199,8 +199,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + VAULTID_FIELD_NUMBER;
     hash = (53 * hash) + getVaultID();
-    hash = (37 * hash) + VALUTCONF_FIELD_NUMBER;
-    hash = (53 * hash) + getValutConf().hashCode();
+    hash = (37 * hash) + VAULTCONF_FIELD_NUMBER;
+    hash = (53 * hash) + getVaultConf().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       vaultID_ = 0;
 
-      valutConf_ = "";
+      vaultConf_ = "";
 
       return this;
     }
@@ -365,7 +365,7 @@ private static final long serialVersionUID = 0L;
     public eBankingServices.UserTools.VaultConfirmation buildPartial() {
       eBankingServices.UserTools.VaultConfirmation result = new eBankingServices.UserTools.VaultConfirmation(this);
       result.vaultID_ = vaultID_;
-      result.valutConf_ = valutConf_;
+      result.vaultConf_ = vaultConf_;
       onBuilt();
       return result;
     }
@@ -417,8 +417,8 @@ private static final long serialVersionUID = 0L;
       if (other.getVaultID() != 0) {
         setVaultID(other.getVaultID());
       }
-      if (!other.getValutConf().isEmpty()) {
-        valutConf_ = other.valutConf_;
+      if (!other.getVaultConf().isEmpty()) {
+        vaultConf_ = other.vaultConf_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -476,71 +476,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object valutConf_ = "";
+    private java.lang.Object vaultConf_ = "";
     /**
-     * <code>string valutConf = 2;</code>
+     * <code>string vaultConf = 2;</code>
      */
-    public java.lang.String getValutConf() {
-      java.lang.Object ref = valutConf_;
+    public java.lang.String getVaultConf() {
+      java.lang.Object ref = vaultConf_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        valutConf_ = s;
+        vaultConf_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string valutConf = 2;</code>
+     * <code>string vaultConf = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getValutConfBytes() {
-      java.lang.Object ref = valutConf_;
+        getVaultConfBytes() {
+      java.lang.Object ref = vaultConf_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        valutConf_ = b;
+        vaultConf_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string valutConf = 2;</code>
+     * <code>string vaultConf = 2;</code>
      */
-    public Builder setValutConf(
+    public Builder setVaultConf(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      valutConf_ = value;
+      vaultConf_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string valutConf = 2;</code>
+     * <code>string vaultConf = 2;</code>
      */
-    public Builder clearValutConf() {
+    public Builder clearVaultConf() {
       
-      valutConf_ = getDefaultInstance().getValutConf();
+      vaultConf_ = getDefaultInstance().getVaultConf();
       onChanged();
       return this;
     }
     /**
-     * <code>string valutConf = 2;</code>
+     * <code>string vaultConf = 2;</code>
      */
-    public Builder setValutConfBytes(
+    public Builder setVaultConfBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      valutConf_ = value;
+      vaultConf_ = value;
       onChanged();
       return this;
     }

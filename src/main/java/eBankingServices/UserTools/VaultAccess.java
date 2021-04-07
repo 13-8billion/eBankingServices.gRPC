@@ -20,9 +20,12 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private VaultAccess() {
-    accNo_ = "";
-    sum_ = "";
+    accNo_ = 0;
+    sum_ = 0;
     unlockDate_ = "";
+    vaultID_ = 0;
+    username_ = "";
+    password_ = "";
   }
 
   @java.lang.Override
@@ -49,22 +52,37 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            accNo_ = s;
+            accNo_ = input.readInt32();
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
 
-            sum_ = s;
+            sum_ = input.readInt32();
             break;
           }
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
             unlockDate_ = s;
+            break;
+          }
+          case 32: {
+
+            vaultID_ = input.readInt32();
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            username_ = s;
+            break;
+          }
+          case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            password_ = s;
             break;
           }
           default: {
@@ -100,71 +118,21 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ACCNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object accNo_;
+  private int accNo_;
   /**
-   * <code>string accNo = 1;</code>
+   * <code>int32 accNo = 1;</code>
    */
-  public java.lang.String getAccNo() {
-    java.lang.Object ref = accNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      accNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string accNo = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getAccNoBytes() {
-    java.lang.Object ref = accNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      accNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getAccNo() {
+    return accNo_;
   }
 
   public static final int SUM_FIELD_NUMBER = 2;
-  private volatile java.lang.Object sum_;
+  private int sum_;
   /**
-   * <code>string sum = 2;</code>
+   * <code>int32 sum = 2;</code>
    */
-  public java.lang.String getSum() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      sum_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string sum = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getSumBytes() {
-    java.lang.Object ref = sum_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      sum_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getSum() {
+    return sum_;
   }
 
   public static final int UNLOCKDATE_FIELD_NUMBER = 3;
@@ -201,6 +169,83 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int VAULTID_FIELD_NUMBER = 4;
+  private int vaultID_;
+  /**
+   * <code>int32 vaultID = 4;</code>
+   */
+  public int getVaultID() {
+    return vaultID_;
+  }
+
+  public static final int USERNAME_FIELD_NUMBER = 5;
+  private volatile java.lang.Object username_;
+  /**
+   * <code>string username = 5;</code>
+   */
+  public java.lang.String getUsername() {
+    java.lang.Object ref = username_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      username_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string username = 5;</code>
+   */
+  public com.google.protobuf.ByteString
+      getUsernameBytes() {
+    java.lang.Object ref = username_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      username_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int PASSWORD_FIELD_NUMBER = 6;
+  private volatile java.lang.Object password_;
+  /**
+   * <code>string password = 6;</code>
+   */
+  public java.lang.String getPassword() {
+    java.lang.Object ref = password_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      password_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string password = 6;</code>
+   */
+  public com.google.protobuf.ByteString
+      getPasswordBytes() {
+    java.lang.Object ref = password_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      password_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -215,14 +260,23 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getAccNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accNo_);
+    if (accNo_ != 0) {
+      output.writeInt32(1, accNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, sum_);
+    if (sum_ != 0) {
+      output.writeInt32(2, sum_);
     }
     if (!getUnlockDateBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, unlockDate_);
+    }
+    if (vaultID_ != 0) {
+      output.writeInt32(4, vaultID_);
+    }
+    if (!getUsernameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, username_);
+    }
+    if (!getPasswordBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, password_);
     }
     unknownFields.writeTo(output);
   }
@@ -233,14 +287,26 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getAccNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, accNo_);
+    if (accNo_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, accNo_);
     }
-    if (!getSumBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, sum_);
+    if (sum_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, sum_);
     }
     if (!getUnlockDateBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, unlockDate_);
+    }
+    if (vaultID_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(4, vaultID_);
+    }
+    if (!getUsernameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, username_);
+    }
+    if (!getPasswordBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, password_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -258,12 +324,18 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.VaultAccess other = (eBankingServices.UserTools.VaultAccess) obj;
 
     boolean result = true;
-    result = result && getAccNo()
-        .equals(other.getAccNo());
-    result = result && getSum()
-        .equals(other.getSum());
+    result = result && (getAccNo()
+        == other.getAccNo());
+    result = result && (getSum()
+        == other.getSum());
     result = result && getUnlockDate()
         .equals(other.getUnlockDate());
+    result = result && (getVaultID()
+        == other.getVaultID());
+    result = result && getUsername()
+        .equals(other.getUsername());
+    result = result && getPassword()
+        .equals(other.getPassword());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -276,11 +348,17 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ACCNO_FIELD_NUMBER;
-    hash = (53 * hash) + getAccNo().hashCode();
+    hash = (53 * hash) + getAccNo();
     hash = (37 * hash) + SUM_FIELD_NUMBER;
-    hash = (53 * hash) + getSum().hashCode();
+    hash = (53 * hash) + getSum();
     hash = (37 * hash) + UNLOCKDATE_FIELD_NUMBER;
     hash = (53 * hash) + getUnlockDate().hashCode();
+    hash = (37 * hash) + VAULTID_FIELD_NUMBER;
+    hash = (53 * hash) + getVaultID();
+    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+    hash = (53 * hash) + getUsername().hashCode();
+    hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
+    hash = (53 * hash) + getPassword().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -418,11 +496,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      accNo_ = "";
+      accNo_ = 0;
 
-      sum_ = "";
+      sum_ = 0;
 
       unlockDate_ = "";
+
+      vaultID_ = 0;
+
+      username_ = "";
+
+      password_ = "";
 
       return this;
     }
@@ -453,6 +537,9 @@ private static final long serialVersionUID = 0L;
       result.accNo_ = accNo_;
       result.sum_ = sum_;
       result.unlockDate_ = unlockDate_;
+      result.vaultID_ = vaultID_;
+      result.username_ = username_;
+      result.password_ = password_;
       onBuilt();
       return result;
     }
@@ -501,16 +588,25 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.VaultAccess other) {
       if (other == eBankingServices.UserTools.VaultAccess.getDefaultInstance()) return this;
-      if (!other.getAccNo().isEmpty()) {
-        accNo_ = other.accNo_;
-        onChanged();
+      if (other.getAccNo() != 0) {
+        setAccNo(other.getAccNo());
       }
-      if (!other.getSum().isEmpty()) {
-        sum_ = other.sum_;
-        onChanged();
+      if (other.getSum() != 0) {
+        setSum(other.getSum());
       }
       if (!other.getUnlockDate().isEmpty()) {
         unlockDate_ = other.unlockDate_;
+        onChanged();
+      }
+      if (other.getVaultID() != 0) {
+        setVaultID(other.getVaultID());
+      }
+      if (!other.getUsername().isEmpty()) {
+        username_ = other.username_;
+        onChanged();
+      }
+      if (!other.getPassword().isEmpty()) {
+        password_ = other.password_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -542,140 +638,54 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object accNo_ = "";
+    private int accNo_ ;
     /**
-     * <code>string accNo = 1;</code>
+     * <code>int32 accNo = 1;</code>
      */
-    public java.lang.String getAccNo() {
-      java.lang.Object ref = accNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        accNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getAccNo() {
+      return accNo_;
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>int32 accNo = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getAccNoBytes() {
-      java.lang.Object ref = accNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        accNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string accNo = 1;</code>
-     */
-    public Builder setAccNo(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setAccNo(int value) {
+      
       accNo_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string accNo = 1;</code>
+     * <code>int32 accNo = 1;</code>
      */
     public Builder clearAccNo() {
       
-      accNo_ = getDefaultInstance().getAccNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string accNo = 1;</code>
-     */
-    public Builder setAccNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      accNo_ = value;
+      accNo_ = 0;
       onChanged();
       return this;
     }
 
-    private java.lang.Object sum_ = "";
+    private int sum_ ;
     /**
-     * <code>string sum = 2;</code>
+     * <code>int32 sum = 2;</code>
      */
-    public java.lang.String getSum() {
-      java.lang.Object ref = sum_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sum_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getSum() {
+      return sum_;
     }
     /**
-     * <code>string sum = 2;</code>
+     * <code>int32 sum = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getSumBytes() {
-      java.lang.Object ref = sum_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        sum_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string sum = 2;</code>
-     */
-    public Builder setSum(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setSum(int value) {
+      
       sum_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string sum = 2;</code>
+     * <code>int32 sum = 2;</code>
      */
     public Builder clearSum() {
       
-      sum_ = getDefaultInstance().getSum();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string sum = 2;</code>
-     */
-    public Builder setSumBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      sum_ = value;
+      sum_ = 0;
       onChanged();
       return this;
     }
@@ -745,6 +755,170 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       unlockDate_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int vaultID_ ;
+    /**
+     * <code>int32 vaultID = 4;</code>
+     */
+    public int getVaultID() {
+      return vaultID_;
+    }
+    /**
+     * <code>int32 vaultID = 4;</code>
+     */
+    public Builder setVaultID(int value) {
+      
+      vaultID_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 vaultID = 4;</code>
+     */
+    public Builder clearVaultID() {
+      
+      vaultID_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object username_ = "";
+    /**
+     * <code>string username = 5;</code>
+     */
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string username = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string username = 5;</code>
+     */
+    public Builder setUsername(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      username_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string username = 5;</code>
+     */
+    public Builder clearUsername() {
+      
+      username_ = getDefaultInstance().getUsername();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string username = 5;</code>
+     */
+    public Builder setUsernameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      username_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object password_ = "";
+    /**
+     * <code>string password = 6;</code>
+     */
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        password_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string password = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string password = 6;</code>
+     */
+    public Builder setPassword(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      password_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string password = 6;</code>
+     */
+    public Builder clearPassword() {
+      
+      password_ = getDefaultInstance().getPassword();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string password = 6;</code>
+     */
+    public Builder setPasswordBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      password_ = value;
       onChanged();
       return this;
     }

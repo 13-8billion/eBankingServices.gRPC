@@ -3,6 +3,8 @@ package eBankingServices.UserTools;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -19,7 +21,8 @@ import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
 public class UserToolsServer extends UserToolsImplBase {
 	
-
+	String euro = "\u20AC";
+	
 	public static void main(String[] args) throws InterruptedException, IOException {
 
 		// initiate server
@@ -118,9 +121,46 @@ public class UserToolsServer extends UserToolsImplBase {
 				
 				//completed too
 				responseObserver.onCompleted();
-			}
-			
+			}		
 		};
+	}
+	
+public void vault(VaultAccess request, StreamObserver<VaultConfirmation> responseObserver) {
+		
+		VaultConfirmation vc;
+			
+		if (authenticateUser(request.getUsername(), request.getPassword())) {
+			
+			vc = VaultConfirmation.newBuilder()	
+					.setVaultConf("Server >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
+					.setVaultConf("Server >>>>>>>>> Vault ID. " + request.getVaultID() + ": " + euro + request.getSum() +  
+							" has been stored successfully into Account No. " + request.getAccNo() 
+							+ ". The money can not be accessed until " + request.getUnlockDate())
+					.build();
+			
+		} else {	
+			vc = VaultConfirmation.newBuilder()	
+					.setVaultConf("Server >>>>>>>>> Username or Password Incorrect!" )
+					.build();
+		}
+		
+		responseObserver.onNext(vc);
+		responseObserver.onCompleted();
+	}
+
+
+//Authenticate user method
+	
+	private boolean authenticateUser(String username, String password) 
+	{
+		if (username.equals("Amy") && password.equals("123")) 
+		{
+			return true;
+		} 
+		else 
+		{
+			return false;
+		}
 	}
 	
 }

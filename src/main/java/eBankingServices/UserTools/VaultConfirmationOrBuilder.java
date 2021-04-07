@@ -8,16 +8,11 @@ public interface VaultConfirmationOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 vaultID = 1;</code>
-   */
-  int getVaultID();
-
-  /**
-   * <code>string vaultConf = 2;</code>
+   * <code>string vaultConf = 3;</code>
    */
   java.lang.String getVaultConf();
   /**
-   * <code>string vaultConf = 2;</code>
+   * <code>string vaultConf = 3;</code>
    */
   com.google.protobuf.ByteString
       getVaultConfBytes();

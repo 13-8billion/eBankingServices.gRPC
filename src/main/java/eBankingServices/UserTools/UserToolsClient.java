@@ -1,7 +1,10 @@
 package eBankingServices.UserTools;
 
 import java.util.Random;
+import java.util.Scanner;
 
+import eBankingServices.Transactions.DepositConfirmation;
+import eBankingServices.Transactions.DepositSum;
 //import eBankingServices.Transactions.RequestStatus;
 //import eBankingServices.Transactions.RequestSum;
 //import eBankingServices.UserTools.UserToolsGrpc;
@@ -29,8 +32,8 @@ public class UserToolsClient {
 		asyncStub = UserToolsGrpc.newStub(channel);
 		
 		// call methods in transactions client class
-		helpBot();
-//		vault();
+//		helpBot();
+		vault();
 //		interestCalc();
 	}
 	
@@ -107,5 +110,40 @@ public class UserToolsClient {
 		}
 
 	}
+	
+// Vault method - Unary gRPC
 
+	public static void vault() {
+		
+		Scanner in = new Scanner(System.in);
+		String username;
+		String password;
+		int accNo;
+		int sum;
+		String unlockDate;
+	
+		System.out.println("Client >>>>>>>>> Requesting to access vault...");
+		System.out.println("Enter username (Amy): ");
+		username = in.next();
+		System.out.println("Enter password (123): ");
+		password = in.next();
+		System.out.println("Enter Account No (1, 2 or 3): ");
+		accNo = in.nextInt();
+		System.out.println("Enter sum to store: ");
+		sum = in.nextInt();
+		System.out.println("Enter unlock date (dd-mm-yyyy): ");
+		unlockDate = in.next();
+		
+		VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
+				.setUsername(username)
+				.setPassword(password)
+				.setAccNo(accNo)
+				.setSum(sum)
+				.setVaultID(1)
+				.setUnlockDate(unlockDate)
+				.build());
+		
+		System.out.println(response);
+	}
+	
 }

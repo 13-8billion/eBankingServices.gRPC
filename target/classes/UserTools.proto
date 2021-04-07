@@ -39,14 +39,16 @@ message HelpResponse {
   
 // valut message
 message VaultAccess {
-  string accNo = 1;  
-  string sum = 2;
+  int32 accNo = 1;  
+  int32 sum = 2;
   string unlockDate = 3;
+  int32 vaultID = 4;
+  string username = 5;
+  string password = 6;
 }
 
 message VaultConfirmation {
-  int32 vaultID = 1;
-  string vaultConf = 2;
+  string vaultConf = 3;
 }
 
 // interest calculator message

@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private VaultConfirmation() {
-    vaultID_ = 0;
     vaultConf_ = "";
   }
 
@@ -44,12 +43,7 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
-
-            vaultID_ = input.readInt32();
-            break;
-          }
-          case 18: {
+          case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
             vaultConf_ = s;
@@ -87,19 +81,10 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.VaultConfirmation.class, eBankingServices.UserTools.VaultConfirmation.Builder.class);
   }
 
-  public static final int VAULTID_FIELD_NUMBER = 1;
-  private int vaultID_;
-  /**
-   * <code>int32 vaultID = 1;</code>
-   */
-  public int getVaultID() {
-    return vaultID_;
-  }
-
-  public static final int VAULTCONF_FIELD_NUMBER = 2;
+  public static final int VAULTCONF_FIELD_NUMBER = 3;
   private volatile java.lang.Object vaultConf_;
   /**
-   * <code>string vaultConf = 2;</code>
+   * <code>string vaultConf = 3;</code>
    */
   public java.lang.String getVaultConf() {
     java.lang.Object ref = vaultConf_;
@@ -114,7 +99,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string vaultConf = 2;</code>
+   * <code>string vaultConf = 3;</code>
    */
   public com.google.protobuf.ByteString
       getVaultConfBytes() {
@@ -144,11 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (vaultID_ != 0) {
-      output.writeInt32(1, vaultID_);
-    }
     if (!getVaultConfBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, vaultConf_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, vaultConf_);
     }
     unknownFields.writeTo(output);
   }
@@ -159,12 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (vaultID_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, vaultID_);
-    }
     if (!getVaultConfBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, vaultConf_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, vaultConf_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -182,8 +160,6 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.VaultConfirmation other = (eBankingServices.UserTools.VaultConfirmation) obj;
 
     boolean result = true;
-    result = result && (getVaultID()
-        == other.getVaultID());
     result = result && getVaultConf()
         .equals(other.getVaultConf());
     result = result && unknownFields.equals(other.unknownFields);
@@ -197,8 +173,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + VAULTID_FIELD_NUMBER;
-    hash = (53 * hash) + getVaultID();
     hash = (37 * hash) + VAULTCONF_FIELD_NUMBER;
     hash = (53 * hash) + getVaultConf().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -334,8 +308,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      vaultID_ = 0;
-
       vaultConf_ = "";
 
       return this;
@@ -364,7 +336,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.VaultConfirmation buildPartial() {
       eBankingServices.UserTools.VaultConfirmation result = new eBankingServices.UserTools.VaultConfirmation(this);
-      result.vaultID_ = vaultID_;
       result.vaultConf_ = vaultConf_;
       onBuilt();
       return result;
@@ -414,9 +385,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.VaultConfirmation other) {
       if (other == eBankingServices.UserTools.VaultConfirmation.getDefaultInstance()) return this;
-      if (other.getVaultID() != 0) {
-        setVaultID(other.getVaultID());
-      }
       if (!other.getVaultConf().isEmpty()) {
         vaultConf_ = other.vaultConf_;
         onChanged();
@@ -450,35 +418,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int vaultID_ ;
-    /**
-     * <code>int32 vaultID = 1;</code>
-     */
-    public int getVaultID() {
-      return vaultID_;
-    }
-    /**
-     * <code>int32 vaultID = 1;</code>
-     */
-    public Builder setVaultID(int value) {
-      
-      vaultID_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 vaultID = 1;</code>
-     */
-    public Builder clearVaultID() {
-      
-      vaultID_ = 0;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object vaultConf_ = "";
     /**
-     * <code>string vaultConf = 2;</code>
+     * <code>string vaultConf = 3;</code>
      */
     public java.lang.String getVaultConf() {
       java.lang.Object ref = vaultConf_;
@@ -493,7 +435,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string vaultConf = 2;</code>
+     * <code>string vaultConf = 3;</code>
      */
     public com.google.protobuf.ByteString
         getVaultConfBytes() {
@@ -509,7 +451,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string vaultConf = 2;</code>
+     * <code>string vaultConf = 3;</code>
      */
     public Builder setVaultConf(
         java.lang.String value) {
@@ -522,7 +464,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string vaultConf = 2;</code>
+     * <code>string vaultConf = 3;</code>
      */
     public Builder clearVaultConf() {
       
@@ -531,7 +473,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string vaultConf = 2;</code>
+     * <code>string vaultConf = 3;</code>
      */
     public Builder setVaultConfBytes(
         com.google.protobuf.ByteString value) {

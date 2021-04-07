@@ -8,24 +8,14 @@ public interface VaultAccessOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string accNo = 1;</code>
+   * <code>int32 accNo = 1;</code>
    */
-  java.lang.String getAccNo();
-  /**
-   * <code>string accNo = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getAccNoBytes();
+  int getAccNo();
 
   /**
-   * <code>string sum = 2;</code>
+   * <code>int32 sum = 2;</code>
    */
-  java.lang.String getSum();
-  /**
-   * <code>string sum = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getSumBytes();
+  int getSum();
 
   /**
    * <code>string unlockDate = 3;</code>
@@ -36,4 +26,29 @@ public interface VaultAccessOrBuilder extends
    */
   com.google.protobuf.ByteString
       getUnlockDateBytes();
+
+  /**
+   * <code>int32 vaultID = 4;</code>
+   */
+  int getVaultID();
+
+  /**
+   * <code>string username = 5;</code>
+   */
+  java.lang.String getUsername();
+  /**
+   * <code>string username = 5;</code>
+   */
+  com.google.protobuf.ByteString
+      getUsernameBytes();
+
+  /**
+   * <code>string password = 6;</code>
+   */
+  java.lang.String getPassword();
+  /**
+   * <code>string password = 6;</code>
+   */
+  com.google.protobuf.ByteString
+      getPasswordBytes();
 }

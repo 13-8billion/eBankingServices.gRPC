@@ -1,6 +1,8 @@
 package eBankingServices.Transactions;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -9,6 +11,8 @@ import io.grpc.stub.StreamObserver;
 
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
+
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -18,21 +22,20 @@ public class TransactionsClient {
 	private static TransactionsStub asyncStub;
 
 	
-	public static void main(String args[]) throws InterruptedException {
-		
+	public static void main(String args[]) throws InterruptedException, IOException {
+	
 		final ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("localhost", 50054)
+				.forAddress("localhost", 50050)
 				.usePlaintext()
 				.build();
-		
 		//stubs -- generated from .proto files
 		blockingStub = TransactionsGrpc.newBlockingStub(channel);
 		asyncStub = TransactionsGrpc.newStub(channel);
-		
+	
 		// call methods
 		deposit();
 		transfer();
-		request();
+		request();	
 	}
 	
 	

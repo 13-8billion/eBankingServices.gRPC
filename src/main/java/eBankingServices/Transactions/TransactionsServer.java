@@ -79,7 +79,7 @@ private void registerService(Properties prop) {
          System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
          
          // Wait a bit
-         Thread.sleep(1000);
+         Thread.sleep(500);
 
          // Unregister all services
          //jmdns.unregisterAllServices();
@@ -140,18 +140,27 @@ private Properties getProperties() {
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
 				
 		return new StreamObserver<TransferSum>() {
-			
-			 ArrayList<Object> acc = new ArrayList<Object>(Arrays.asList(accounts)); 
 		
 				@Override
 			public void onNext(TransferSum request) {
 			
 		try {	
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-					System.out.println("Server >>>>>>>>> Transfer request SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo());
+						
+					TransferConfirmation reply = TransferConfirmation.newBuilder()
+							.setMessage("Server >>>>>>>>> Transfer request SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo())
+							.build();
+					
+					responseObserver.onNext(reply);
 						
 				} else {
-					System.out.println("Server >>>>>>>>> Transfer request FAILED not enough funds in AccountNo. " + request.getFromAccNo());
+					String message2 = "Server >>>>>>>>> Transfer request FAILED not enough funds in AccountNo. " + request.getFromAccNo();
+					
+					TransferConfirmation reply2 = TransferConfirmation.newBuilder()
+							.setMessage(message2)
+							.build();
+					
+					responseObserver.onNext(reply2);
 				}
 				Thread.sleep(1000);
 				

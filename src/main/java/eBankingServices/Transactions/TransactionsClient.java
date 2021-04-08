@@ -49,6 +49,7 @@ public class TransactionsClient {
 				.setSum(33)
 				.setDepositID(1)
 				.build());
+
 		
 		System.out.println(response);
 
@@ -87,6 +88,7 @@ public class TransactionsClient {
 				@Override
 				public void onCompleted() {
 					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
+
 				}			
 			};
 			

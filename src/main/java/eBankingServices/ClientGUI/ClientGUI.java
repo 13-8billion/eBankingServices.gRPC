@@ -17,27 +17,31 @@ import javax.swing.border.EmptyBorder;
 
 import eBankingServices.ClientGUI.ClientGUI;
 import eBankingServices.Transactions.DepositConfirmation;
+import eBankingServices.Transactions.DepositConfirmationOrBuilder;
 import eBankingServices.Transactions.DepositSum;
 import eBankingServices.Transactions.TransactionsGrpc;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
+import eBankingServices.Transactions.TransferConfirmation;
+import eBankingServices.Transactions.TransferConfirmationOrBuilder;
+import eBankingServices.Transactions.TransferSum;
 import eBankingServices.UserAccount.UserAccountGrpc;
 import eBankingServices.UserTools.UserToolsGrpc;
 
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 
 
 public class ClientGUI implements ActionListener{
 	
-//	private static TransactionsBlockingStub blockingStub;
-//	private static TransactionsStub asyncStub;
+	private static TransactionsBlockingStub blockingStub;
+	private static TransactionsStub asyncStub;
 //	
 	
 	private JTextField entry1, entry2, entry3, reply1;
-//	private JTextArea reply1;
-//	private JTextField entry2, reply2;
+	private JTextField fromAccNo, toAccNo, sum, transferID, tranMsg;
 //	private JTextField entry3, reply3;
 //	private JTextField entry4, reply4;
 
@@ -46,15 +50,13 @@ public class ClientGUI implements ActionListener{
 
 		JPanel panel = new JPanel();
 		
-		BoxLayout boxlayoutY = new BoxLayout(panel, BoxLayout.Y_AXIS);
+		// deposit 
+
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
 		JLabel depositLabel = new JLabel("DEPOSIT MONEY             |");
 		panel.add(depositLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
-		panel.setLayout(boxlayoutY);
-
-		
-		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 
 		JLabel label = new JLabel("Account No:")	;
 		panel.add(label);
@@ -90,6 +92,60 @@ public class ClientGUI implements ActionListener{
 		panel.setLayout(boxlayout);
 
 		return panel;
+	}
+		
+		private JPanel getTransferJPanel() {
+		
+		// transfer
+		
+		JPanel panel2 = new JPanel();
+		
+		BoxLayout boxlayout2 = new BoxLayout(panel2, BoxLayout.X_AXIS);
+		
+		JLabel transferLabel = new JLabel("TRANSFER MONEY             |");
+		panel2.add(transferLabel);
+		panel2.add(Box.createRigidArea(new Dimension(50, 0)));
+
+		JLabel label4 = new JLabel("From Account No:")	;
+		panel2.add(label4);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		fromAccNo = new JTextField("",10);
+		panel2.add(fromAccNo);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label5 = new JLabel("To Account No:")	;
+		panel2.add(label5);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		toAccNo = new JTextField("",10);
+		panel2.add(toAccNo);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label6 = new JLabel("Amount:")	;
+		panel2.add(label6);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		sum = new JTextField("",10);
+		panel2.add(sum);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		JLabel label7 = new JLabel("TransferID:")	;
+		panel2.add(label7);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		transferID = new JTextField("",10);
+		panel2.add(transferID);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		JButton button2 = new JButton("Transfer");
+		button2.addActionListener(this);
+		panel2.add(button2);
+		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		tranMsg = new JTextField("", 100);
+		tranMsg.setEditable(false);
+		panel2.add(tranMsg);
+
+		panel2.setLayout(boxlayout2);
+
+		return panel2;
 
 	}
 
@@ -174,7 +230,7 @@ public class ClientGUI implements ActionListener{
 		panel.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
 	
 		panel.add( getTransactionsJPanel() );
-//		panel.add( getUserAccountJPanel() );
+		panel.add( getTransferJPanel() );
 //		panel.add( getUserToolsJPanel() );
 
 		// Set size for the frame
@@ -185,36 +241,6 @@ public class ClientGUI implements ActionListener{
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
-
-	
-//			JButton btnDeposit = new JButton("Deposit");
-//			btnDeposit.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent e) {
-//			
-//			int accNo = Integer.parseInt(entry1.getText());
-//			int sum = Integer.parseInt(entry2.getText());
-//			int depositID = Integer.parseInt(entry3.getText());
-//
-//			DepositSum req = DepositSum.newBuilder()
-//					.setAccNo(accNo)
-//					.setSum(sum)
-//					.setDepositID(depositID)
-//					.build();
-//
-//			DepositConfirmation response = blockingStub.deposit(req);
-//
-//			reply1.append("reply:"+ response.getMessage());
-//			
-//			System.out.println("res: " + response.getMessage());
-//				}
-//			});
-//}
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 			/*
 			 * 
@@ -226,7 +252,7 @@ public class ClientGUI implements ActionListener{
 				String label = button.getActionCommand();  
 		
 				if (label.equals("Deposit")) {
-					System.out.println("Deposits service to be invoked ...");
+					System.out.println("Deposits service invoked ...");
 					
 			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050)
 					.usePlaintext()
@@ -235,46 +261,69 @@ public class ClientGUI implements ActionListener{
 			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
 
 			//preparing message to send
-			DepositSum request = DepositSum.newBuilder()
+			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 					.setAccNo(Integer.parseInt(entry1.getText()))
-					.setSum(Integer.parseInt(entry2.getText()))
+					.setSum(Double.parseDouble(entry2.getText()))
 					.setDepositID(Integer.parseInt(entry3.getText()))
-					.build();
+					.build());
 
 			//Retrieving reply from service
-			DepositConfirmation response = blockingStub.deposit(request);
+//			DepositConfirmation response = blockingStub.deposit(request);
 			//withWaitForReady().
 
 			reply1.setText(response.getMessage());
-		
-			}
+	
+				}
 			else if (label.equals("Transfer")) {
-			System.out.println("Transfer service to be invoked ...");
-			}
-			
-}
-
-
-
-
-
-		
+			System.out.println("Transfer service invoked ...");	
 			/*
 			 * 
 			 */
-//			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
-//			Service2Grpc.Service2BlockingStub blockingStub = Service2Grpc.newBlockingStub(channel);
-//
-//			//preparing message to send
-//			ds.service2.RequestMessage request = ds.service2.RequestMessage.newBuilder().setText(entry2.getText()).build();
-//
-//			//retreving reply from service
-//			ds.service2.ResponseMessage response = blockingStub.service2Do(request);
-//
-//			reply2.setText( String.valueOf( response.getLength()) );
-//			
-//		}else if (label.equals("Invoke Service 3")) {
-//			System.out.println("service 3 to be invoked ...");
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050)
+						.usePlaintext()
+						.build();
+				
+				TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
+
+				//preparing message to send
+				StreamObserver<TransferConfirmation> response = new StreamObserver<TransferConfirmation>() {
+
+					@Override
+					public void onNext(TransferConfirmation response) {
+						
+						tranMsg.setText(response.getMessage()); 
+					}
+
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+					}
+
+					@Override
+					public void onCompleted() {
+						System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
+		
+					}			
+				};
+				
+				StreamObserver<TransferSum> request = asyncStub.transfer(response);
+				request.onNext(TransferSum.newBuilder()
+						.setFromAccNo(Integer.parseInt(fromAccNo.getText()))
+						.setToAccNo(Integer.parseInt(toAccNo.getText()))
+						.setSum(Double.parseDouble(sum.getText()))
+						.setTransferID(Integer.parseInt(transferID.getText()))
+						.build());
+
+			
+				}
+				else if (label.equals("Request")) {
+				System.out.println("Request service to be invoked ...");
+				}
+			
+			}
+}
+			
+
 
 		
 			/*
@@ -313,6 +362,5 @@ public class ClientGUI implements ActionListener{
 //			
 	
 
-}
 
 

@@ -23,9 +23,11 @@ import eBankingServices.Transactions.DepositSum;
 import eBankingServices.Transactions.TransactionsGrpc;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
+import eBankingServices.Transactions.TransferConfirmation;
+import eBankingServices.Transactions.TransferSum;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-
+import io.grpc.stub.StreamObserver;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -42,10 +44,8 @@ public class mainClientGUI {
 	private ServiceInfo transactionsInfo;
 	
 	private JFrame frame;
-	private JTextField entryAccNo;
-	private JTextField entrySum;
-	private JTextField entryDepositID;
-	private JTextArea replyMessage;
+	private JTextField entryAccNo, entrySum, entryDepositID, toAccNo, fromAccNo, sum, transferID;
+	private JTextArea replyMessage, transferMsg;
 
 	/**
 	 * Launch the application.
@@ -73,11 +73,11 @@ public class mainClientGUI {
 		// discover math service
 		discoverTransactions(transactions_service_type);
 		
-		String host = transactionsInfo.getHostAddresses()[0];
-		int port = transactionsInfo.getPort();
+//		String host = transactionsInfo.getHostAddresses()[0];
+		int port = 50050;
 		
 		ManagedChannel channel = ManagedChannelBuilder
-				.forAddress(host, port)
+				.forAddress("localhost", port)
 				.usePlaintext()
 				.build();
 
@@ -88,6 +88,7 @@ public class mainClientGUI {
 
 		
 		initialize();
+		initialize2();
 	}
 
 	
@@ -103,7 +104,7 @@ public class mainClientGUI {
 				
 				@Override
 				public void serviceResolved(ServiceEvent event) {
-					System.out.println("Math Service resolved: " + event.getInfo());
+					System.out.println("Transaction Service resolved: " + event.getInfo());
 
 					transactionsInfo = event.getInfo();
 
@@ -121,14 +122,14 @@ public class mainClientGUI {
 				
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
-					System.out.println("Math Service removed: " + event.getInfo());
+					System.out.println("Transaction Service removed: " + event.getInfo());
 
 					
 				}
 				
 				@Override
 				public void serviceAdded(ServiceEvent event) {
-					System.out.println("Math Service added: " + event.getInfo());
+					System.out.println("Transaction Service added: " + event.getInfo());
 
 					
 				}
@@ -228,6 +229,101 @@ public class mainClientGUI {
 		replyMessage.setWrapStyleWord(true);
 		
 		JScrollPane scrollPane = new JScrollPane(replyMessage);
+		
+		//textResponse.setSize(new Dimension(15, 30));
+		panel_service_1.add(scrollPane);
+		
+		
+		JPanel panel_service_2 = new JPanel();
+		frame.getContentPane().add(panel_service_2);
+		
+		JPanel panel_service_3 = new JPanel();
+		frame.getContentPane().add(panel_service_3);
+			
+	}
+	
+	private void initialize2() {
+		frame = new JFrame();
+		frame.setTitle("eBANKING APPLICATION");
+		frame.setBounds(100, 100, 500, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		BoxLayout bl = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
+		
+		frame.getContentPane().setLayout(bl);
+		
+		JPanel panel_service_1 = new JPanel();
+		frame.getContentPane().add(panel_service_1);
+		panel_service_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_1 = new JLabel("To Account No");
+		panel_service_1.add(lblNewLabel_1);
+		
+		toAccNo = new JTextField();
+		panel_service_1.add(toAccNo);
+		toAccNo.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("From Account No");
+		panel_service_1.add(lblNewLabel_1);
+		
+		fromAccNo = new JTextField();
+		panel_service_1.add(fromAccNo);
+		entryAccNo.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Amount");
+		panel_service_1.add(lblNewLabel_2);
+		
+		sum = new JTextField();
+		panel_service_1.add(sum);
+		sum.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("TransferID");
+		panel_service_1.add(lblNewLabel_2);
+		
+		transferID = new JTextField();
+		panel_service_1.add(transferID);
+		transferID.setColumns(10);
+		
+		
+//		JComboBox comboOperation = new JComboBox();
+//		comboOperation.setModel(new DefaultComboBoxModel(new String[] {"ADDITION", "SUBTRACTION", "MULTIPLICATION", "DIVISION"}));
+//		panel_service_1.add(comboOperation);
+	
+		
+		JButton btnTransfer = new JButton("Transfer");
+		btnTransfer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int tAccNo = Integer.parseInt(toAccNo.getText());
+				int fAccNo = Integer.parseInt(fromAccNo.getText());
+				int sum1 = Integer.parseInt(sum.getText());
+				int transferIDs = Integer.parseInt(transferID.getText());
+
+//				int index = comboOperation.getSelectedIndex();
+//				Operation operation = Operation.forNumber(index);
+				
+				StreamObserver<TransferConfirmation> req = TransferSum.newBuilder()
+						.setToAccNo(tAccNo)
+						.setFromAccNo(fAccNo)
+						.setSum(sum1)
+						.setTransferID(transferIDs)
+						.build();
+
+				TransferConfirmation response = asyncStub.transfer(req);
+
+				transferMsg.append("reply:"+ response.getMessage());
+				
+				System.out.println("res: " + response.getMessage());
+
+			}
+		});
+		panel_service_1.add(btnTransfer);
+		
+		transferMsg = new JTextArea(3, 20);
+		transferMsg .setLineWrap(true);
+		transferMsg.setWrapStyleWord(true);
+		
+		JScrollPane scrollPane = new JScrollPane(transferMsg);
 		
 		//textResponse.setSize(new Dimension(15, 30));
 		panel_service_1.add(scrollPane);

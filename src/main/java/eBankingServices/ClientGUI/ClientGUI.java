@@ -83,7 +83,7 @@ public class ClientGUI implements ActionListener{
 		panel.add(button);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-		reply1 = new JTextField("", 10);
+		reply1 = new JTextField("", 100);
 		reply1.setEditable(false);
 		panel.add(reply1);
 

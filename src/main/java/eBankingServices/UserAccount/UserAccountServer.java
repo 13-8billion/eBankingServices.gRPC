@@ -128,14 +128,15 @@ private Properties getProperties() {
 					lc = LoginConfirmation.newBuilder()	
 							.setMessage("Server >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
 							.build();
+					responseObserver.onNext(lc);
 					
 				} else {	
 					lc = LoginConfirmation.newBuilder()	
 							.setMessage("Server >>>>>>>>> Username or Password Incorrect!" )
 							.build();
+					responseObserver.onNext(lc);
 				}
 				
-		responseObserver.onNext(lc);
 		responseObserver.onCompleted();
 	}
 
@@ -160,13 +161,14 @@ private Properties getProperties() {
 			if (request.getAccNo() == c.getAccNo()) 
 			{
 				reply = AccountInfo.newBuilder()
-						.setMessage("Server >>>>>>>>> Streaming details for Account No: " + request.getAccNo() + " ...") 
+						.setMessage("Streaming info for Acc No: " + request.getAccNo() + " ...") 
 						.setAccNo(request.getAccNo())
 						.setFirstName(c.getFirstName())
 						.setLastName(c.getLastName())
 						.setBalance(c.getBalance())
 						.build();	
 				responseObserver.onNext(reply);
+
 			}
 			
 		}

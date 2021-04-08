@@ -46,4 +46,14 @@ public interface AccountInfoOrBuilder extends
    * <code>double balance = 5;</code>
    */
   double getBalance();
+
+  /**
+   * <code>string accInfo = 6;</code>
+   */
+  java.lang.String getAccInfo();
+  /**
+   * <code>string accInfo = 6;</code>
+   */
+  com.google.protobuf.ByteString
+      getAccInfoBytes();
 }

@@ -199,9 +199,7 @@ private Properties getProperties() {
 			public void onNext(RequestSum request) {
 		
 		try {
-				System.out.println("Server >>>>>>>>> Receiving money request:  AccountNo. " + request.getToAccNo() + " is requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
-				
-				String status =  "Server status >>>>>>>>> Money request is pending...";
+			String status = ("Server >>>>>>>>> Receiving money request:  AccountNo. " + request.getToAccNo() + " is requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
 				
 				RequestStatus reply = RequestStatus.newBuilder()
 						.setStatus(status)

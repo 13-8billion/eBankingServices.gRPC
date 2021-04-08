@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
     firstName_ = "";
     lastName_ = "";
     balance_ = 0D;
+    accInfo_ = "";
   }
 
   @java.lang.Override
@@ -73,6 +74,12 @@ private static final long serialVersionUID = 0L;
           case 41: {
 
             balance_ = input.readDouble();
+            break;
+          }
+          case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            accInfo_ = s;
             break;
           }
           default: {
@@ -227,6 +234,40 @@ private static final long serialVersionUID = 0L;
     return balance_;
   }
 
+  public static final int ACCINFO_FIELD_NUMBER = 6;
+  private volatile java.lang.Object accInfo_;
+  /**
+   * <code>string accInfo = 6;</code>
+   */
+  public java.lang.String getAccInfo() {
+    java.lang.Object ref = accInfo_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      accInfo_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string accInfo = 6;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAccInfoBytes() {
+    java.lang.Object ref = accInfo_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      accInfo_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -256,6 +297,9 @@ private static final long serialVersionUID = 0L;
     if (balance_ != 0D) {
       output.writeDouble(5, balance_);
     }
+    if (!getAccInfoBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, accInfo_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -281,6 +325,9 @@ private static final long serialVersionUID = 0L;
     if (balance_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(5, balance_);
+    }
+    if (!getAccInfoBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, accInfo_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -310,6 +357,8 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getBalance())
         == java.lang.Double.doubleToLongBits(
             other.getBalance()));
+    result = result && getAccInfo()
+        .equals(other.getAccInfo());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -332,6 +381,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + BALANCE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getBalance()));
+    hash = (37 * hash) + ACCINFO_FIELD_NUMBER;
+    hash = (53 * hash) + getAccInfo().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -475,6 +526,8 @@ private static final long serialVersionUID = 0L;
 
       balance_ = 0D;
 
+      accInfo_ = "";
+
       return this;
     }
 
@@ -506,6 +559,7 @@ private static final long serialVersionUID = 0L;
       result.firstName_ = firstName_;
       result.lastName_ = lastName_;
       result.balance_ = balance_;
+      result.accInfo_ = accInfo_;
       onBuilt();
       return result;
     }
@@ -571,6 +625,10 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getBalance() != 0D) {
         setBalance(other.getBalance());
+      }
+      if (!other.getAccInfo().isEmpty()) {
+        accInfo_ = other.accInfo_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -856,6 +914,75 @@ private static final long serialVersionUID = 0L;
     public Builder clearBalance() {
       
       balance_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object accInfo_ = "";
+    /**
+     * <code>string accInfo = 6;</code>
+     */
+    public java.lang.String getAccInfo() {
+      java.lang.Object ref = accInfo_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        accInfo_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string accInfo = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAccInfoBytes() {
+      java.lang.Object ref = accInfo_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        accInfo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string accInfo = 6;</code>
+     */
+    public Builder setAccInfo(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      accInfo_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string accInfo = 6;</code>
+     */
+    public Builder clearAccInfo() {
+      
+      accInfo_ = getDefaultInstance().getAccInfo();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string accInfo = 6;</code>
+     */
+    public Builder setAccInfoBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      accInfo_ = value;
       onChanged();
       return this;
     }

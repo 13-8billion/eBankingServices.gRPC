@@ -1,5 +1,6 @@
 package eBankingServices.ClientGUI;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -19,13 +20,19 @@ import eBankingServices.ClientGUI.ClientGUI;
 import eBankingServices.Transactions.DepositConfirmation;
 import eBankingServices.Transactions.DepositConfirmationOrBuilder;
 import eBankingServices.Transactions.DepositSum;
+import eBankingServices.Transactions.RequestStatus;
+import eBankingServices.Transactions.RequestSum;
 import eBankingServices.Transactions.TransactionsGrpc;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
 import eBankingServices.Transactions.TransferConfirmation;
 import eBankingServices.Transactions.TransferConfirmationOrBuilder;
 import eBankingServices.Transactions.TransferSum;
+import eBankingServices.UserAccount.AccountInfo;
+import eBankingServices.UserAccount.LoginConfirmation;
+import eBankingServices.UserAccount.LoginRequest;
 import eBankingServices.UserAccount.UserAccountGrpc;
+import eBankingServices.UserAccount.ViewRequest;
 import eBankingServices.UserTools.UserToolsGrpc;
 
 
@@ -38,27 +45,26 @@ public class ClientGUI implements ActionListener{
 	
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
-//	
-	
-	private JTextField entry1, entry2, entry3, reply1;
+
+	private JTextField entry1, entry2, reply1;
 	private JTextField fromAccNo, toAccNo, sum, transferID, tranMsg;
-//	private JTextField entry3, reply3;
-//	private JTextField entry4, reply4;
+	private JTextField fromAccNo2, toAccNo2, sum2, requestID, status;
+	private JTextField username, password, loginConf;
+	private JTextField accno, firstName, lastName, balance, viewAccMsg, viewAccInfo;
 
 
-	private JPanel getTransactionsJPanel() {
+// deposit -----------------------------
+	private JPanel getDepositJPanel() {
 
 		JPanel panel = new JPanel();
-		
-		// deposit 
 
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
-		JLabel depositLabel = new JLabel("DEPOSIT MONEY             |");
+		JLabel depositLabel = new JLabel("DEPOSIT      |");
 		panel.add(depositLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 
-		JLabel label = new JLabel("Account No:")	;
+		JLabel label = new JLabel("To Account No:")	;
 		panel.add(label);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		entry1 = new JTextField("",10);
@@ -71,14 +77,6 @@ public class ClientGUI implements ActionListener{
 		entry2 = new JTextField("",10);
 		panel.add(entry2);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		
-		JLabel label3 = new JLabel("DepositID:")	;
-		panel.add(label3);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		entry3 = new JTextField("",10);
-		panel.add(entry3);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		
 
 		JButton button = new JButton("Deposit");
 		button.addActionListener(this);
@@ -93,117 +91,204 @@ public class ClientGUI implements ActionListener{
 
 		return panel;
 	}
+	
+// transfer -----------------------------	
+	private JPanel getTransferJPanel() {
 		
-		private JPanel getTransferJPanel() {
+		JPanel panel = new JPanel();
 		
-		// transfer
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
-		JPanel panel2 = new JPanel();
-		
-		BoxLayout boxlayout2 = new BoxLayout(panel2, BoxLayout.X_AXIS);
-		
-		JLabel transferLabel = new JLabel("TRANSFER MONEY             |");
-		panel2.add(transferLabel);
-		panel2.add(Box.createRigidArea(new Dimension(50, 0)));
-
-		JLabel label4 = new JLabel("From Account No:")	;
-		panel2.add(label4);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
-		fromAccNo = new JTextField("",10);
-		panel2.add(fromAccNo);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		JLabel transferLabel = new JLabel("TRANSFER   |");
+		panel.add(transferLabel);
+		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 		
 		JLabel label5 = new JLabel("To Account No:")	;
-		panel2.add(label5);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		toAccNo = new JTextField("",10);
-		panel2.add(toAccNo);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		panel.add(toAccNo);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		JLabel label4 = new JLabel("From Account No:")	;
+		panel.add(label4);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		fromAccNo = new JTextField("",10);
+		panel.add(fromAccNo);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		
 		JLabel label6 = new JLabel("Amount:")	;
-		panel2.add(label6);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		panel.add(label6);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		sum = new JTextField("",10);
-		panel2.add(sum);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
-
-		JLabel label7 = new JLabel("TransferID:")	;
-		panel2.add(label7);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
-		transferID = new JTextField("",10);
-		panel2.add(transferID);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		panel.add(sum);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		JButton button2 = new JButton("Transfer");
 		button2.addActionListener(this);
-		panel2.add(button2);
-		panel2.add(Box.createRigidArea(new Dimension(10, 0)));
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		tranMsg = new JTextField("", 100);
 		tranMsg.setEditable(false);
-		panel2.add(tranMsg);
+		panel.add(tranMsg);
 
-		panel2.setLayout(boxlayout2);
+		panel.setLayout(boxlayout);
 
-		return panel2;
+		return panel;
+	}
+		
+// request -----------------------------		
+	private JPanel getRequestJPanel() {
+				
+		JPanel panel = new JPanel();
+		
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		
+		JLabel transferLabel = new JLabel("REQUEST     |");
+		panel.add(transferLabel);
+		panel.add(Box.createRigidArea(new Dimension(50, 0)));
+	
+		JLabel label5 = new JLabel("To Account No:")	;
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		toAccNo2 = new JTextField("",10);
+		panel.add(toAccNo2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label4 = new JLabel("From Account No:")	;
+		panel.add(label4);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		fromAccNo2 = new JTextField("",10);
+		panel.add(fromAccNo2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label6 = new JLabel("Amount:")	;
+		panel.add(label6);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		sum2 = new JTextField("",10);
+		panel.add(sum2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
+		JButton button2 = new JButton("Request");
+		button2.addActionListener(this);
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		status = new JTextField("", 100);
+		status.setEditable(false);
+		panel.add(status);
+
+		panel.setLayout(boxlayout);
+
+		return panel;
+	}
+		
+// login ----------------------------
+	private JPanel getLoginJPanel() {
+			
+		JPanel panel = new JPanel();
+		
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		
+		JLabel transferLabel = new JLabel("LOGIN         |");
+		panel.add(transferLabel);
+		panel.add(Box.createRigidArea(new Dimension(50, 0)));
+	
+		JLabel label5 = new JLabel("Username (Amy):")	;
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		username = new JTextField("",10);
+		panel.add(username);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label4 = new JLabel("Password (123)")	;
+		panel.add(label4);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		password = new JTextField("",10);
+		panel.add(password);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JButton button2 = new JButton("Login");
+		button2.addActionListener(this);
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		loginConf = new JTextField("", 100);
+		loginConf.setEditable(false);
+		panel.add(loginConf);
+
+		panel.setLayout(boxlayout);
+
+		return panel;
+	}
+		
+	
+	private JPanel getViewAccountJPanel() {
+		
+		JPanel panel = new JPanel();
+		
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		
+		JLabel label = new JLabel("VIEW            |");
+		panel.add(label);
+		panel.add(Box.createRigidArea(new Dimension(50, 0)));
+	
+		JLabel label5 = new JLabel("Account No: ")	;
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		accno = new JTextField("",10);
+		panel.add(accno);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JButton button2 = new JButton("View Account");
+		button2.addActionListener(this);
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(0, 0)));
+
+		viewAccMsg = new JTextField("", 20);
+		viewAccMsg.setEditable(false);
+		panel.add(viewAccMsg);
+		
+		JLabel label6 = new JLabel("First Name: ")	;
+		panel.add(label6);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		firstName= new JTextField("", 10);
+		firstName.setEditable(false);
+		panel.add(firstName); 
+		
+		JLabel label7 = new JLabel("Last Name: ")	;
+		panel.add(label7);
+		lastName= new JTextField("", 10);
+		lastName.setEditable(false);
+		panel.add(lastName);
+		
+		JLabel label8 = new JLabel("Balance: ")	;
+		panel.add(label8);
+		balance= new JTextField("", 10);
+		balance.setEditable(false);
+		panel.add(balance);
+
+
+		panel.setLayout(boxlayout);
+
+		return panel;
 	}
 
-//	private JPanel getUserAccountJPanel() {
-//
-//		JPanel panel = new JPanel();
-//
-//		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-//
-//		JLabel label = new JLabel("Enter value")	;
-//		panel.add(label);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//		entry2 = new JTextField("",10);
-//		panel.add(entry2);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//
-//		JButton button = new JButton("Invoke Service 2");
-//		button.addActionListener(this);
-//		panel.add(button);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//
-//		reply2 = new JTextField("", 10);
-//		reply2 .setEditable(false);
-//		panel.add(reply2 );
-//
-//		panel.setLayout(boxlayout);
-//
-//		return panel;
-//
+//		
+//	private JPanel getChangePassJPanel() {
 //	}
-//
-//	private JPanel getUserToolsJPanel() {
-//
-//		JPanel panel = new JPanel();
-//
-//		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-//
-//		JLabel label = new JLabel("Enter value")	;
-//		panel.add(label);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//		entry3 = new JTextField("",10);
-//		panel.add(entry3);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//
-//		JButton button = new JButton("Invoke Service 3");
-//		button.addActionListener(this);
-//		panel.add(button);
-//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-//
-//		reply3 = new JTextField("", 10);
-//		reply3 .setEditable(false);
-//		panel.add(reply3 );
-//
-//		panel.setLayout(boxlayout);
-//
-//		return panel;
-//
+//	
+//	private JPanel getHelpBotJPanel() {
 //	}
+//	
+//	private JPanel getVaultJPanel() {
+//	}
+//	
+//	private JPanel getInterestCalcJPanel() {
+//	}
+		
+
 
 
 	public static void main(String[] args) {
@@ -229,9 +314,16 @@ public class ClientGUI implements ActionListener{
 		// Set border for the panel
 		panel.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
 	
-		panel.add( getTransactionsJPanel() );
+		panel.add( getDepositJPanel() );
 		panel.add( getTransferJPanel() );
-//		panel.add( getUserToolsJPanel() );
+		panel.add( getRequestJPanel() );
+		panel.add( getLoginJPanel() );
+		panel.add( getViewAccountJPanel() );
+//		panel.add( getChangePassJPanel() );
+//		panel.add( getHelpBotJPanel() );
+//		panel.add( getVaultJPanel() );
+//		panel.add( getInterestCalcJPanel() );
+
 
 		// Set size for the frame
 		frame.setSize(300, 300);
@@ -245,12 +337,12 @@ public class ClientGUI implements ActionListener{
 			/*
 			 * 
 			 */
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton button = (JButton)e.getSource();
 				String label = button.getActionCommand();  
-		
+// DEPOSIT ---------------------------------------------------------------------------------------			
 				if (label.equals("Deposit")) {
 					System.out.println("Deposits service invoked ...");
 					
@@ -264,18 +356,16 @@ public class ClientGUI implements ActionListener{
 			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 					.setAccNo(Integer.parseInt(entry1.getText()))
 					.setSum(Double.parseDouble(entry2.getText()))
-					.setDepositID(Integer.parseInt(entry3.getText()))
 					.build());
 
 			//Retrieving reply from service
-//			DepositConfirmation response = blockingStub.deposit(request);
-			//withWaitForReady().
-
 			reply1.setText(response.getMessage());
-	
-				}
-			else if (label.equals("Transfer")) {
-			System.out.println("Transfer service invoked ...");	
+
+// TRANSFER ---------------------------------------------------------------------------------------		
+			}
+			else if (label.equals("Transfer")) 
+			{
+				System.out.println("Transfer service invoked ...");	
 			/*
 			 * 
 			 */
@@ -311,55 +401,129 @@ public class ClientGUI implements ActionListener{
 						.setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 						.setToAccNo(Integer.parseInt(toAccNo.getText()))
 						.setSum(Double.parseDouble(sum.getText()))
-						.setTransferID(Integer.parseInt(transferID.getText()))
 						.build());
 
-			
+// REQUEST ---------------------------------------------------------------------------------------				
 				}
-				else if (label.equals("Request")) {
+				else if (label.equals("Request")) 
+				{
 				System.out.println("Request service to be invoked ...");
+				
+				/*
+				 * 
+				 */
+				
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050)
+						.usePlaintext()
+						.build();
+				
+				TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
+
+					
+				StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
+
+					@Override
+					public void onNext(RequestStatus response) {
+	
+						status.setText(response.getStatus()); 
+					}
+
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+
+					}
+
+					@Override
+					public void onCompleted() {
+						System.out.println("Client >>>>>>>>> END OF STREAM: Money request completed");
+					}
+
+				};
+
+				StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
+
+					requestObserver.onNext(RequestSum.newBuilder()
+							.setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
+							.setToAccNo(Integer.parseInt(toAccNo2.getText()))
+							.setSum(Double.parseDouble(sum2.getText()))
+							.build());
+// LOGIN ---------------------------------------------------------------------------------------					
 				}
+				else if (label.equals("Login")) 
+				{
+				System.out.println("Login service to be invoked ...");
 			
-			}
+				/*
+				 * 
+				 */ 
+				
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052)
+						.usePlaintext()
+						.build();
+				
+				UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
+
+				//preparing message to send
+				LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder()
+						.setUsername(username.getText())
+						.setPassword(password.getText())
+						.build());
+
+				//Retrieving reply from service
+				loginConf.setText(response.getMessage());
+				
+// VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
+				}
+				else if (label.equals("View Account")) 
+				{
+				System.out.println("View Account service to be invoked ...");
+				
+				/*
+				 * 
+				 */ 
+				
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052)
+						.usePlaintext()
+						.build();
+				
+				UserAccountGrpc.UserAccountStub asyncStub = UserAccountGrpc.newStub(channel);
+				
+				ViewRequest request = ViewRequest.newBuilder()
+						.setAccNo(Integer.parseInt(accno.getText()))
+						.build();
+
+				StreamObserver<AccountInfo> responseObserver = new StreamObserver<AccountInfo>() {
+
+					@Override
+					public void onNext(AccountInfo value) {
+						viewAccMsg.setText(value.getMessage());
+						firstName.setText(value.getFirstName());
+						lastName.setText(value.getLastName());
+						balance.setText(String.valueOf(value.getBalance()) );
+							
+					}
+					
+			
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+
+					}
+
+					@Override
+					public void onCompleted() {
+						System.out.println("Client >>>>>>>>> Server stream complete");
+					}
+
+				};
+				asyncStub.viewAccount(request, responseObserver);
+				
+		}
+	}
 }
+
 			
-
-
-		
-			/*
-			 * 
-			 */
-//			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
-//			Service3Grpc.Service3BlockingStub blockingStub = Service3Grpc.newBlockingStub(channel);
-//
-//			//preparing message to send
-//			ds.service3.RequestMessage request = ds.service3.RequestMessage.newBuilder().setText(entry3.getText()).build();
-//
-//			//retreving reply from service
-//			ds.service3.ResponseMessage response = blockingStub.service3Do(request);
-//
-//			reply3.setText( String.valueOf( response.getLength()) );
-//		
-//		}else if (label.equals("Invoke Service 4")) {
-//			System.out.println("service 4 to be invoked ...");
-
-		
-			/*
-			 * 
-			 */
-//			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
-//			Service4Grpc.Service4BlockingStub blockingStub = Service4Grpc.newBlockingStub(channel);
-//
-//			//preparing message to send
-//			ds.service4.RequestMessage request = ds.service4.RequestMessage.newBuilder().setText(entry4.getText()).build();
-//
-//			//retreving reply from service
-//			ds.service4.ResponseMessage response = blockingStub.service4Do(request);
-//
-//			reply4.setText( String.valueOf( response.getLength()) );
-//		
-//		}else{
-//			
 	
 
 

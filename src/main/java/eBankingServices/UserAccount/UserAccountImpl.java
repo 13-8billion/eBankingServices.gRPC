@@ -56,20 +56,21 @@ public final class UserAccountImpl {
       "\n\021UserAccount.proto\022\013UserAccount\"2\n\014Logi" +
       "nRequest\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002" +
       " \001(\t\"$\n\021LoginConfirmation\022\017\n\007message\030\001 \001" +
-      "(\t\"\034\n\013ViewRequest\022\r\n\005accNo\030\001 \001(\005\"c\n\013Acco" +
+      "(\t\"\034\n\013ViewRequest\022\r\n\005accNo\030\001 \001(\005\"t\n\013Acco" +
       "untInfo\022\017\n\007message\030\001 \001(\t\022\r\n\005accNo\030\002 \001(\005\022" +
       "\021\n\tfirstName\030\003 \001(\t\022\020\n\010lastName\030\004 \001(\t\022\017\n\007" +
-      "balance\030\005 \001(\001\"F\n\017PasswordRequest\022\020\n\010user" +
-      "name\030\001 \001(\t\022\020\n\010currPass\030\002 \001(\t\022\017\n\007newPass\030" +
-      "\003 \001(\t\"\'\n\024PasswordConfirmation\022\017\n\007message" +
-      "\030\001 \001(\t2\357\001\n\013UserAccount\022D\n\005Login\022\031.UserAc" +
-      "count.LoginRequest\032\036.UserAccount.LoginCo" +
-      "nfirmation\"\000\022E\n\013ViewAccount\022\030.UserAccoun" +
-      "t.ViewRequest\032\030.UserAccount.AccountInfo\"" +
-      "\0000\001\022S\n\016ChangePassword\022\034.UserAccount.Pass" +
-      "wordRequest\032!.UserAccount.PasswordConfir" +
-      "mation\"\000B1\n\034eBankingServices.UserAccount" +
-      "B\017UserAccountImplP\001b\006proto3"
+      "balance\030\005 \001(\001\022\017\n\007accInfo\030\006 \001(\t\"F\n\017Passwo" +
+      "rdRequest\022\020\n\010username\030\001 \001(\t\022\020\n\010currPass\030" +
+      "\002 \001(\t\022\017\n\007newPass\030\003 \001(\t\"\'\n\024PasswordConfir" +
+      "mation\022\017\n\007message\030\001 \001(\t2\357\001\n\013UserAccount\022" +
+      "D\n\005Login\022\031.UserAccount.LoginRequest\032\036.Us" +
+      "erAccount.LoginConfirmation\"\000\022E\n\013ViewAcc" +
+      "ount\022\030.UserAccount.ViewRequest\032\030.UserAcc" +
+      "ount.AccountInfo\"\0000\001\022S\n\016ChangePassword\022\034" +
+      ".UserAccount.PasswordRequest\032!.UserAccou" +
+      "nt.PasswordConfirmation\"\000B1\n\034eBankingSer" +
+      "vices.UserAccountB\017UserAccountImplP\001b\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -106,7 +107,7 @@ public final class UserAccountImpl {
     internal_static_UserAccount_AccountInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserAccount_AccountInfo_descriptor,
-        new java.lang.String[] { "Message", "AccNo", "FirstName", "LastName", "Balance", });
+        new java.lang.String[] { "Message", "AccNo", "FirstName", "LastName", "Balance", "AccInfo", });
     internal_static_UserAccount_PasswordRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_UserAccount_PasswordRequest_fieldAccessorTable = new

@@ -40,6 +40,7 @@ message AccountInfo {
   string firstName = 3;
   string lastName = 4;
   double balance = 5;
+  string accInfo = 6;
 }
 
 // Change password message

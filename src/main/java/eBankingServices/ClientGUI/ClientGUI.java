@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 
 
 import eBankingServices.ClientGUI.ClientGUI;
@@ -36,6 +40,8 @@ import eBankingServices.UserAccount.PasswordConfirmation;
 import eBankingServices.UserAccount.PasswordRequest;
 import eBankingServices.UserAccount.UserAccountGrpc;
 import eBankingServices.UserAccount.ViewRequest;
+import eBankingServices.UserTools.HelpRequest;
+import eBankingServices.UserTools.HelpResponse;
 import eBankingServices.UserTools.UserToolsGrpc;
 
 
@@ -52,10 +58,18 @@ public class ClientGUI implements ActionListener{
 	private JTextField entry1, entry2, reply1;
 	private JTextField fromAccNo, toAccNo, sum, transferID, tranMsg;
 	private JTextField fromAccNo2, toAccNo2, sum2, requestID, status;
-	private JTextField username, loginConf;
-	private JPasswordField password, currPass, newPass;
+//	private JTextField username, loginConf, password;
+	private JPasswordField currPass, newPass;
 	private JTextField accno, firstName, lastName, balance, viewAccMsg;
 	private JTextField passMsg;
+	private JTextField problems, problemID, solution;
+		
+		private JLabel labelUsername = new JLabel("Enter username: ");
+	    private JLabel labelPassword = new JLabel("Enter password: ");
+	    private JTextField username = new JTextField(20);
+	    private JTextField loginConf = new JTextField(20);
+	    private JPasswordField password = new JPasswordField(20);
+	    private JButton buttonLogin = new JButton("Login");
 
 
 // deposit -----------------------------
@@ -65,10 +79,6 @@ public class ClientGUI implements ActionListener{
 
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
-		JLabel depositLabel = new JLabel("DEPOSIT      |");
-		panel.add(depositLabel);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
-
 		JLabel label = new JLabel("To Acc No:")	;
 		panel.add(label);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -91,6 +101,10 @@ public class ClientGUI implements ActionListener{
 		reply1 = new JTextField("", 100);
 		reply1.setEditable(false);
 		panel.add(reply1);
+		
+		panel.setBorder(BorderFactory.createTitledBorder(
+		BorderFactory.createEtchedBorder(), "DEPOSIT"));
+				         
 
 		panel.setLayout(boxlayout);
 
@@ -103,10 +117,6 @@ public class ClientGUI implements ActionListener{
 		JPanel panel = new JPanel();
 		
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-		
-		JLabel transferLabel = new JLabel("TRANSFER   |");
-		panel.add(transferLabel);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 		
 		JLabel label5 = new JLabel("To Acc No:")	;
 		panel.add(label5);
@@ -137,7 +147,10 @@ public class ClientGUI implements ActionListener{
 		tranMsg = new JTextField("", 100);
 		tranMsg.setEditable(false);
 		panel.add(tranMsg);
-
+		
+		panel.setBorder(BorderFactory.createTitledBorder(
+		BorderFactory.createEtchedBorder(), "TRANSFER"));
+				         
 		panel.setLayout(boxlayout);
 
 		return panel;
@@ -150,10 +163,6 @@ public class ClientGUI implements ActionListener{
 		
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
-		JLabel transferLabel = new JLabel("REQUEST     |");
-		panel.add(transferLabel);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
-	
 		JLabel label5 = new JLabel("To Acc No:")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -183,7 +192,10 @@ public class ClientGUI implements ActionListener{
 		status = new JTextField("", 100);
 		status.setEditable(false);
 		panel.add(status);
-
+		
+	    panel.setBorder(BorderFactory.createTitledBorder(
+	    BorderFactory.createEtchedBorder(), "REQUEST"));
+	         
 		panel.setLayout(boxlayout);
 
 		return panel;
@@ -192,40 +204,92 @@ public class ClientGUI implements ActionListener{
 // login ----------------------------
 	private JPanel getLoginJPanel() {
 			
-		JPanel panel = new JPanel();
-		
-		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-		
-		JLabel transferLabel = new JLabel("LOGIN         |");
-		panel.add(transferLabel);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
-	
-		JLabel label5 = new JLabel("Username:")	;
-		panel.add(label5);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		username = new JTextField(10);
-		panel.add(username);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		
-		JLabel label4 = new JLabel("Password:")	;
-		panel.add(label4);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		password = new JPasswordField(10);
-		panel.add(password);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		
-		JButton button2 = new JButton("Login");
-		button2.addActionListener(this);
-		panel.add(button2);
-		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-
-		loginConf = new JTextField("", 100);
-		loginConf.setEditable(false);
-		panel.add(loginConf);
-
-		panel.setLayout(boxlayout);
-
-		return panel;
+//		JPanel panel = new JPanel();
+//		
+//		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+//		
+//		JLabel transferLabel = new JLabel("LOGIN         |");
+//		panel.add(transferLabel);
+//		panel.add(Box.createRigidArea(new Dimension(50, 0)));
+//	
+//		JLabel label5 = new JLabel("Username:")	;
+//		panel.add(label5);
+//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+//		username = new JTextField(10);
+//		panel.add(username);
+//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+//		
+//		JLabel label4 = new JLabel("Password:")	;
+//		panel.add(label4);
+//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+//		password = new JPasswordField(10);
+//		panel.add(password);
+//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+//		
+//		JButton button2 = new JButton("Login");
+//		button2.addActionListener(this);
+//		panel.add(button2);
+//		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+//
+//		loginConf = new JTextField("", 100);
+//		loginConf.setEditable(false);
+//		panel.add(loginConf);
+//
+//		panel.setLayout(boxlayout);
+//
+//		return panel;
+//		
+//		private JLabel labelUsername = new JLabel("Enter username: ");
+//	    private JLabel labelPassword = new JLabel("Enter password: ");
+//	    private JTextField textUsername = new JTextField(20);
+//	    private JPasswordField fieldPassword = new JPasswordField(20);
+//	    private JButton buttonLogin = new JButton("Login");
+//	
+		         
+		        // create a new panel with GridBagLayout manager
+		        JPanel panel = new JPanel(new GridBagLayout());
+		         
+		        GridBagConstraints constraints = new GridBagConstraints();
+		        constraints.anchor = GridBagConstraints.WEST;
+		        constraints.insets = new Insets(10, 10, 10, 10);
+		         
+		        // add components to the panel
+		        constraints.gridx = 0;
+		        constraints.gridy = 0;     
+		        panel.add(labelUsername, constraints);
+		 
+		        constraints.gridx = 1;
+		        panel.add(username, constraints);
+		         
+		        constraints.gridx = 0;
+		        constraints.gridy = 1;     
+		        panel.add(labelPassword, constraints);
+		         
+		        constraints.gridx = 1;
+		        panel.add(password, constraints);
+		         
+		        constraints.gridx = 0;
+		        constraints.gridy = 2;
+		        constraints.gridwidth = 2;
+		        constraints.anchor = GridBagConstraints.CENTER;
+		    	buttonLogin.addActionListener(this);
+		        panel.add(buttonLogin, constraints);
+		        
+		        constraints.gridx = 1;
+		        constraints.gridy = 3;
+		        panel.add(loginConf, constraints);
+		         
+		         
+		        // set border for the panel
+		        panel.setBorder(BorderFactory.createTitledBorder(
+		        BorderFactory.createEtchedBorder(), "LOGIN"));
+		         
+		        return panel;
+		        // add the panel to this frame
+//		        add(panel);
+//		         
+//		        pack();
+//		        setLocationRelativeTo(null);
 	}
 		
 	
@@ -234,10 +298,6 @@ public class ClientGUI implements ActionListener{
 		JPanel panel = new JPanel();
 		
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-		
-		JLabel label = new JLabel("VIEW            |");
-		panel.add(label);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 	
 		JLabel label5 = new JLabel("Acc No: ")	;
 		panel.add(label5);
@@ -274,6 +334,9 @@ public class ClientGUI implements ActionListener{
 		balance.setEditable(false);
 		panel.add(balance);
 
+		panel.setBorder(BorderFactory.createTitledBorder(
+		BorderFactory.createEtchedBorder(), "VIEW ACCOUNT"));
+				         
 
 		panel.setLayout(boxlayout);
 
@@ -283,14 +346,10 @@ public class ClientGUI implements ActionListener{
 	
 	private JPanel getChangePassJPanel() {
 		
-JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
 		
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 		
-		JLabel label = new JLabel("RESET PASSWORD |");
-		panel.add(label);
-		panel.add(Box.createRigidArea(new Dimension(50, 0)));
-	
 		JLabel label5 = new JLabel("Username: ")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -321,14 +380,59 @@ JPanel panel = new JPanel();
 		passMsg.setEditable(false);
 		panel.add(passMsg);
 		
-		panel.setLayout(boxlayout);
+		panel.setBorder(BorderFactory.createTitledBorder(
+		BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
+		   
+		  panel.setLayout(boxlayout);
 
 		return panel;
 		
 	}
-//	
-//	private JPanel getHelpBotJPanel() {
-//	}
+	
+	
+	private JPanel getHelpBotJPanel() {
+		
+		
+		JPanel panel = new JPanel();
+//		panel.setBackground(Color.white);
+		
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		
+		JLabel label2 = new JLabel("How to: ");
+		panel.add(label2);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+	
+		problems = new JTextField("1. Reset Password", 10);
+		problems.setEditable(false);
+		panel.add(problems);
+		
+		JLabel label5 = new JLabel("Enter no:")	;
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		problemID = new JTextField("",0);
+		panel.add(problemID);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JButton button2 = new JButton("Select");
+		button2.addActionListener(this);
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(0, 0)));
+		
+		JLabel label3 = new JLabel("Solution: ");
+		panel.add(label3);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		solution = new JTextField("", 20);
+		solution.setEditable(false);
+		panel.add(solution);
+		
+		panel.setBorder(BorderFactory.createTitledBorder(
+		BorderFactory.createEtchedBorder(), "HELP BOT"));
+		
+		panel.setLayout(boxlayout);
+
+		return panel;
+	}
 //	
 //	private JPanel getVaultJPanel() {
 //	}
@@ -336,8 +440,6 @@ JPanel panel = new JPanel();
 //	private JPanel getInterestCalcJPanel() {
 //	}
 		
-
-
 
 	public static void main(String[] args) {
 
@@ -361,6 +463,8 @@ JPanel panel = new JPanel();
 
 		// Set border for the panel
 		panel.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
+		panel.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEtchedBorder(), "eBanking Application"));
 	
 		panel.add( getDepositJPanel() );
 		panel.add( getTransferJPanel() );
@@ -368,7 +472,7 @@ JPanel panel = new JPanel();
 		panel.add( getLoginJPanel() );
 		panel.add( getViewAccountJPanel() );
 		panel.add( getChangePassJPanel() );
-//		panel.add( getHelpBotJPanel() );
+		panel.add( getHelpBotJPanel() );
 //		panel.add( getVaultJPanel() );
 //		panel.add( getInterestCalcJPanel() );
 
@@ -455,7 +559,7 @@ JPanel panel = new JPanel();
 				}
 				else if (label.equals("Request")) 
 				{
-				System.out.println("Request service to be invoked ...");
+				System.out.println("Request service invoked ...");
 				
 				/*
 				 * 
@@ -500,7 +604,7 @@ JPanel panel = new JPanel();
 				}
 				else if (label.equals("Login")) 
 				{
-				System.out.println("Login service to be invoked ...");
+				System.out.println("Login service invoked ...");
 			
 				/*
 				 * 
@@ -525,7 +629,7 @@ JPanel panel = new JPanel();
 				}
 				else if (label.equals("View Account")) 
 				{
-				System.out.println("View Account service to be invoked ...");
+				System.out.println("View Account service invoked ...");
 				
 				/*
 				 * 
@@ -572,7 +676,7 @@ JPanel panel = new JPanel();
 				}
 				else if (label.equals("Change password")) 
 				{
-				System.out.println("Password service to be invoked ...");
+				System.out.println("Password service invoked ...");
 			
 				/*
 				 * 
@@ -595,9 +699,49 @@ JPanel panel = new JPanel();
 				passMsg.setText(response.getMessage());
 				
 // HELP BOT  ---------------------------------------------------------------------------------------					
+				}
+				else if (label.equals("Select"))
+				{
+				System.out.println("Help Bot service invoked ...");
+				
+				/*
+				 * 
+				 */ 
+				
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053)
+						.usePlaintext()
+						.build();
+				
+				UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
+				
+				StreamObserver<HelpResponse> responseObserver = new StreamObserver<HelpResponse>() {
+
+					@Override
+					public void onNext(HelpResponse response) {
+						problems.setText(response.getProblems()); 
+						solution.setText(response.getSolution()); 
+					}
+
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+
+					}
+
+					@Override
+					public void onCompleted() {
+						System.out.println("END OF STREAM: HelpBot offline");
+					}
+
+				};
+
+				StreamObserver<HelpRequest> requestObserver = asyncStub.helpBot(responseObserver);
 
 				
-		}
+					requestObserver.onNext(HelpRequest.newBuilder()
+							.setProblemID(Integer.parseInt(problemID.getText()))		
+							.build());
+				}
 	}
 }
 

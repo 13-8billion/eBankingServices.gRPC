@@ -3,6 +3,8 @@
 
 package eBankingServices.UserTools;
 
+import io.grpc.ServerBuilder;
+
 /**
  * Protobuf type {@code UserTools.HelpResponse}
  */
@@ -16,6 +18,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private HelpResponse() {
+    problems_ = "";
     solution_ = "";
   }
 
@@ -44,6 +47,12 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            problems_ = s;
+            break;
+          }
+          case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             solution_ = s;
@@ -81,10 +90,44 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.HelpResponse.class, eBankingServices.UserTools.HelpResponse.Builder.class);
   }
 
-  public static final int SOLUTION_FIELD_NUMBER = 1;
+  public static final int PROBLEMS_FIELD_NUMBER = 1;
+  private volatile java.lang.Object problems_;
+  /**
+   * <code>string problems = 1;</code>
+   */
+  public java.lang.String getProblems() {
+    java.lang.Object ref = problems_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      problems_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string problems = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getProblemsBytes() {
+    java.lang.Object ref = problems_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      problems_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SOLUTION_FIELD_NUMBER = 2;
   private volatile java.lang.Object solution_;
   /**
-   * <code>string solution = 1;</code>
+   * <code>string solution = 2;</code>
    */
   public java.lang.String getSolution() {
     java.lang.Object ref = solution_;
@@ -99,7 +142,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string solution = 1;</code>
+   * <code>string solution = 2;</code>
    */
   public com.google.protobuf.ByteString
       getSolutionBytes() {
@@ -129,8 +172,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!getProblemsBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, problems_);
+    }
     if (!getSolutionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, solution_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, solution_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +187,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!getProblemsBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, problems_);
+    }
     if (!getSolutionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, solution_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, solution_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,6 +209,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.HelpResponse other = (eBankingServices.UserTools.HelpResponse) obj;
 
     boolean result = true;
+    result = result && getProblems()
+        .equals(other.getProblems());
     result = result && getSolution()
         .equals(other.getSolution());
     result = result && unknownFields.equals(other.unknownFields);
@@ -173,6 +224,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + PROBLEMS_FIELD_NUMBER;
+    hash = (53 * hash) + getProblems().hashCode();
     hash = (37 * hash) + SOLUTION_FIELD_NUMBER;
     hash = (53 * hash) + getSolution().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -308,6 +361,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      problems_ = "";
+
       solution_ = "";
 
       return this;
@@ -336,6 +391,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.HelpResponse buildPartial() {
       eBankingServices.UserTools.HelpResponse result = new eBankingServices.UserTools.HelpResponse(this);
+      result.problems_ = problems_;
       result.solution_ = solution_;
       onBuilt();
       return result;
@@ -385,6 +441,10 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.HelpResponse other) {
       if (other == eBankingServices.UserTools.HelpResponse.getDefaultInstance()) return this;
+      if (!other.getProblems().isEmpty()) {
+        problems_ = other.problems_;
+        onChanged();
+      }
       if (!other.getSolution().isEmpty()) {
         solution_ = other.solution_;
         onChanged();
@@ -418,9 +478,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object problems_ = "";
+    /**
+     * <code>string problems = 1;</code>
+     */
+    public java.lang.String getProblems() {
+      java.lang.Object ref = problems_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        problems_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string problems = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getProblemsBytes() {
+      java.lang.Object ref = problems_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        problems_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string problems = 1;</code>
+     */
+    public Builder setProblems(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      problems_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string problems = 1;</code>
+     */
+    public Builder clearProblems() {
+      
+      problems_ = getDefaultInstance().getProblems();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string problems = 1;</code>
+     */
+    public Builder setProblemsBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      problems_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object solution_ = "";
     /**
-     * <code>string solution = 1;</code>
+     * <code>string solution = 2;</code>
      */
     public java.lang.String getSolution() {
       java.lang.Object ref = solution_;
@@ -435,7 +564,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string solution = 1;</code>
+     * <code>string solution = 2;</code>
      */
     public com.google.protobuf.ByteString
         getSolutionBytes() {
@@ -451,7 +580,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string solution = 1;</code>
+     * <code>string solution = 2;</code>
      */
     public Builder setSolution(
         java.lang.String value) {
@@ -464,7 +593,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string solution = 1;</code>
+     * <code>string solution = 2;</code>
      */
     public Builder clearSolution() {
       
@@ -473,7 +602,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string solution = 1;</code>
+     * <code>string solution = 2;</code>
      */
     public Builder setSolutionBytes(
         com.google.protobuf.ByteString value) {
@@ -497,6 +626,7 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
+
 
 
     // @@protoc_insertion_point(builder_scope:UserTools.HelpResponse)

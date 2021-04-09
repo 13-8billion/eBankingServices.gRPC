@@ -39,7 +39,7 @@ public class UserToolsClient {
 
 			@Override
 			public void onNext(HelpResponse response) {
-				System.out.println("Client >>>>>>>>> "+ response.getSolution());
+				System.out.println(response.getSolution());
 			}
 
 			@Override
@@ -50,7 +50,7 @@ public class UserToolsClient {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("Client >>>>>>>>> END OF STREAM: HelpBot offline");
+				System.out.println("END OF STREAM: HelpBot offline");
 			}
 
 		};

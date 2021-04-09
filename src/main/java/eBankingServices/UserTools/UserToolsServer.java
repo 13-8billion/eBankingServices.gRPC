@@ -129,38 +129,43 @@ public class UserToolsServer extends UserToolsImplBase {
 			@Override
 			public void onNext(HelpRequest request) {
 				
-			try {
+//			try {
 				int id = request.getProblemID();
-
-				System.out.println("Server >>>>>>>>> Welcome to HelpBot. Please select the number of your problem below:");
-				System.out.println("Reset password enter 1: ");
-				System.out.println("Report a bug enter 2: ");
-				System.out.println("Help with Vaults enter 3: ");
-				System.out.println("Help with payments enter 4: ");
-				Thread.sleep(7000);
+				
+				String problems = "1. Reset Password "
+								+ "2. Report bug"
+								+ "3. Use vaults"
+								+ "4. Send/receive payments";
+//
+//				System.out.println("Welcome to HelpBot. Please select the number of your problem below:");
+//				System.out.println("Reset password enter 1: ");
+//				System.out.println("Report a bug enter 2: ");
+//				System.out.println("Help with Vaults enter 3: ");
+//				System.out.println("Help with payments enter 4: ");
+//				Thread.sleep(7000);
 				
 //				id = in.nextInt();
-				
-				System.out.println("Server >>>>>>>>> You have selected Problem No: " + id + " please find solutions on next screen.");
-				Thread.sleep(2000); 
+//				
+//				System.out.println("You have selected Problem No: " + id + " please find solutions on next screen.");
+//				Thread.sleep(2000); 
 				
 				String solution = null;
 
 				if(id == 1) //request.getSolutions()==Solutions.PASSWORD_RESET)
 				{
-					solution = "Problem ID. 1 Solution = To reset your password, navigate to your account and under settings select 'change password' and follow the instructions";			
+					solution = "To reset your password, navigate to your account and under settings select 'change password' and follow the instructions";			
 				}
 				else if(id == 2)// request.getSolutions()==Solutions.REPORT_BUG
 				{								
-					solution = "Problem ID. 2 Solution = To report a bug please send an email to our 24 hour help assist at: eBankingServices.gRPC@nci.ie";
+					solution = "To report a bug please send an email to our 24 hour help assist at: eBankingServices.gRPC@nci.ie";
 				}
 				else if(id == 3) // request.getSolutions()==Solutions.VAULTS
 				{
-					solution = "Problem ID. 3 Solution = To use our vault service simply navigate to the vaults under the 'user tools' menu, select the amount of money you wish to store and select a date for when the vault can be reopened.";
+					solution = "To use our vault service simply navigate to the vaults under the 'user tools' menu, select the amount of money you wish to store and select a date for when the vault can be reopened.";
 				}
 				else if(id == 4) // request.getSolutions()==Solutions.PAYMENTS
 				{
-					solution = "Problem ID. 4 Solution = If you are experiencing issues making or recieveing payment please call our free 24 hour hotline at: 0800-03041992.";
+					solution = "If you are experiencing issues making or recieveing payment please call our free 24 hour hotline at: 0800-03041992.";
 				}
 				else if (id != 1 || id != 2 || id !=3 | id !=4){
 
@@ -169,22 +174,25 @@ public class UserToolsServer extends UserToolsImplBase {
 
 				HelpResponse reply = HelpResponse.newBuilder()
 						.setSolution(solution)
+						.setProblems(problems)
 						.build();
 				
 				responseObserver.onNext(reply);
-				Thread.sleep(1000);
-				
+			
+//				Thread.sleep(1000);
+//				
 
 				// Sleep for a bit before sending the next one.
-				Thread.sleep(new Random().nextInt(1000) + 500);
+//				Thread.sleep(new Random().nextInt(1000) + 500);
 
-
-			} catch (RuntimeException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {			
-				e.printStackTrace();
-			}
+//
+//			} catch (RuntimeException e) {
+//				e.printStackTrace();
+//			} catch (InterruptedException e) {			
+//				e.printStackTrace();
+//			}
 		}
+			
 
 			@Override
 			public void onError(Throwable t) {
@@ -212,14 +220,14 @@ public void vault(VaultAccess request, StreamObserver<VaultConfirmation> respons
 		if (authenticateUser(request.getUsername(), request.getPassword())) {
 			
 			vc = VaultConfirmation.newBuilder()	
-					.setVaultConf("Server >>>>>>>>> Vault ID. " + request.getVaultID() + ": " + euro + request.getSum() +  
+					.setVaultConf("Vault ID. " + request.getVaultID() + ": " + euro + request.getSum() +  
 							" has been stored successfully into Account No. " + request.getAccNo() 
 							+ ". The money can not be accessed until " + request.getUnlockDate())
 					.build();
 			
 		} else {	
 			vc = VaultConfirmation.newBuilder()	
-					.setVaultConf("Server >>>>>>>>> Username or Password Incorrect!" )
+					.setVaultConf("Username or Password Incorrect!" )
 					.build();
 		}
 		

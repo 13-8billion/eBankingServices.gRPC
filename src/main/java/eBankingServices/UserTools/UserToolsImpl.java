@@ -57,21 +57,22 @@ public final class UserToolsImpl {
       "uest\022\021\n\tproblemID\030\001 \001(\005\0223\n\tsolutions\030\002 \001" +
       "(\0162 .UserTools.HelpRequest.Solutions\"I\n\t" +
       "Solutions\022\022\n\016PASSWORD_RESET\020\000\022\016\n\nREPORT_" +
-      "BUG\020\001\022\n\n\006VAULTS\020\002\022\014\n\010PAYMENTS\020\003\" \n\014HelpR" +
-      "esponse\022\020\n\010solution\030\001 \001(\t\"r\n\013VaultAccess" +
-      "\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\022\022\n\nunlockDa" +
-      "te\030\003 \001(\t\022\017\n\007vaultID\030\004 \001(\005\022\020\n\010username\030\005 " +
-      "\001(\t\022\020\n\010password\030\006 \001(\t\"&\n\021VaultConfirmati" +
-      "on\022\021\n\tvaultConf\030\003 \001(\t\";\n\013CalcRequest\022\017\n\007" +
-      "accType\030\001 \001(\t\022\013\n\003sum\030\002 \001(\001\022\016\n\006access\030\003 \001" +
-      "(\t\" \n\014CalcResponse\022\020\n\010interest\030\001 \001(\0012\321\001\n" +
-      "\tUserTools\022@\n\007HelpBot\022\026.UserTools.HelpRe" +
-      "quest\032\027.UserTools.HelpResponse\"\000(\0010\001\022?\n\005" +
-      "Vault\022\026.UserTools.VaultAccess\032\034.UserTool" +
-      "s.VaultConfirmation\"\000\022A\n\014InterestCalc\022\026." +
-      "UserTools.CalcRequest\032\027.UserTools.CalcRe" +
-      "sponse\"\000B-\n\032eBankingServices.UserToolsB\r" +
-      "UserToolsImplP\001b\006proto3"
+      "BUG\020\001\022\n\n\006VAULTS\020\002\022\014\n\010PAYMENTS\020\003\"2\n\014HelpR" +
+      "esponse\022\020\n\010problems\030\001 \001(\t\022\020\n\010solution\030\002 " +
+      "\001(\t\"r\n\013VaultAccess\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum" +
+      "\030\002 \001(\001\022\022\n\nunlockDate\030\003 \001(\t\022\017\n\007vaultID\030\004 " +
+      "\001(\005\022\020\n\010username\030\005 \001(\t\022\020\n\010password\030\006 \001(\t\"" +
+      "&\n\021VaultConfirmation\022\021\n\tvaultConf\030\003 \001(\t\"" +
+      ";\n\013CalcRequest\022\017\n\007accType\030\001 \001(\t\022\013\n\003sum\030\002" +
+      " \001(\001\022\016\n\006access\030\003 \001(\t\" \n\014CalcResponse\022\020\n\010" +
+      "interest\030\001 \001(\0012\321\001\n\tUserTools\022@\n\007HelpBot\022" +
+      "\026.UserTools.HelpRequest\032\027.UserTools.Help" +
+      "Response\"\000(\0010\001\022?\n\005Vault\022\026.UserTools.Vaul" +
+      "tAccess\032\034.UserTools.VaultConfirmation\"\000\022" +
+      "A\n\014InterestCalc\022\026.UserTools.CalcRequest\032" +
+      "\027.UserTools.CalcResponse\"\000B-\n\032eBankingSe" +
+      "rvices.UserToolsB\rUserToolsImplP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -96,7 +97,7 @@ public final class UserToolsImpl {
     internal_static_UserTools_HelpResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_HelpResponse_descriptor,
-        new java.lang.String[] { "Solution", });
+        new java.lang.String[] { "Problems", "Solution", });
     internal_static_UserTools_VaultAccess_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_UserTools_VaultAccess_fieldAccessorTable = new

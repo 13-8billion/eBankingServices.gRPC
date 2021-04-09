@@ -8,11 +8,21 @@ public interface HelpResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string solution = 1;</code>
+   * <code>string problems = 1;</code>
+   */
+  java.lang.String getProblems();
+  /**
+   * <code>string problems = 1;</code>
+   */
+  com.google.protobuf.ByteString
+      getProblemsBytes();
+
+  /**
+   * <code>string solution = 2;</code>
    */
   java.lang.String getSolution();
   /**
-   * <code>string solution = 1;</code>
+   * <code>string solution = 2;</code>
    */
   com.google.protobuf.ByteString
       getSolutionBytes();

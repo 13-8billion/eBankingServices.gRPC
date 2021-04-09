@@ -34,7 +34,8 @@ message HelpRequest {
 }
 
 message HelpResponse {
-  string solution = 1;
+  string problems = 1; 
+  string solution = 2;
   }
   
 // valut message

@@ -126,13 +126,13 @@ private Properties getProperties() {
 				if (authenticateUser(request.getUsername(), request.getPassword())) {
 						
 					lc = LoginConfirmation.newBuilder()	
-							.setMessage("Server >>>>>>>>> Username and Password Correct! Welcome "+ request.getUsername())
+							.setMessage("Welcome back "+ request.getUsername()+ "!")
 							.build();
 					responseObserver.onNext(lc);
 					
 				} else {	
 					lc = LoginConfirmation.newBuilder()	
-							.setMessage("Server >>>>>>>>> Username or Password Incorrect!" )
+							.setMessage("Username or Password Incorrect!" )
 							.build();
 					responseObserver.onNext(lc);
 				}

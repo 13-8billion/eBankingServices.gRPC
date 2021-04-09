@@ -40,11 +40,13 @@ import eBankingServices.UserAccount.PasswordConfirmation;
 import eBankingServices.UserAccount.PasswordRequest;
 import eBankingServices.UserAccount.UserAccountGrpc;
 import eBankingServices.UserAccount.ViewRequest;
+import eBankingServices.UserTools.CalcRequest;
+import eBankingServices.UserTools.CalcResponse;
 import eBankingServices.UserTools.HelpRequest;
 import eBankingServices.UserTools.HelpResponse;
 import eBankingServices.UserTools.UserToolsGrpc;
-
-
+import eBankingServices.UserTools.VaultAccess;
+import eBankingServices.UserTools.VaultConfirmation;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -58,18 +60,39 @@ public class ClientGUI implements ActionListener{
 	private JTextField entry1, entry2, reply1;
 	private JTextField fromAccNo, toAccNo, sum, transferID, tranMsg;
 	private JTextField fromAccNo2, toAccNo2, sum2, requestID, status;
-//	private JTextField username, loginConf, password;
-	private JPasswordField currPass, newPass;
-	private JTextField accno, firstName, lastName, balance, viewAccMsg;
-	private JTextField passMsg;
+	private JPasswordField currPass, newPass; // password;
+	private JTextField accno, firstName, lastName, balance, viewAccMsg, username, passMsg;
 	private JTextField problems, problemID, solution;
-		
-		private JLabel labelUsername = new JLabel("Enter username: ");
-	    private JLabel labelPassword = new JLabel("Enter password: ");
-	    private JTextField username = new JTextField(20);
-	    private JTextField loginConf = new JTextField(20);
-	    private JPasswordField password = new JPasswordField(20);
-	    private JButton buttonLogin = new JButton("Login");
+	// login
+	private JLabel labelUsername = new JLabel("Enter username: ");
+	private JLabel labelPassword = new JLabel("Enter password: ");
+	private JTextField username1 = new JTextField(10);
+	private JTextField loginConf1 = new JTextField(20);
+	private JPasswordField password1 = new JPasswordField(10);
+	private JButton buttonLogin = new JButton("Login");
+	private JLabel labelUsername2 = new JLabel("Enter username: ");
+    private JLabel labelPassword2 = new JLabel("Enter password: ");
+    // vault
+    private JTextField vaultUsername = new JTextField(10);
+    private JTextField vaultConf = new JTextField(50);
+	private JLabel labelaccno = new JLabel("Acc No: ");
+    private JLabel labelsum = new JLabel("Amount: ");
+    private JTextField vaultaccno = new JTextField(10);
+    private JLabel labelunlock = new JLabel("Unlock Date (dd/mm/yyyy): ");
+    private JTextField vaultunlock = new JTextField(10);
+    private JTextField vaultsum = new JTextField(10);
+    private JPasswordField vaultPassword = new JPasswordField(10);
+    private JButton buttonVault = new JButton("Vault");
+    //calculator
+    private JLabel labelacctype = new JLabel("Acc type (12, 24 or 36) term: ");
+    private JTextField acctype = new JTextField(10);
+    private JLabel labelcalcsum = new JLabel("Amount € ");
+    private JTextField calcsum = new JTextField(10);
+    private JLabel labelaccess = new JLabel("Access(yes/no): ");
+    private JTextField access = new JTextField(10);
+    private JButton buttoncalc = new JButton("Calculate");
+    private JLabel labelinterest = new JLabel("Interest Payable € ");
+    private JTextField interest = new JTextField(10);
 
 
 // deposit -----------------------------
@@ -259,14 +282,14 @@ public class ClientGUI implements ActionListener{
 		        panel.add(labelUsername, constraints);
 		 
 		        constraints.gridx = 1;
-		        panel.add(username, constraints);
+		        panel.add(username1, constraints);
 		         
 		        constraints.gridx = 0;
 		        constraints.gridy = 1;     
 		        panel.add(labelPassword, constraints);
 		         
 		        constraints.gridx = 1;
-		        panel.add(password, constraints);
+		        panel.add(password1, constraints);
 		         
 		        constraints.gridx = 0;
 		        constraints.gridy = 2;
@@ -277,7 +300,7 @@ public class ClientGUI implements ActionListener{
 		        
 		        constraints.gridx = 1;
 		        constraints.gridy = 3;
-		        panel.add(loginConf, constraints);
+		        panel.add(loginConf1, constraints);
 		         
 		         
 		        // set border for the panel
@@ -285,11 +308,7 @@ public class ClientGUI implements ActionListener{
 		        BorderFactory.createEtchedBorder(), "LOGIN"));
 		         
 		        return panel;
-		        // add the panel to this frame
-//		        add(panel);
-//		         
-//		        pack();
-//		        setLocationRelativeTo(null);
+
 	}
 		
 	
@@ -383,7 +402,7 @@ public class ClientGUI implements ActionListener{
 		panel.setBorder(BorderFactory.createTitledBorder(
 		BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
 		   
-		  panel.setLayout(boxlayout);
+		 panel.setLayout(boxlayout);
 
 		return panel;
 		
@@ -433,12 +452,126 @@ public class ClientGUI implements ActionListener{
 
 		return panel;
 	}
-//	
-//	private JPanel getVaultJPanel() {
-//	}
-//	
-//	private JPanel getInterestCalcJPanel() {
-//	}
+	
+	
+	private JPanel getVaultJPanel() {
+		
+		   JPanel panel = new JPanel(new GridBagLayout());
+	         
+	        GridBagConstraints constraints = new GridBagConstraints();
+	        constraints.anchor = GridBagConstraints.WEST;
+	        constraints.insets = new Insets(10, 10, 10, 10);
+	         
+	        // add components to the panel
+	       
+	        constraints.gridx = 0;
+	        constraints.gridy = 0;     
+	        panel.add(labelUsername2, constraints);
+	 
+	        constraints.gridx = 1;
+	        panel.add(vaultUsername, constraints);
+	         
+	        constraints.gridx = 0;
+	        constraints.gridy = 1;     
+	        panel.add(labelPassword2, constraints);
+	         
+	        constraints.gridx = 1;
+	        panel.add(vaultPassword, constraints);
+	        
+	        constraints.gridx = 0;
+	        constraints.gridy = 2;     
+	        panel.add(labelaccno, constraints);
+	 
+	        constraints.gridx = 1;
+	        panel.add(vaultaccno, constraints);
+	         
+	        constraints.gridx = 0;
+	        constraints.gridy = 3;     
+	        panel.add(labelsum, constraints);
+	         
+	        constraints.gridx = 1;
+	        panel.add(vaultsum, constraints);
+	        
+	        constraints.gridx = 0;
+	        constraints.gridy = 4;     
+	        panel.add(labelunlock, constraints);
+	         
+	        constraints.gridx = 1;
+	        panel.add(vaultunlock, constraints);
+	         
+	        constraints.gridx = 0;
+	        constraints.gridy = 5;
+	        constraints.gridwidth = 2;
+	        constraints.anchor = GridBagConstraints.CENTER;
+	    	buttonVault.addActionListener(this);
+	        panel.add(buttonVault, constraints);
+	        
+	        constraints.gridx = 0;
+	        constraints.gridy = 6;
+	        panel.add(vaultConf, constraints);
+	         
+	         
+	        // set border for the panel
+	        panel.setBorder(BorderFactory.createTitledBorder(
+	        BorderFactory.createEtchedBorder(), "VAULT"));
+	         
+	        return panel;
+		
+	}
+	
+	
+	private JPanel getInterestCalcJPanel() {
+		
+		 JPanel panel = new JPanel(new GridBagLayout());
+         
+	        GridBagConstraints constraints = new GridBagConstraints();
+	        constraints.anchor = GridBagConstraints.WEST;
+	        constraints.insets = new Insets(10, 10, 10, 10);
+	         
+	        // add components to the panel
+	        constraints.gridx = 0;
+	        constraints.gridy = 0;     
+	        panel.add(labelacctype, constraints);
+	 
+	        constraints.gridx = 1;
+	        panel.add(acctype, constraints);
+	         
+	        constraints.gridx = 0;
+	        constraints.gridy = 1;     
+	        panel.add(labelcalcsum, constraints);
+	         
+	        constraints.gridx = 1;
+	        panel.add(calcsum, constraints);
+	        
+	        constraints.gridx = 0;
+	        constraints.gridy = 2;     
+	        panel.add(labelaccess, constraints);
+	 
+	        constraints.gridx = 1;
+	        panel.add(access, constraints);
+	        
+	        constraints.gridx = 0;
+	        constraints.gridy = 4;
+	        constraints.gridwidth = 2;
+	        constraints.anchor = GridBagConstraints.CENTER;
+	    	buttoncalc.addActionListener(this);
+	        panel.add(buttoncalc, constraints);
+	        
+	        constraints.anchor = GridBagConstraints.WEST;
+	        constraints.gridx = 0;
+	        constraints.gridy = 5;     
+	        panel.add(labelinterest, constraints);
+	         
+	        constraints.gridx = 1;
+	        panel.add(interest, constraints);
+	        
+	        // set border for the panel
+	        panel.setBorder(BorderFactory.createTitledBorder(
+	        BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
+	         
+	        return panel;
+		
+	}
 		
 
 	public static void main(String[] args) {
@@ -463,18 +596,16 @@ public class ClientGUI implements ActionListener{
 
 		// Set border for the panel
 		panel.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
-		panel.setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createEtchedBorder(), "eBanking Application"));
 	
-		panel.add( getDepositJPanel() );
-		panel.add( getTransferJPanel() );
-		panel.add( getRequestJPanel() );
-		panel.add( getLoginJPanel() );
-		panel.add( getViewAccountJPanel() );
-		panel.add( getChangePassJPanel() );
+//		panel.add( getDepositJPanel() );
+//		panel.add( getTransferJPanel() );
+//		panel.add( getRequestJPanel() );
+//		panel.add( getLoginJPanel() );
+//		panel.add( getViewAccountJPanel() );
+//		panel.add( getChangePassJPanel() );
 		panel.add( getHelpBotJPanel() );
-//		panel.add( getVaultJPanel() );
-//		panel.add( getInterestCalcJPanel() );
+		panel.add( getVaultJPanel() );
+		panel.add( getInterestCalcJPanel() );
 
 
 		// Set size for the frame
@@ -618,12 +749,12 @@ public class ClientGUI implements ActionListener{
 
 				//preparing message to send
 				LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder()
-						.setUsername(username.getText())
-						.setPassword(password.getText())
+						.setUsername(username1.getText())
+						.setPassword(password1.getText())
 						.build());
 
 				//Retrieving reply from service
-				loginConf.setText(response.getMessage());
+				loginConf1.setText(response.getMessage());
 				
 // VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
 				}
@@ -741,8 +872,61 @@ public class ClientGUI implements ActionListener{
 					requestObserver.onNext(HelpRequest.newBuilder()
 							.setProblemID(Integer.parseInt(problemID.getText()))		
 							.build());
-				}
+		
+// VAULT ---------------------------------------------------------------------------------------
+			}
+			else if (label.equals("Vault")) 
+			{
+			System.out.println("Vault service invoked ...");
+		
+			/*
+			 * 
+			 */ 
+			
+			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053)
+					.usePlaintext()
+					.build();
+			
+			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
+			
+				VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
+						.setUsername(vaultUsername.getText())
+						.setPassword(vaultPassword.getText())
+						.setAccNo(Integer.parseInt(vaultaccno.getText()))
+						.setSum(Double.parseDouble(vaultsum.getText()))
+						.setUnlockDate(vaultunlock.getText())
+						.build());
+				//Retrieving reply from service
+				vaultConf.setText(response.getVaultConf());	
+
+// INTEREST CALCULATOR ---------------------------------------------------------------------------------------
+				
+			}
+			else if (label.equals("Calculate")) 
+			{
+			System.out.println("interest calculator service invoked ...");
+		
+			/*
+			 * 
+			 */ 
+			
+			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053)
+					.usePlaintext()
+					.build();
+			
+			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
+			
+			CalcResponse response = blockingStub.interestCalc(CalcRequest.newBuilder()
+					.setAccType(acctype.getText())
+					.setAccess(access.getText())
+					.setSum(Double.parseDouble(calcsum.getText()))
+			
+					.build());
+			//Retrieving reply from service
+			interest.setText((String.valueOf(response.getInterest())));	
+				
 	}
+}
 }
 
 			

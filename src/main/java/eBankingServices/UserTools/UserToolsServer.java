@@ -221,7 +221,7 @@ public void vault(VaultAccess request, StreamObserver<VaultConfirmation> respons
 			
 			vc = VaultConfirmation.newBuilder()	
 					.setVaultConf("Vault ID. " + request.getVaultID() + ": " + euro + request.getSum() +  
-							" has been stored successfully into Account No. " + request.getAccNo() 
+							" locked into Acc No. " + request.getAccNo() 
 							+ ". The money can not be accessed until " + request.getUnlockDate())
 					.build();
 			

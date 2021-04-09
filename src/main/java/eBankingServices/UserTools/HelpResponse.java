@@ -3,8 +3,6 @@
 
 package eBankingServices.UserTools;
 
-import io.grpc.ServerBuilder;
-
 /**
  * Protobuf type {@code UserTools.HelpResponse}
  */
@@ -626,7 +624,6 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
-
 
 
     // @@protoc_insertion_point(builder_scope:UserTools.HelpResponse)

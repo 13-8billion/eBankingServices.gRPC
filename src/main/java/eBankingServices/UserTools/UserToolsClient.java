@@ -110,24 +110,24 @@ public class UserToolsClient {
 
 	public static void vault() {
 		
-		Scanner in = new Scanner(System.in);
-		String username;
-		String password;
-		int accNo;
-		int sum;
-		String unlockDate;
+//		Scanner in = new Scanner(System.in);
+		String username = null;
+		String password = null;
+		int accNo =0;
+		double sum = 0;
+		String unlockDate = null;
 	
-		System.out.println("Client >>>>>>>>> Requesting to access vault...");
-		System.out.println("Enter username (Amy): ");
-		username = in.next();
-		System.out.println("Enter password (123): ");
-		password = in.next();
-		System.out.println("Enter Account No (1, 2 or 3): ");
-		accNo = in.nextInt();
-		System.out.println("Enter sum to store: ");
-		sum = in.nextInt();
-		System.out.println("Enter unlock date (dd-mm-yyyy): ");
-		unlockDate = in.next();
+//		System.out.println("Client >>>>>>>>> Requesting to access vault...");
+//		System.out.println("Enter username (Amy): ");
+//		username = in.next();
+//		System.out.println("Enter password (123): ");
+//		password = in.next();
+//		System.out.println("Enter Account No (1, 2 or 3): ");
+//		accNo = in.nextInt();
+//		System.out.println("Enter sum to store: ");
+//		sum = in.nextInt();
+//		System.out.println("Enter unlock date (dd-mm-yyyy): ");
+//		unlockDate = in.next();
 		
 		VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
 				.setUsername(username)

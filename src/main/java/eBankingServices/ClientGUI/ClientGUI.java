@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -31,6 +32,8 @@ import eBankingServices.Transactions.TransferSum;
 import eBankingServices.UserAccount.AccountInfo;
 import eBankingServices.UserAccount.LoginConfirmation;
 import eBankingServices.UserAccount.LoginRequest;
+import eBankingServices.UserAccount.PasswordConfirmation;
+import eBankingServices.UserAccount.PasswordRequest;
 import eBankingServices.UserAccount.UserAccountGrpc;
 import eBankingServices.UserAccount.ViewRequest;
 import eBankingServices.UserTools.UserToolsGrpc;
@@ -49,12 +52,14 @@ public class ClientGUI implements ActionListener{
 	private JTextField entry1, entry2, reply1;
 	private JTextField fromAccNo, toAccNo, sum, transferID, tranMsg;
 	private JTextField fromAccNo2, toAccNo2, sum2, requestID, status;
-	private JTextField username, password, loginConf;
-	private JTextField accno, firstName, lastName, balance, viewAccMsg, viewAccInfo;
+	private JTextField username, loginConf;
+	private JPasswordField password, currPass, newPass;
+	private JTextField accno, firstName, lastName, balance, viewAccMsg;
+	private JTextField passMsg;
 
 
 // deposit -----------------------------
-	private JPanel getDepositJPanel() {
+ 	private JPanel getDepositJPanel() {
 
 		JPanel panel = new JPanel();
 
@@ -64,7 +69,7 @@ public class ClientGUI implements ActionListener{
 		panel.add(depositLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 
-		JLabel label = new JLabel("To Account No:")	;
+		JLabel label = new JLabel("To Acc No:")	;
 		panel.add(label);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		entry1 = new JTextField("",10);
@@ -103,14 +108,14 @@ public class ClientGUI implements ActionListener{
 		panel.add(transferLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 		
-		JLabel label5 = new JLabel("To Account No:")	;
+		JLabel label5 = new JLabel("To Acc No:")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		toAccNo = new JTextField("",10);
 		panel.add(toAccNo);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-		JLabel label4 = new JLabel("From Account No:")	;
+		JLabel label4 = new JLabel("From Acc No:")	;
 		panel.add(label4);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		fromAccNo = new JTextField("",10);
@@ -149,14 +154,14 @@ public class ClientGUI implements ActionListener{
 		panel.add(transferLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 	
-		JLabel label5 = new JLabel("To Account No:")	;
+		JLabel label5 = new JLabel("To Acc No:")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		toAccNo2 = new JTextField("",10);
 		panel.add(toAccNo2);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		
-		JLabel label4 = new JLabel("From Account No:")	;
+		JLabel label4 = new JLabel("From Acc No:")	;
 		panel.add(label4);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		fromAccNo2 = new JTextField("",10);
@@ -195,17 +200,17 @@ public class ClientGUI implements ActionListener{
 		panel.add(transferLabel);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 	
-		JLabel label5 = new JLabel("Username (Amy):")	;
+		JLabel label5 = new JLabel("Username:")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		username = new JTextField("",10);
+		username = new JTextField(10);
 		panel.add(username);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		
-		JLabel label4 = new JLabel("Password (123)")	;
+		JLabel label4 = new JLabel("Password:")	;
 		panel.add(label4);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
-		password = new JTextField("",10);
+		password = new JPasswordField(10);
 		panel.add(password);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		
@@ -234,7 +239,7 @@ public class ClientGUI implements ActionListener{
 		panel.add(label);
 		panel.add(Box.createRigidArea(new Dimension(50, 0)));
 	
-		JLabel label5 = new JLabel("Account No: ")	;
+		JLabel label5 = new JLabel("Acc No: ")	;
 		panel.add(label5);
 		panel.add(Box.createRigidArea(new Dimension(10, 0)));
 		accno = new JTextField("",10);
@@ -275,9 +280,52 @@ public class ClientGUI implements ActionListener{
 		return panel;
 	}
 
-//		
-//	private JPanel getChangePassJPanel() {
-//	}
+	
+	private JPanel getChangePassJPanel() {
+		
+JPanel panel = new JPanel();
+		
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		
+		JLabel label = new JLabel("RESET PASSWORD |");
+		panel.add(label);
+		panel.add(Box.createRigidArea(new Dimension(50, 0)));
+	
+		JLabel label5 = new JLabel("Username: ")	;
+		panel.add(label5);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		username = new JTextField("",10);
+		panel.add(username);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label6 = new JLabel("Current password: ")	;
+		panel.add(label6);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		currPass = new JPasswordField("",10);
+		panel.add(currPass);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JLabel label7 = new JLabel("New password: ")	;
+		panel.add(label7);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		newPass = new JPasswordField("",10);
+		panel.add(newPass);
+		panel.add(Box.createRigidArea(new Dimension(10, 0)));
+		
+		JButton button2 = new JButton("Change password");
+		button2.addActionListener(this);
+		panel.add(button2);
+		panel.add(Box.createRigidArea(new Dimension(0, 0)));
+
+		passMsg = new JTextField("", 20);
+		passMsg.setEditable(false);
+		panel.add(passMsg);
+		
+		panel.setLayout(boxlayout);
+
+		return panel;
+		
+	}
 //	
 //	private JPanel getHelpBotJPanel() {
 //	}
@@ -319,7 +367,7 @@ public class ClientGUI implements ActionListener{
 		panel.add( getRequestJPanel() );
 		panel.add( getLoginJPanel() );
 		panel.add( getViewAccountJPanel() );
-//		panel.add( getChangePassJPanel() );
+		panel.add( getChangePassJPanel() );
 //		panel.add( getHelpBotJPanel() );
 //		panel.add( getVaultJPanel() );
 //		panel.add( getInterestCalcJPanel() );
@@ -518,6 +566,36 @@ public class ClientGUI implements ActionListener{
 
 				};
 				asyncStub.viewAccount(request, responseObserver);
+
+// CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
+				
+				}
+				else if (label.equals("Change password")) 
+				{
+				System.out.println("Password service to be invoked ...");
+			
+				/*
+				 * 
+				 */ 
+				
+				ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052)
+						.usePlaintext()
+						.build();
+				
+				UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
+
+				//preparing message to send
+				PasswordConfirmation response = blockingStub.changePassword(PasswordRequest.newBuilder()
+						.setUsername(username.getText())
+						.setCurrPass(currPass.getText())
+						.setNewPass(newPass.getText())	
+						.build());
+
+				//Retrieving reply from service
+				passMsg.setText(response.getMessage());
+				
+// HELP BOT  ---------------------------------------------------------------------------------------					
+
 				
 		}
 	}

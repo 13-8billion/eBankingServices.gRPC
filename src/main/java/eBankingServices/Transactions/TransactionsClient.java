@@ -43,7 +43,7 @@ public class TransactionsClient {
 	
 	public static void deposit() {
 		
-		System.out.println("Client >>>>>>>>> Requesting to deposit money...");
+		System.out.println("Requesting to deposit...");
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
@@ -54,7 +54,7 @@ public class TransactionsClient {
 		System.out.println(response);
 
 	
-		System.out.println("Client >>>>>>>>> Requesting to deposit money...");
+		System.out.println("Requesting to deposit...");
 		response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(2)
 				.setSum(100)
@@ -77,7 +77,7 @@ public class TransactionsClient {
 				@Override
 				public void onNext(TransferConfirmation response) {
 					
-					System.out.println("Client >>>>>>>>> getting confirmation " + response.getMessage());			
+					System.out.println("Getting confirmation " + response.getMessage());			
 				}
 
 				@Override
@@ -87,7 +87,7 @@ public class TransactionsClient {
 
 				@Override
 				public void onCompleted() {
-					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
+					System.out.println("STREAM END: All transfers have completed.");
 
 				}			
 			};
@@ -135,7 +135,7 @@ public class TransactionsClient {
 
 				@Override
 				public void onNext(RequestStatus response) {
-					System.out.println("Client >>>>>>>>> Requesting status: "+ response.getStatus());
+					System.out.println("Requesting status: "+ response.getStatus());
 				}
 
 				@Override
@@ -146,7 +146,7 @@ public class TransactionsClient {
 
 				@Override
 				public void onCompleted() {
-					System.out.println("Client >>>>>>>>> END OF STREAM: Money request completed");
+					System.out.println("END OF STREAM: Money request completed");
 				}
 
 			};

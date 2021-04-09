@@ -127,7 +127,7 @@ private Properties getProperties() {
 		
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
 
-				.setMessage("Server >>>>>>>>> Deposit ID. " + request.getDepositID() + ": " + euro + request.getSum() +  " has been deposited successfully into Account No. " + request.getAccNo())
+				.setMessage("Deposit ID. " + request.getDepositID() + ": " + euro + request.getSum() +  " has been deposited successfully into Account No. " + request.getAccNo())
 				.build();
 
 		responseObserver.onNext(dc);
@@ -148,13 +148,13 @@ private Properties getProperties() {
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 						
 					TransferConfirmation reply = TransferConfirmation.newBuilder()
-							.setMessage("Server >>>>>>>>> Transfer request SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo())
+							.setMessage("Transfer SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo())
 							.build();
 					
 					responseObserver.onNext(reply);
 						
 				} else {
-					String message2 = "Server >>>>>>>>> Transfer request FAILED not enough funds in AccountNo. " + request.getFromAccNo();
+					String message2 = "Transfer FAILED not enough funds in AccountNo. " + request.getFromAccNo();
 					
 					TransferConfirmation reply2 = TransferConfirmation.newBuilder()
 							.setMessage(message2)
@@ -177,7 +177,7 @@ private Properties getProperties() {
 			@Override
 			public void onCompleted() {
 
-				System.out.println("Server >>>>>>>>> Transaction process completed" );		
+				System.out.println("Transaction process completed" );		
 			}
 			
 			@Override
@@ -199,7 +199,7 @@ private Properties getProperties() {
 			public void onNext(RequestSum request) {
 		
 		try {
-			String status = ("Server >>>>>>>>> Receiving money request:  AccountNo. " + request.getToAccNo() + " is requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
+			String status = ("Receiving money request:  AccountNo. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
 				
 				RequestStatus reply = RequestStatus.newBuilder()
 						.setStatus(status)
@@ -228,7 +228,7 @@ private Properties getProperties() {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("Server >>>>>>>>> Receiving money request completed ");
+				System.out.println("Receiving money request complete");
 				
 				//completed too
 				responseObserver.onCompleted();

@@ -23,7 +23,6 @@ private static final long serialVersionUID = 0L;
     fromAccNo_ = 0;
     toAccNo_ = 0;
     sum_ = 0D;
-    transferID_ = 0;
   }
 
   @java.lang.Override
@@ -63,11 +62,6 @@ private static final long serialVersionUID = 0L;
           case 25: {
 
             sum_ = input.readDouble();
-            break;
-          }
-          case 32: {
-
-            transferID_ = input.readInt32();
             break;
           }
           default: {
@@ -129,15 +123,6 @@ private static final long serialVersionUID = 0L;
     return sum_;
   }
 
-  public static final int TRANSFERID_FIELD_NUMBER = 4;
-  private int transferID_;
-  /**
-   * <code>int32 transferID = 4;</code>
-   */
-  public int getTransferID() {
-    return transferID_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -161,9 +146,6 @@ private static final long serialVersionUID = 0L;
     if (sum_ != 0D) {
       output.writeDouble(3, sum_);
     }
-    if (transferID_ != 0) {
-      output.writeInt32(4, transferID_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -184,10 +166,6 @@ private static final long serialVersionUID = 0L;
     if (sum_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(3, sum_);
-    }
-    if (transferID_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, transferID_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -213,8 +191,6 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getSum())
         == java.lang.Double.doubleToLongBits(
             other.getSum()));
-    result = result && (getTransferID()
-        == other.getTransferID());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -233,8 +209,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + SUM_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getSum()));
-    hash = (37 * hash) + TRANSFERID_FIELD_NUMBER;
-    hash = (53 * hash) + getTransferID();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -378,8 +352,6 @@ private static final long serialVersionUID = 0L;
 
       sum_ = 0D;
 
-      transferID_ = 0;
-
       return this;
     }
 
@@ -409,7 +381,6 @@ private static final long serialVersionUID = 0L;
       result.fromAccNo_ = fromAccNo_;
       result.toAccNo_ = toAccNo_;
       result.sum_ = sum_;
-      result.transferID_ = transferID_;
       onBuilt();
       return result;
     }
@@ -466,9 +437,6 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getSum() != 0D) {
         setSum(other.getSum());
-      }
-      if (other.getTransferID() != 0) {
-        setTransferID(other.getTransferID());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -573,32 +541,6 @@ private static final long serialVersionUID = 0L;
     public Builder clearSum() {
       
       sum_ = 0D;
-      onChanged();
-      return this;
-    }
-
-    private int transferID_ ;
-    /**
-     * <code>int32 transferID = 4;</code>
-     */
-    public int getTransferID() {
-      return transferID_;
-    }
-    /**
-     * <code>int32 transferID = 4;</code>
-     */
-    public Builder setTransferID(int value) {
-      
-      transferID_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 transferID = 4;</code>
-     */
-    public Builder clearTransferID() {
-      
-      transferID_ = 0;
       onChanged();
       return this;
     }

@@ -18,11 +18,20 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 
+
 public class TransactionsServer extends TransactionsImplBase {
 	
 	String euro = "\u20ac";
+	
+	Customer[] cArray = new Customer[] {
 
-	// hard code some account balances
+	// hard code some customer accounts
+	new Customer(1, "Arthur", "Morgan", 27000),
+	new Customer(2, "Sadie", "Adler", 5900),
+	new Customer(3, "Amy", "Percival", 33333)
+	};
+
+//	// hard code some account balances
 	private double[] accounts = {0, 3000, 30000};
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -53,7 +62,8 @@ public class TransactionsServer extends TransactionsImplBase {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+		
 	}
 	
 	
@@ -120,19 +130,42 @@ private Properties getProperties() {
 	 return prop;
 }
 
-
 // Deposit money method - Unary
 
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
+	
+	DepositConfirmation dc;
+	
+	int depositID = 1;
+	String newline = "\n\r";
+	double newBalance;
+	
+			
+	for(int i=0; i<cArray.length;i++)
+	{
+		Customer c = cArray[i];
 		
-		DepositConfirmation dc = DepositConfirmation.newBuilder()
-
-				.setMessage("Deposit ID. " + request.getDepositID() + "SUCCESS " + euro + request.getSum() +  " deposited into Account No. " + request.getAccNo())
-				.build();
-
+		newBalance = request.getSum() + c.getBalance();	
+		
+		if (request.getAccNo() == c.getAccNo()) 
+		{
+			
+			dc = DepositConfirmation.newBuilder()
+						.setMessage("SUCCESS " + newline + euro + request.getSum() +  " deposited into Acc No. " + request.getAccNo() + newline +
+			"Previous Balance: " + c.getBalance() + newline + "New Balance: " + newBalance)
+						.build();
+		
 		responseObserver.onNext(dc);
 		responseObserver.onCompleted();
+		
+		}
 	}
+}
+	
+
+	
+
+
 
 	
 // Transfer money method - Client streaming
@@ -248,4 +281,60 @@ private Properties getProperties() {
 			return true;
 		}
 	}
+	
+	// Customer class 
+	
+		private class Customer {
+
+			private int accNo;
+			private String firstName;
+			private String lastName;
+			private double balance;
+
+			// constructor
+			public Customer(int accNo, String firstName, String lastName, double balance)
+			{
+				this.accNo = accNo;
+				this.firstName = firstName;
+				this.lastName = lastName;
+				this.balance = balance;
+			}
+			
+			public Customer()
+			{
+			}
+
+			public int getAccNo() {
+				return accNo;
+			}
+
+			public void setEmpNo(int accNo) {
+				this.accNo = accNo;
+			}
+
+		
+			public String getFirstName() {
+				return firstName;
+			}
+
+			public void setFirstName(String firstName) {
+				this.firstName = firstName;
+			}
+
+			public String getLastName() {
+				return lastName;
+			}
+
+			public void setLastName(String lastName) {
+				this.lastName = lastName;
+			}
+
+			public double getBalance() {
+				return balance;
+			}
+
+			public void setBalance(double balance) {
+				this.balance = balance;
+			}
+		}
 }

@@ -36,6 +36,9 @@ public class TransactionsClient {
 		deposit();
 		transfer();
 		request();	
+		
+		channel.shutdown()
+	 	   .awaitTermination(10, TimeUnit.SECONDS);
 	}
 	
 	
@@ -47,7 +50,6 @@ public class TransactionsClient {
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
-				.setDepositID(1)
 				.build());
 
 		
@@ -58,7 +60,6 @@ public class TransactionsClient {
 		response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(2)
 				.setSum(100)
-				.setDepositID(2)
 				.build());
 		
 		System.out.println(response);

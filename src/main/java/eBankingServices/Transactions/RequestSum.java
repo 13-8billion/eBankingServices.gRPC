@@ -24,7 +24,6 @@ private static final long serialVersionUID = 0L;
     toAccNo_ = 0;
     sum_ = 0D;
     monthly_ = false;
-    requestID_ = 0;
   }
 
   @java.lang.Override
@@ -69,11 +68,6 @@ private static final long serialVersionUID = 0L;
           case 32: {
 
             monthly_ = input.readBool();
-            break;
-          }
-          case 40: {
-
-            requestID_ = input.readInt32();
             break;
           }
           default: {
@@ -144,15 +138,6 @@ private static final long serialVersionUID = 0L;
     return monthly_;
   }
 
-  public static final int REQUESTID_FIELD_NUMBER = 5;
-  private int requestID_;
-  /**
-   * <code>int32 requestID = 5;</code>
-   */
-  public int getRequestID() {
-    return requestID_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -179,9 +164,6 @@ private static final long serialVersionUID = 0L;
     if (monthly_ != false) {
       output.writeBool(4, monthly_);
     }
-    if (requestID_ != 0) {
-      output.writeInt32(5, requestID_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -206,10 +188,6 @@ private static final long serialVersionUID = 0L;
     if (monthly_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(4, monthly_);
-    }
-    if (requestID_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(5, requestID_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -237,8 +215,6 @@ private static final long serialVersionUID = 0L;
             other.getSum()));
     result = result && (getMonthly()
         == other.getMonthly());
-    result = result && (getRequestID()
-        == other.getRequestID());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -260,8 +236,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + MONTHLY_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getMonthly());
-    hash = (37 * hash) + REQUESTID_FIELD_NUMBER;
-    hash = (53 * hash) + getRequestID();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -407,8 +381,6 @@ private static final long serialVersionUID = 0L;
 
       monthly_ = false;
 
-      requestID_ = 0;
-
       return this;
     }
 
@@ -439,7 +411,6 @@ private static final long serialVersionUID = 0L;
       result.toAccNo_ = toAccNo_;
       result.sum_ = sum_;
       result.monthly_ = monthly_;
-      result.requestID_ = requestID_;
       onBuilt();
       return result;
     }
@@ -499,9 +470,6 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getMonthly() != false) {
         setMonthly(other.getMonthly());
-      }
-      if (other.getRequestID() != 0) {
-        setRequestID(other.getRequestID());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -632,32 +600,6 @@ private static final long serialVersionUID = 0L;
     public Builder clearMonthly() {
       
       monthly_ = false;
-      onChanged();
-      return this;
-    }
-
-    private int requestID_ ;
-    /**
-     * <code>int32 requestID = 5;</code>
-     */
-    public int getRequestID() {
-      return requestID_;
-    }
-    /**
-     * <code>int32 requestID = 5;</code>
-     */
-    public Builder setRequestID(int value) {
-      
-      requestID_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 requestID = 5;</code>
-     */
-    public Builder clearRequestID() {
-      
-      requestID_ = 0;
       onChanged();
       return this;
     }

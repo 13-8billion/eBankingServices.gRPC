@@ -20,6 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private TransferConfirmation() {
+    transferID_ = 0;
     message_ = "";
   }
 
@@ -47,6 +48,11 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
+          case 8: {
+
+            transferID_ = input.readInt32();
+            break;
+          }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
@@ -83,6 +89,15 @@ private static final long serialVersionUID = 0L;
     return eBankingServices.Transactions.TransactionsImpl.internal_static_Transactions_TransferConfirmation_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             eBankingServices.Transactions.TransferConfirmation.class, eBankingServices.Transactions.TransferConfirmation.Builder.class);
+  }
+
+  public static final int TRANSFERID_FIELD_NUMBER = 1;
+  private int transferID_;
+  /**
+   * <code>int32 transferID = 1;</code>
+   */
+  public int getTransferID() {
+    return transferID_;
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 2;
@@ -133,6 +148,9 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (transferID_ != 0) {
+      output.writeInt32(1, transferID_);
+    }
     if (!getMessageBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
     }
@@ -145,6 +163,10 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (transferID_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, transferID_);
+    }
     if (!getMessageBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
     }
@@ -164,6 +186,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.Transactions.TransferConfirmation other = (eBankingServices.Transactions.TransferConfirmation) obj;
 
     boolean result = true;
+    result = result && (getTransferID()
+        == other.getTransferID());
     result = result && getMessage()
         .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
@@ -177,6 +201,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + TRANSFERID_FIELD_NUMBER;
+    hash = (53 * hash) + getTransferID();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
     hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -316,6 +342,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      transferID_ = 0;
+
       message_ = "";
 
       return this;
@@ -344,6 +372,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.Transactions.TransferConfirmation buildPartial() {
       eBankingServices.Transactions.TransferConfirmation result = new eBankingServices.Transactions.TransferConfirmation(this);
+      result.transferID_ = transferID_;
       result.message_ = message_;
       onBuilt();
       return result;
@@ -393,6 +422,9 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.Transactions.TransferConfirmation other) {
       if (other == eBankingServices.Transactions.TransferConfirmation.getDefaultInstance()) return this;
+      if (other.getTransferID() != 0) {
+        setTransferID(other.getTransferID());
+      }
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
         onChanged();
@@ -423,6 +455,32 @@ private static final long serialVersionUID = 0L;
           mergeFrom(parsedMessage);
         }
       }
+      return this;
+    }
+
+    private int transferID_ ;
+    /**
+     * <code>int32 transferID = 1;</code>
+     */
+    public int getTransferID() {
+      return transferID_;
+    }
+    /**
+     * <code>int32 transferID = 1;</code>
+     */
+    public Builder setTransferID(int value) {
+      
+      transferID_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 transferID = 1;</code>
+     */
+    public Builder clearTransferID() {
+      
+      transferID_ = 0;
+      onChanged();
       return this;
     }
 

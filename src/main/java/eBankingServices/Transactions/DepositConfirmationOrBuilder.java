@@ -8,11 +8,21 @@ public interface DepositConfirmationOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string message = 2;</code>
+   * <code>int32 depositID = 1;</code>
+   */
+  int getDepositID();
+
+  /**
+   * <code>double balance = 2;</code>
+   */
+  double getBalance();
+
+  /**
+   * <code>string message = 3;</code>
    */
   java.lang.String getMessage();
   /**
-   * <code>string message = 2;</code>
+   * <code>string message = 3;</code>
    */
   com.google.protobuf.ByteString
       getMessageBytes();

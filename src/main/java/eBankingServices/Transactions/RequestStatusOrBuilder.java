@@ -26,4 +26,9 @@ public interface RequestStatusOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMessageBytes();
+
+  /**
+   * <code>int32 requestID = 3;</code>
+   */
+  int getRequestID();
 }

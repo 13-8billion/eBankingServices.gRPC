@@ -22,6 +22,7 @@ private static final long serialVersionUID = 0L;
   private RequestStatus() {
     status_ = "";
     message_ = "";
+    requestID_ = 0;
   }
 
   @java.lang.Override
@@ -58,6 +59,11 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             message_ = s;
+            break;
+          }
+          case 24: {
+
+            requestID_ = input.readInt32();
             break;
           }
           default: {
@@ -160,6 +166,15 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int REQUESTID_FIELD_NUMBER = 3;
+  private int requestID_;
+  /**
+   * <code>int32 requestID = 3;</code>
+   */
+  public int getRequestID() {
+    return requestID_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -180,6 +195,9 @@ private static final long serialVersionUID = 0L;
     if (!getMessageBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
     }
+    if (requestID_ != 0) {
+      output.writeInt32(3, requestID_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -194,6 +212,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!getMessageBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
+    }
+    if (requestID_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(3, requestID_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -215,6 +237,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getStatus());
     result = result && getMessage()
         .equals(other.getMessage());
+    result = result && (getRequestID()
+        == other.getRequestID());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -230,6 +254,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getStatus().hashCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
     hash = (53 * hash) + getMessage().hashCode();
+    hash = (37 * hash) + REQUESTID_FIELD_NUMBER;
+    hash = (53 * hash) + getRequestID();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -371,6 +397,8 @@ private static final long serialVersionUID = 0L;
 
       message_ = "";
 
+      requestID_ = 0;
+
       return this;
     }
 
@@ -399,6 +427,7 @@ private static final long serialVersionUID = 0L;
       eBankingServices.Transactions.RequestStatus result = new eBankingServices.Transactions.RequestStatus(this);
       result.status_ = status_;
       result.message_ = message_;
+      result.requestID_ = requestID_;
       onBuilt();
       return result;
     }
@@ -454,6 +483,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
         onChanged();
+      }
+      if (other.getRequestID() != 0) {
+        setRequestID(other.getRequestID());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -618,6 +650,32 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       message_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int requestID_ ;
+    /**
+     * <code>int32 requestID = 3;</code>
+     */
+    public int getRequestID() {
+      return requestID_;
+    }
+    /**
+     * <code>int32 requestID = 3;</code>
+     */
+    public Builder setRequestID(int value) {
+      
+      requestID_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 requestID = 3;</code>
+     */
+    public Builder clearRequestID() {
+      
+      requestID_ = 0;
       onChanged();
       return this;
     }

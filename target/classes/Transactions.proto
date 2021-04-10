@@ -23,11 +23,12 @@ service Transactions {
 message DepositSum {
   int32 accNo = 1;
   double sum = 2;
-  int32 depositID = 3;  
 }
 // deposit response
 message DepositConfirmation {
-  string message = 2;
+ int32 depositID = 1; 
+ double balance = 2;
+  string message = 3;
 }
 
 // transfer request
@@ -35,10 +36,10 @@ message TransferSum {
   int32 from_accNo = 1;
   int32 to_accNo = 2;
   double sum = 3; 
-  int32 transferID = 4;
 }
 // transfer response
 message TransferConfirmation {
+  int32 transferID = 1;
   string message = 2;
 }
 
@@ -48,10 +49,10 @@ message RequestSum {
   int32 to_accNo = 2;
   double sum = 3;
   bool monthly = 4;  
-  int32 requestID = 5;
 }
 // request money response
 message RequestStatus {
   string status = 1;
   string message = 2;
+    int32 requestID = 3;
 }

@@ -41,8 +41,9 @@ public class ClientGUI implements ActionListener {
 
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
-	
+
 	// TRANSACTIONS -----------
+	
 	// deposit instance variables
 	private JLabel labelentry1 = new JLabel("To Acc No: ");
 	private JTextField entry1 = new JTextField(10);
@@ -50,7 +51,7 @@ public class ClientGUI implements ActionListener {
 	private JTextField entry2 = new JTextField(10);
 	private JButton buttondeposit = new JButton("Deposit");
 	private JLabel labelreply1 = new JLabel("Message: ");
-	private JTextField reply1 = new JTextField(30);
+	private JTextArea reply1 = new JTextArea();
 	// transfer instance variables
 	private JLabel labelfromaccno = new JLabel("From Acc No: ");
 	private JTextField fromAccNo = new JTextField(10);
@@ -71,8 +72,9 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonRequest = new JButton("Request");
 	private JLabel labelstatus = new JLabel("Message: ");
 	private JTextField status = new JTextField(30);
-	
+
 	// USER ACCOUNT---------------------
+	
 	// change password
 	private JLabel labelusername = new JLabel("Username: ");
 	private JTextField username = new JTextField(10);
@@ -105,6 +107,7 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelPassword2 = new JLabel("Enter password: ");
 
 	// USER TOOLS --------------
+	
 	// vault
 	private JTextField vaultUsername = new JTextField(10);
 	private JTextField vaultConf = new JTextField(50);
@@ -138,18 +141,15 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonselect = new JButton("Select");
 
 	private JTabbedPane getClientGUIJTabbedPane() {
-		
+
 		JTabbedPane tabPane = new JTabbedPane();
-		
-//		JLabel label1 = new JLabel("Help Bot");
-//		JLabel label2 = new JLabel("Vault");
-		
+
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 
-	// HELP BOT PANEL ----------------------
-		
+		// HELP BOT PANEL ----------------------
+
 		JPanel helpBot = new JPanel(new GridBagLayout());
 
 		constraints.gridx = 0;
@@ -189,9 +189,9 @@ public class ClientGUI implements ActionListener {
 		solutions.setEditable(false);
 		// set border for the panel
 		helpBot.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "HELP BOT"));
-		
-	// VAULT PANEL -------------------
-		
+
+		// VAULT PANEL -------------------
+
 		JPanel vault = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints2 = new GridBagConstraints();
 		constraints2.anchor = GridBagConstraints.WEST;
@@ -247,9 +247,9 @@ public class ClientGUI implements ActionListener {
 		vault.add(vaultConf, constraints2);
 		// set border for the panel
 		vault.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "VAULT"));
-		
-	// INTEREST CALC -------------------
-		
+
+		// INTEREST CALC -------------------
+
 		JPanel interestCalc = new JPanel(new GridBagLayout());
 
 		GridBagConstraints constraints3 = new GridBagConstraints();
@@ -294,10 +294,11 @@ public class ClientGUI implements ActionListener {
 		interestCalc.add(interest, constraints3);
 		interest.setEditable(false);
 		// set border for the panel
-		interestCalc.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
+		interestCalc
+				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
 
-	// LOGIN PANEL -------------------
-		
+		// LOGIN PANEL -------------------
+
 		JPanel login = new JPanel(new GridBagLayout());
 
 		GridBagConstraints constraints4 = new GridBagConstraints();
@@ -332,9 +333,9 @@ public class ClientGUI implements ActionListener {
 		login.add(loginConf1, constraints4);
 		// set border for the panel
 		login.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "LOGIN"));
-		
-	// VIEW ACC PANEL -------------------
-		
+
+		// VIEW ACC PANEL -------------------
+
 		JPanel viewAcc = new JPanel(new GridBagLayout());
 
 		GridBagConstraints constraints5 = new GridBagConstraints();
@@ -347,229 +348,229 @@ public class ClientGUI implements ActionListener {
 		viewAcc.add(labelaccno, constraints5);
 
 		constraints5.gridx = 1;
-		 viewAcc.add(accno, constraints5);
-		
+		viewAcc.add(accno, constraints5);
+
 		constraints5.gridx = 0;
 		constraints5.gridy = 1;
 		constraints5.gridwidth = 2;
 		constraints5.anchor = GridBagConstraints.CENTER;
 		buttonAcc.addActionListener(this);
-		 viewAcc.add(buttonAcc, constraints5);
+		viewAcc.add(buttonAcc, constraints5);
 
 		constraints5.gridx = 1;
 		constraints5.gridy = 2;
-		 viewAcc.add(viewAccMsg, constraints5);
+		viewAcc.add(viewAccMsg, constraints5);
 
 		constraints5.anchor = GridBagConstraints.WEST;
 		constraints5.gridx = 0;
 		constraints5.gridy = 3;
-		 viewAcc.add(labelfname, constraints5);
+		viewAcc.add(labelfname, constraints5);
 
 		constraints5.gridx = 1;
-		 viewAcc.add(firstName, constraints5);
-		
+		viewAcc.add(firstName, constraints5);
+
 		constraints5.gridx = 0;
 		constraints5.gridy = 4;
-		 viewAcc.add(labellname, constraints5);
+		viewAcc.add(labellname, constraints5);
 
 		constraints5.gridx = 1;
-		 viewAcc.add(lastName, constraints5);
+		viewAcc.add(lastName, constraints5);
 
 		constraints5.gridx = 0;
 		constraints5.gridy = 5;
-		 viewAcc.add(labelbalance, constraints5);
+		viewAcc.add(labelbalance, constraints5);
 
 		constraints5.gridx = 1;
-		 viewAcc.add(balance, constraints5);
+		viewAcc.add(balance, constraints5);
 		// set border for the panel
-		 viewAcc.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "VIEW ACCOUNTS"));
-		
+		viewAcc.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "VIEW ACCOUNTS"));
+
 		// CHANGE PASSWORD PANEL -------------------
-		
-			JPanel changePass = new JPanel(new GridBagLayout());
 
-			GridBagConstraints constraints6 = new GridBagConstraints();
-			constraints6.anchor = GridBagConstraints.WEST;
-			constraints6.insets = new Insets(10, 10, 10, 10);
+		JPanel changePass = new JPanel(new GridBagLayout());
 
-			// add components to the panel
-			constraints6.gridx = 0;
-			constraints6.gridy = 0;
-			changePass.add(labelusername, constraints6);
+		GridBagConstraints constraints6 = new GridBagConstraints();
+		constraints6.anchor = GridBagConstraints.WEST;
+		constraints6.insets = new Insets(10, 10, 10, 10);
 
-			constraints6.gridx = 1;
-			changePass.add(username, constraints6);
+		// add components to the panel
+		constraints6.gridx = 0;
+		constraints6.gridy = 0;
+		changePass.add(labelusername, constraints6);
 
-			constraints6.gridx = 0;
-			constraints6.gridy = 1;
-			changePass.add(labelcurrpass, constraints6);
+		constraints6.gridx = 1;
+		changePass.add(username, constraints6);
 
-			constraints6.gridx = 1;
-			changePass.add(currPass, constraints6);
-			
-			constraints6.gridx = 0;
-			constraints6.gridy = 2;
-			changePass.add(labelnewpass, constraints6);
+		constraints6.gridx = 0;
+		constraints6.gridy = 1;
+		changePass.add(labelcurrpass, constraints6);
 
-			constraints6.gridx = 1;
-			changePass.add(newPass, constraints6);
+		constraints6.gridx = 1;
+		changePass.add(currPass, constraints6);
 
-			constraints6.gridx = 0;
-			constraints6.gridy = 3;
-			constraints6.gridwidth = 2;
-			constraints6.anchor = GridBagConstraints.CENTER;
-			buttonPass.addActionListener(this);
-			changePass.add(buttonPass, constraints6);
+		constraints6.gridx = 0;
+		constraints6.gridy = 2;
+		changePass.add(labelnewpass, constraints6);
 
-			constraints6.anchor = GridBagConstraints.WEST;
-			constraints6.gridx = 0;
-			constraints6.gridy = 4;
-			changePass.add(labelpassmsg, constraints6);
-			
-			constraints6.gridx = 1;
-			changePass.add(passMsg, constraints6);
+		constraints6.gridx = 1;
+		changePass.add(newPass, constraints6);
 
-			// set border for the panel
-			changePass.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
-		
+		constraints6.gridx = 0;
+		constraints6.gridy = 3;
+		constraints6.gridwidth = 2;
+		constraints6.anchor = GridBagConstraints.CENTER;
+		buttonPass.addActionListener(this);
+		changePass.add(buttonPass, constraints6);
+
+		constraints6.anchor = GridBagConstraints.WEST;
+		constraints6.gridx = 0;
+		constraints6.gridy = 4;
+		changePass.add(labelpassmsg, constraints6);
+
+		constraints6.gridx = 1;
+		changePass.add(passMsg, constraints6);
+
+		// set border for the panel
+		changePass.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
+
 		// TRANSFER PANEL -------------------
-			
-			JPanel transfer = new JPanel(new GridBagLayout());
 
-			GridBagConstraints constraints7 = new GridBagConstraints();
-			constraints7.anchor = GridBagConstraints.WEST;
-			constraints7.insets = new Insets(10, 10, 10, 10);
+		JPanel transfer = new JPanel(new GridBagLayout());
 
-			// add components to the panel
-			constraints7.gridx = 0;
-			constraints7.gridy = 0;
-			transfer.add(labeltoaccno, constraints7);
+		GridBagConstraints constraints7 = new GridBagConstraints();
+		constraints7.anchor = GridBagConstraints.WEST;
+		constraints7.insets = new Insets(10, 10, 10, 10);
 
-			constraints7.gridx = 1;
-			transfer.add(toAccNo, constraints7);
+		// add components to the panel
+		constraints7.gridx = 0;
+		constraints7.gridy = 0;
+		transfer.add(labeltoaccno, constraints7);
 
-			constraints7.gridx = 0;
-			constraints7.gridy = 1;
-			transfer.add(labelfromaccno, constraints7);
+		constraints7.gridx = 1;
+		transfer.add(toAccNo, constraints7);
 
-			constraints7.gridx = 1;
-			transfer.add(fromAccNo, constraints7);
-			
-			constraints7.gridx = 0;
-			constraints7.gridy = 2;
-			transfer.add(labelsum, constraints7);
+		constraints7.gridx = 0;
+		constraints7.gridy = 1;
+		transfer.add(labelfromaccno, constraints7);
 
-			constraints7.gridx = 1;
-			transfer.add(sum, constraints7);
+		constraints7.gridx = 1;
+		transfer.add(fromAccNo, constraints7);
 
-			constraints7.gridx = 1;
-			constraints7.gridy = 2;
-			constraints7.gridwidth = 2;
-			constraints7.anchor = GridBagConstraints.CENTER;
-			buttonTransfer.addActionListener(this);
-			transfer.add(buttonTransfer, constraints7);
+		constraints7.gridx = 0;
+		constraints7.gridy = 2;
+		transfer.add(labelsum, constraints7);
 
-			constraints7.anchor = GridBagConstraints.WEST;
-			constraints7.gridx = 0;
-			constraints7.gridy = 6;
-			transfer.add(labelmsg, constraints7);
+		constraints7.gridx = 1;
+		transfer.add(sum, constraints7);
 
-			constraints7.gridx = 1;
-			constraints7.gridy = 6;
-			transfer.add(transMsg, constraints7);
+		constraints7.gridx = 1;
+		constraints7.gridy = 2;
+		constraints7.gridwidth = 2;
+		constraints7.anchor = GridBagConstraints.CENTER;
+		buttonTransfer.addActionListener(this);
+		transfer.add(buttonTransfer, constraints7);
 
-			// set border for the panel
-			transfer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
+		constraints7.anchor = GridBagConstraints.WEST;
+		constraints7.gridx = 0;
+		constraints7.gridy = 6;
+		transfer.add(labelmsg, constraints7);
+
+		constraints7.gridx = 1;
+		constraints7.gridy = 6;
+		transfer.add(transMsg, constraints7);
+
+		// set border for the panel
+		transfer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
 
 		// DEPOSIT PANEL -------------------
-			
-			JPanel deposit = new JPanel(new GridBagLayout());
 
-			GridBagConstraints constraints8 = new GridBagConstraints();
-			constraints8.anchor = GridBagConstraints.WEST;
-			constraints8.insets = new Insets(10, 10, 10, 10);
+		JPanel deposit = new JPanel(new GridBagLayout());
 
-			// add components to the panel
-			constraints8.gridx = 0;
-			constraints8.gridy = 0;
-			deposit.add(labelentry1, constraints8);
+		GridBagConstraints constraints8 = new GridBagConstraints();
+		constraints8.anchor = GridBagConstraints.WEST;
+		constraints8.insets = new Insets(10, 10, 10, 10);
 
-			constraints8.gridx = 1;
-			deposit.add(entry1, constraints8);
+		// add components to the panel
+		constraints8.gridx = 0;
+		constraints8.gridy = 0;
+		deposit.add(labelentry1, constraints8);
 
-			constraints8.gridx = 0;
-			constraints8.gridy = 1;
-			deposit.add(labelentry2, constraints8);
+		constraints8.gridx = 1;
+		deposit.add(entry1, constraints8);
 
-			constraints8.gridx = 1;
-			deposit.add(entry2, constraints8);
+		constraints8.gridx = 0;
+		constraints8.gridy = 1;
+		deposit.add(labelentry2, constraints8);
 
-			constraints8.gridx = 1;
-			constraints8.gridy = 2;
-			constraints8.gridwidth = 2;
-			constraints8.anchor = GridBagConstraints.CENTER;
-			buttondeposit.addActionListener(this);
-			deposit.add(buttondeposit, constraints8);
+		constraints8.gridx = 1;
+		deposit.add(entry2, constraints8);
 
-			constraints8.anchor = GridBagConstraints.WEST;
-			constraints8.gridx = 0;
-			constraints8.gridy = 5;
-			deposit.add(labelreply1, constraints8);
+		constraints8.gridx = 1;
+		constraints8.gridy = 2;
+		constraints8.gridwidth = 2;
+		constraints8.anchor = GridBagConstraints.CENTER;
+		buttondeposit.addActionListener(this);
+		deposit.add(buttondeposit, constraints8);
 
-			constraints8.gridx = 1;
-			deposit.add(reply1, constraints8);
+		constraints8.anchor = GridBagConstraints.WEST;
+		constraints8.gridx = 0;
+		constraints8.gridy = 5;
+		deposit.add(labelreply1, constraints8);
 
-			// set border for the panel
-			deposit.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
-		
+		constraints8.gridx = 1;
+		deposit.add(reply1, constraints8);
+
+		// set border for the panel
+		deposit.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
+
 		// REQUEST PANEL -------------------
-			
-			JPanel request = new JPanel(new GridBagLayout());
 
-			GridBagConstraints constraints9 = new GridBagConstraints();
-			constraints9.anchor = GridBagConstraints.WEST;
-			constraints9.insets = new Insets(10, 10, 10, 10);
+		JPanel request = new JPanel(new GridBagLayout());
 
-			// add components to the panel
-			
-			constraints9.gridx = 0;
-			constraints9.gridy = 0;
-			request.add(labelfromaccno2, constraints9);
+		GridBagConstraints constraints9 = new GridBagConstraints();
+		constraints9.anchor = GridBagConstraints.WEST;
+		constraints9.insets = new Insets(10, 10, 10, 10);
 
-			constraints9.gridx = 1;
-			request.add(fromAccNo2, constraints9);
-			
-			constraints9.gridx = 0;
-			constraints9.gridy = 1;
-			request.add(labeltoaccno2, constraints9);
+		// add components to the panel
 
-			constraints9.gridx = 1;
-			request.add(toAccNo2, constraints9);
-		
-			constraints9.gridx = 0;
-			constraints9.gridy = 2;
-			request.add(labelsum2, constraints9);
+		constraints9.gridx = 0;
+		constraints9.gridy = 0;
+		request.add(labelfromaccno2, constraints9);
 
-			constraints9.gridx = 1;
-			request.add(sum2, constraints9);
+		constraints9.gridx = 1;
+		request.add(fromAccNo2, constraints9);
 
-			constraints9.gridx = 1;
-			constraints9.gridy = 3;
-			constraints9.gridwidth = 2;
-			constraints9.anchor = GridBagConstraints.CENTER;
-			buttonRequest.addActionListener(this);
-			request.add(buttonRequest, constraints9);
+		constraints9.gridx = 0;
+		constraints9.gridy = 1;
+		request.add(labeltoaccno2, constraints9);
 
-			constraints9.anchor = GridBagConstraints.WEST;
-			constraints9.gridx = 0;
-			constraints9.gridy = 5;
-			request.add(labelstatus, constraints9);
+		constraints9.gridx = 1;
+		request.add(toAccNo2, constraints9);
 
-			constraints9.gridx = 1;
-			request.add(status, constraints9);
+		constraints9.gridx = 0;
+		constraints9.gridy = 2;
+		request.add(labelsum2, constraints9);
 
-			// set border for the panel
-			request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
+		constraints9.gridx = 1;
+		request.add(sum2, constraints9);
+
+		constraints9.gridx = 1;
+		constraints9.gridy = 3;
+		constraints9.gridwidth = 2;
+		constraints9.anchor = GridBagConstraints.CENTER;
+		buttonRequest.addActionListener(this);
+		request.add(buttonRequest, constraints9);
+
+		constraints9.anchor = GridBagConstraints.WEST;
+		constraints9.gridx = 0;
+		constraints9.gridy = 5;
+		request.add(labelstatus, constraints9);
+
+		constraints9.gridx = 1;
+		request.add(status, constraints9);
+
+		// set border for the panel
+		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
 
 		tabPane.add("Login", login);
 		tabPane.add("View Account", viewAcc);
@@ -578,16 +579,11 @@ public class ClientGUI implements ActionListener {
 		tabPane.add("Request", request);
 		tabPane.add("Vault", vault);
 		tabPane.add("Help Bot", helpBot);
-		tabPane.add("Change password",changePass);
+		tabPane.add("Change password", changePass);
 		tabPane.add("Interest Calculator", interestCalc);
 
-		
-		
-		
-				
 		return tabPane;
 	}
-		
 
 	public static void main(String[] args) {
 
@@ -612,7 +608,6 @@ public class ClientGUI implements ActionListener {
 		// Set border for the panel
 		panel.setBorder(new EmptyBorder(new Insets(25, 50, 25, 50)));
 
-		
 		panel.add(getClientGUIJTabbedPane());
 
 		// Set size for the frame
@@ -646,6 +641,7 @@ public class ClientGUI implements ActionListener {
 
 			// Retrieving reply from service
 			reply1.setText(response.getMessage());
+//			reply1.setText((String.valueOf(response.getBalance())));
 
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {

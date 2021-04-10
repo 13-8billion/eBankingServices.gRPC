@@ -22,7 +22,6 @@ private static final long serialVersionUID = 0L;
   private DepositSum() {
     accNo_ = 0;
     sum_ = 0D;
-    depositID_ = 0;
   }
 
   @java.lang.Override
@@ -57,11 +56,6 @@ private static final long serialVersionUID = 0L;
           case 17: {
 
             sum_ = input.readDouble();
-            break;
-          }
-          case 24: {
-
-            depositID_ = input.readInt32();
             break;
           }
           default: {
@@ -114,15 +108,6 @@ private static final long serialVersionUID = 0L;
     return sum_;
   }
 
-  public static final int DEPOSITID_FIELD_NUMBER = 3;
-  private int depositID_;
-  /**
-   * <code>int32 depositID = 3;</code>
-   */
-  public int getDepositID() {
-    return depositID_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -143,9 +128,6 @@ private static final long serialVersionUID = 0L;
     if (sum_ != 0D) {
       output.writeDouble(2, sum_);
     }
-    if (depositID_ != 0) {
-      output.writeInt32(3, depositID_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -162,10 +144,6 @@ private static final long serialVersionUID = 0L;
     if (sum_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(2, sum_);
-    }
-    if (depositID_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, depositID_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -189,8 +167,6 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getSum())
         == java.lang.Double.doubleToLongBits(
             other.getSum()));
-    result = result && (getDepositID()
-        == other.getDepositID());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -207,8 +183,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + SUM_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getSum()));
-    hash = (37 * hash) + DEPOSITID_FIELD_NUMBER;
-    hash = (53 * hash) + getDepositID();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -350,8 +324,6 @@ private static final long serialVersionUID = 0L;
 
       sum_ = 0D;
 
-      depositID_ = 0;
-
       return this;
     }
 
@@ -380,7 +352,6 @@ private static final long serialVersionUID = 0L;
       eBankingServices.Transactions.DepositSum result = new eBankingServices.Transactions.DepositSum(this);
       result.accNo_ = accNo_;
       result.sum_ = sum_;
-      result.depositID_ = depositID_;
       onBuilt();
       return result;
     }
@@ -434,9 +405,6 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getSum() != 0D) {
         setSum(other.getSum());
-      }
-      if (other.getDepositID() != 0) {
-        setDepositID(other.getDepositID());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -515,32 +483,6 @@ private static final long serialVersionUID = 0L;
     public Builder clearSum() {
       
       sum_ = 0D;
-      onChanged();
-      return this;
-    }
-
-    private int depositID_ ;
-    /**
-     * <code>int32 depositID = 3;</code>
-     */
-    public int getDepositID() {
-      return depositID_;
-    }
-    /**
-     * <code>int32 depositID = 3;</code>
-     */
-    public Builder setDepositID(int value) {
-      
-      depositID_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 depositID = 3;</code>
-     */
-    public Builder clearDepositID() {
-      
-      depositID_ = 0;
       onChanged();
       return this;
     }

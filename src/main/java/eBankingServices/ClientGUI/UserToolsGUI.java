@@ -66,7 +66,9 @@ public class UserToolsGUI implements ActionListener {
 	private JTextArea solutions = new JTextArea();
 	private JButton buttonselect = new JButton("Select");
 
+
 	private JPanel getHelpBotJPanel() {
+		
 
 		JPanel panel = new JPanel(new GridBagLayout());
 
@@ -262,6 +264,7 @@ public class UserToolsGUI implements ActionListener {
 		panel.add(getHelpBotJPanel());
 		panel.add(getVaultJPanel());
 		panel.add(getInterestCalcJPanel());
+	
 
 		// Set size for the frame
 		frame.setSize(300, 300);

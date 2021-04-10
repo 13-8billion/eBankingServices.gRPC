@@ -127,7 +127,7 @@ private Properties getProperties() {
 		
 		DepositConfirmation dc = DepositConfirmation.newBuilder()
 
-				.setMessage("Deposit ID. " + request.getDepositID() + ": " + euro + request.getSum() +  " has been deposited successfully into Account No. " + request.getAccNo())
+				.setMessage("Deposit ID. " + request.getDepositID() + "SUCCESS " + euro + request.getSum() +  " deposited into Account No. " + request.getAccNo())
 				.build();
 
 		responseObserver.onNext(dc);
@@ -148,13 +148,13 @@ private Properties getProperties() {
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 						
 					TransferConfirmation reply = TransferConfirmation.newBuilder()
-							.setMessage("Transfer SUCCESS " + euro + request.getSum() + " transferred to AccountNo.  "+ request.getToAccNo())
+							.setMessage("SUCCESS " + euro + request.getSum() + " transferred to Account No.  "+ request.getToAccNo())
 							.build();
 					
 					responseObserver.onNext(reply);
 						
 				} else {
-					String message2 = "Transfer FAILED not enough funds in AccountNo. " + request.getFromAccNo();
+					String message2 = "FAILED not enough funds in Account No. " + request.getFromAccNo();
 					
 					TransferConfirmation reply2 = TransferConfirmation.newBuilder()
 							.setMessage(message2)
@@ -199,7 +199,7 @@ private Properties getProperties() {
 			public void onNext(RequestSum request) {
 		
 		try {
-			String status = ("Receiving money request:  AccountNo. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
+			String status = ("Receiving request:  AccountNo. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
 				
 				RequestStatus reply = RequestStatus.newBuilder()
 						.setStatus(status)

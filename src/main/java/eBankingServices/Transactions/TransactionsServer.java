@@ -32,7 +32,7 @@ public class TransactionsServer extends TransactionsImplBase {
 	};
 
 //	// hard code some account balances
-	private double[] accounts = {0, 3000, 30000};
+	private double[] accounts = {0, 27000, 5900, 33333};
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -164,10 +164,6 @@ private Properties getProperties() {
 	
 
 	
-
-
-
-	
 // Transfer money method - Client streaming
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
@@ -176,12 +172,22 @@ private Properties getProperties() {
 		
 				@Override
 			public void onNext(TransferSum request) {
-			
+					
+					double newBalance;
+					String newline = "\n\r";
+					
+					for(int i=0; i<cArray.length;i++)
+					{
+						Customer c = cArray[i];
+						newBalance = c.getBalance() - request.getSum();	
+					
 		try {	
 				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 						
 					TransferConfirmation reply = TransferConfirmation.newBuilder()
-							.setMessage("SUCCESS " + euro + request.getSum() + " transferred to Account No.  "+ request.getToAccNo())
+							.setMessage("SUCCESS " + newline + euro + request.getSum() +
+									" transferred to Account No.  "+ request.getToAccNo() + newline +
+									"Old Balance : " + c.getBalance() + newline + "New Balance: " + newBalance)
 							.build();
 					
 					responseObserver.onNext(reply);
@@ -197,14 +203,15 @@ private Properties getProperties() {
 				}
 				Thread.sleep(1000);
 				
-				Thread.sleep(new Random().nextInt(1000) + 500);
-
 
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {			
 				e.printStackTrace();
 			}
+					}
+						
+					
 		}
 				
 			@Override
@@ -232,7 +239,7 @@ private Properties getProperties() {
 			public void onNext(RequestSum request) {
 		
 		try {
-			String status = ("Receiving request:  AccountNo. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from AccountNo. "+ request.getFromAccNo());
+			String status = ("Receiving request:  Acc No. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from Acc No. "+ request.getFromAccNo() + "...");
 				
 				RequestStatus reply = RequestStatus.newBuilder()
 						.setStatus(status)
@@ -273,6 +280,7 @@ private Properties getProperties() {
 // method to check sufficient funds for transfers
 	
 	private boolean transferSum(int toAccNo, int fromAccNo, double sum) {
+		
 		if (accounts[fromAccNo] < sum) {
 			return false;
 		} else {
@@ -280,7 +288,8 @@ private Properties getProperties() {
 			accounts[toAccNo] += sum;
 			return true;
 		}
-	}
+	
+}
 	
 	// Customer class 
 	

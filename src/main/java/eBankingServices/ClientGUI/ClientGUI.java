@@ -61,7 +61,7 @@ public class ClientGUI implements ActionListener {
 	private JTextField sum = new JTextField(10);
 	private JButton buttonTransfer = new JButton("Transfer");
 	private JLabel labelmsg = new JLabel("Message: ");
-	private JTextField transMsg = new JTextField(30);
+	private JTextArea transMsg = new JTextArea();
 	// request instance variables
 	private JLabel labelfromaccno2 = new JLabel("From Acc No: ");
 	private JTextField fromAccNo2 = new JTextField(10);
@@ -71,7 +71,7 @@ public class ClientGUI implements ActionListener {
 	private JTextField sum2 = new JTextField(10);
 	private JButton buttonRequest = new JButton("Request");
 	private JLabel labelstatus = new JLabel("Message: ");
-	private JTextField status = new JTextField(30);
+	private JTextArea status = new JTextArea();
 
 	// USER ACCOUNT---------------------
 	
@@ -463,7 +463,7 @@ public class ClientGUI implements ActionListener {
 		constraints7.gridx = 1;
 		transfer.add(sum, constraints7);
 
-		constraints7.gridx = 1;
+		constraints7.gridx = 2;
 		constraints7.gridy = 2;
 		constraints7.gridwidth = 2;
 		constraints7.anchor = GridBagConstraints.CENTER;
@@ -480,7 +480,7 @@ public class ClientGUI implements ActionListener {
 		transfer.add(transMsg, constraints7);
 
 		// set border for the panel
-		transfer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
+		transfer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "TRANSFER"));
 
 		// DEPOSIT PANEL -------------------
 

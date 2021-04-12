@@ -111,7 +111,7 @@ public class ClientGUI implements ActionListener {
 	
 	// vault
 	private JTextField vaultUsername = new JTextField(10);
-	private JTextField vaultConf = new JTextField(50);
+	private JTextArea vaultConf = new JTextArea();
 	private JLabel labelaccnovault = new JLabel("Acc No: ");
 	private JLabel labelsumvault = new JLabel("Amount: ");
 	private JTextField vaultaccno = new JTextField(10);
@@ -223,8 +223,6 @@ public class ClientGUI implements ActionListener {
 		buttonVault.addActionListener(this);
 		vault.add(buttonVault, constraints2);
 
-		constraints2.ipady = 5;
-		constraints2.ipadx = 5;
 		constraints2.gridx = 0;
 		constraints2.gridy = 6;
 		vault.add(vaultConf, constraints2);
@@ -826,7 +824,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
 
@@ -846,7 +844,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
 

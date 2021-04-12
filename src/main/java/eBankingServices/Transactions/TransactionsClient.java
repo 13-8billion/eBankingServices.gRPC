@@ -38,7 +38,7 @@ public class TransactionsClient {
 		request();	
 		
 		channel.shutdown()
-	 	   .awaitTermination(10, TimeUnit.SECONDS);
+	 	   .awaitTermination(60, TimeUnit.SECONDS);
 	}
 	
 	

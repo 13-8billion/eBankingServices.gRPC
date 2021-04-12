@@ -18,250 +18,255 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 
-
 public class TransactionsServer extends TransactionsImplBase {
-	
-	String euro = "\u20ac";
-	
-	Customer[] cArray = new Customer[] {
 
-	// hard code some customer accounts
-	new Customer(1, "Arthur", "Morgan", 27000),
-	new Customer(2, "Sadie", "Adler", 5900),
-	new Customer(3, "Amy", "Percival", 33333)
-	};
+	private String euro = "\u20ac";
 
-//	// hard code some account balances
-	private double[] accounts = {0, 27000, 5900, 33333};
+	private Customer[] cArray = new Customer[] {
+
+			// hard code some customer accounts
+			new Customer(1, "Arthur", "Morgan", 27000), new Customer(2, "Sadie", "Adler", 5900),
+			new Customer(3, "Amy", "Percival", 33300) };
+
+	// hard code some account balances
+	private double[] accounts = { 0, 27000, 5900, 33333 };
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
 		// initiate server
 		TransactionsServer transactions = new TransactionsServer();
-		
+
 		Properties prop = transactions.getProperties();
-		
-		// register the service 
+
+		// register the service
 		transactions.registerService(prop);
 
-		int port = Integer.valueOf( prop.getProperty("service_port") );
+		int port = Integer.valueOf(prop.getProperty("service_port"));
 
 		try {
-			
-			Server server = ServerBuilder.forPort(port).addService(transactions)
-					.build()
-					.start();
-	
+
+			Server server = ServerBuilder.forPort(port).addService(transactions).build().start();
+
 			System.out.println("Transaction server started, listening on " + port);
-	
+
 			server.start().awaitTermination();
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-		
+		}
+
 	}
-	
-	
+
 // register service method 
-	
-private void registerService(Properties prop) {
-	
-	try {
-         // Create a JmDNS instance
-         JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-         
-         String service_type = prop.getProperty("service_type");
-         String service_name = prop.getProperty("service_name")  ;
 
-         int service_port = Integer.valueOf( prop.getProperty("service_port") );
-         
-         String service_description_properties = prop.getProperty("service_description")  ;//"path=index.html";
-         
-         // Register a service
-         ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_description_properties);
-         jmdns.registerService(serviceInfo);
-         
-         System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
-         
-         // Wait a bit
-         Thread.sleep(500);
+	private void registerService(Properties prop) {
 
-         // Unregister all services
-         //jmdns.unregisterAllServices();
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
-     } catch (IOException e) {
-         System.out.println(e.getMessage());
-     } catch (InterruptedException e) {
+			String service_type = prop.getProperty("service_type");
+			String service_name = prop.getProperty("service_name");
+
+			int service_port = Integer.valueOf(prop.getProperty("service_port"));
+
+			String service_description_properties = prop.getProperty("service_description");// "path=index.html";
+
+			// Register a service
+			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port,
+					service_description_properties);
+			jmdns.registerService(serviceInfo);
+
+			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+
+			// Wait a bit
+			Thread.sleep(500);
+
+			// Unregister all services
+			// jmdns.unregisterAllServices();
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
-
 
 // get service properties method
 
-private Properties getProperties() {
-	
-	Properties prop = null;		
-	
-	 try (InputStream input = new FileInputStream("src/main/resources/Transactions.properties")) {
+	private Properties getProperties() {
 
-           prop = new Properties();
+		Properties prop = null;
 
-           // load a properties file
-           prop.load(input);
+		try (InputStream input = new FileInputStream("src/main/resources/Transactions.properties")) {
 
-           // get the property value and print it out
-           System.out.println("Transactions Service properies ...");
-           System.out.println("\t service_type: " + prop.getProperty("service_type"));
-           System.out.println("\t service_name: " +prop.getProperty("service_name"));
-           System.out.println("\t service_description: " +prop.getProperty("service_description"));
-	       System.out.println("\t service_port: " +prop.getProperty("service_port"));
+			prop = new Properties();
 
-       } catch (IOException ex) {
-           ex.printStackTrace();
-       }
+			// load a properties file
+			prop.load(input);
 
-	 return prop;
-}
+			// get the property value and print it out
+			System.out.println("Transactions Service properies ...");
+			System.out.println("\t service_type: " + prop.getProperty("service_type"));
+			System.out.println("\t service_name: " + prop.getProperty("service_name"));
+			System.out.println("\t service_description: " + prop.getProperty("service_description"));
+			System.out.println("\t service_port: " + prop.getProperty("service_port"));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return prop;
+	}
 
 // Deposit money method - Unary
 
 	public void deposit(DepositSum request, StreamObserver<DepositConfirmation> responseObserver) {
-	
-	DepositConfirmation dc;
-	
-	int depositID = 1;
-	String newline = "\n\r";
-	double newBalance;
-	
-			
-	for(int i=0; i<cArray.length;i++)
-	{
-		Customer c = cArray[i];
-		
-		newBalance = request.getSum() + c.getBalance();	
-		
-		if (request.getAccNo() == c.getAccNo()) 
-		{
-			
-			dc = DepositConfirmation.newBuilder()
-						.setMessage("SUCCESS " + newline + euro + request.getSum() +  " deposited into Acc No. " + request.getAccNo() + newline +
-			"Previous Balance: " + euro + c.getBalance() + newline + "New Balance: "+ euro + newBalance)
-						.build();
-		
-		responseObserver.onNext(dc);
-		responseObserver.onCompleted();
-		
+
+		DepositConfirmation dc = null;
+
+		int depositID = 1;
+		String newline = "\n\r";
+		double newBalance;
+		String accNo = String.valueOf(request.getAccNo());
+
+		for (int i = 0; i < cArray.length; i++) {
+			Customer c = cArray[i];
+
+			newBalance = request.getSum() + c.getBalance();
+
+			if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) {
+
+				dc = DepositConfirmation.newBuilder()
+						.setMessage("SUCCESS " + newline + euro + request.getSum() + " deposited into Acc No. "
+								+ request.getAccNo() + newline + "Previous Balance: " + euro + c.getBalance() + newline
+								+ "New Balance: " + euro + newBalance).build();
+				
+			} else if (request.getAccNo() != c.getAccNo() && !validAccNo(accNo)) {
+				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + accNo + " is not valid!" + newline
+						+ "Please enter a valid Account Number (1, 2 or 3)").build();
+			}
+			responseObserver.onNext(dc);
+			responseObserver.onCompleted();
+
 		}
 	}
-}
-	
 
-	
 // Transfer money method - Client streaming
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
-				
-		return new StreamObserver<TransferSum>() {
-		
-				@Override
-			public void onNext(TransferSum request) {
-					
-					double newBalance;
-					String newline = "\n\r";
-					
-					for(int i=0; i<cArray.length;i++)
-					{
-						Customer c = cArray[i];
-						newBalance = c.getBalance() - request.getSum();	
-					
-		try {	
-				if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-						
-					TransferConfirmation reply = TransferConfirmation.newBuilder()
-							.setMessage("SUCCESS " + newline + euro + request.getSum() +
-									" transferred to Account No.  "+ request.getToAccNo() + newline +
-									"Previous Balance : " + euro + c.getBalance() + newline + "New Balance: "+ euro + newBalance)
-							.build();
-					
-					responseObserver.onNext(reply);
-						
-				} else {
-					String message2 = "FAILED not enough funds in Account No. " + request.getFromAccNo();
-					
-					TransferConfirmation reply2 = TransferConfirmation.newBuilder()
-							.setMessage(message2)
-							.build();
-					
-					responseObserver.onNext(reply2);
-				}
-				Thread.sleep(1000);
-				
 
-			} catch (RuntimeException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {			
-				e.printStackTrace();
-			}
+		return new StreamObserver<TransferSum>() {
+
+			@Override
+			public void onNext(TransferSum request) {
+
+				TransferConfirmation reply = null;
+
+				double newBalance;
+				String newline = "\n\r";
+				String toAccNo = String.valueOf(request.getToAccNo());
+				String fromAccNo = String.valueOf(request.getFromAccNo());
+
+				for (int i = 0; i < cArray.length; i++) {
+					Customer c = cArray[i];
+					newBalance = c.getBalance() - request.getSum();
+
+					try {
+						if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
+								&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
+
+							reply = TransferConfirmation.newBuilder()
+									.setMessage("SUCCESS " + newline + euro + request.getSum()
+											+ " transferred to Account No.  " + request.getToAccNo() + newline
+											+ "Previous Balance : " + euro + c.getBalance() + newline + "New Balance: "
+											+ euro + newBalance)
+									.build();
+
+							responseObserver.onNext(reply);
+
+						} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
+							reply = TransferConfirmation.newBuilder()
+									.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo())
+									.build();
+
+							responseObserver.onNext(reply);
+
+						} else if (!validAccNo(toAccNo)) {
+							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + toAccNo
+									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
+									.build();
+
+							responseObserver.onNext(reply);
+
+						} else if (!validAccNo(fromAccNo)) {
+							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
+									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
+									.build();
+
+							responseObserver.onNext(reply);
+						}
+						Thread.sleep(1000);
+
+					} catch (RuntimeException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
-						
-					
-		}
-				
+				}
+
+			}
+
 			@Override
 			public void onCompleted() {
 
-				System.out.println("Transaction process completed" );		
+				System.out.println("Transaction process completed");
 			}
-			
+
 			@Override
 			public void onError(Throwable t) {
-				
+
 			}
 		};
 	}
-	
-	
+
 // Request money from another account - Bi-directional streaming
-	
+
 	@Override
 	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
-		
-		return new StreamObserver<RequestSum> () {
+
+		return new StreamObserver<RequestSum>() {
 
 			@Override
 			public void onNext(RequestSum request) {
-		
-		try {
-			String status = ("Receiving request:  Acc No. " + request.getToAccNo() + " requesting " + euro + request.getSum() + " from Acc No. "+ request.getFromAccNo() + "...");
-				
-				RequestStatus reply = RequestStatus.newBuilder()
-						.setStatus(status)
-						.build();
-				
-				responseObserver.onNext(reply);
-				
-				Thread.sleep(1000);
-				
-				Thread.sleep(new Random().nextInt(1000) + 500);
 
-		
+				try {
+					String status = ("Receiving request:  Acc No. " + request.getToAccNo() + " requesting " + euro
+							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "...");
+
+					RequestStatus reply = RequestStatus.newBuilder().setStatus(status).build();
+
+					responseObserver.onNext(reply);
+
+					Thread.sleep(1000);
+
+					Thread.sleep(new Random().nextInt(1000) + 500);
+
 				} catch (RuntimeException e) {
 					e.printStackTrace();
-				} catch (InterruptedException e) {			
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 
 			@Override
 			public void onError(Throwable t) {
-				
+
 				t.printStackTrace();
 
 			}
@@ -269,18 +274,28 @@ private Properties getProperties() {
 			@Override
 			public void onCompleted() {
 				System.out.println("Receiving money request complete");
-				
-				//completed too
+
+				// completed too
 				responseObserver.onCompleted();
 			}
-			
+
 		};
 	}
 
-// method to check sufficient funds for transfers
-	
+// valid account number
+
+	private boolean validAccNo(String accNo) {
+		if (accNo.matches("([1-3])")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+// method to check for sufficient funds 
+
 	private boolean transferSum(int toAccNo, int fromAccNo, double sum) {
-		
+
 		if (accounts[fromAccNo] < sum) {
 			return false;
 		} else {
@@ -288,62 +303,59 @@ private Properties getProperties() {
 			accounts[toAccNo] += sum;
 			return true;
 		}
-	
-}
-	
-	// Customer class 
-	
-		private class Customer {
 
-			private int accNo;
-			private String firstName;
-			private String lastName;
-			private double balance;
+	}
 
-			// constructor
-			public Customer(int accNo, String firstName, String lastName, double balance)
-			{
-				this.accNo = accNo;
-				this.firstName = firstName;
-				this.lastName = lastName;
-				this.balance = balance;
-			}
-			
-			public Customer()
-			{
-			}
+// Customer class
 
-			public int getAccNo() {
-				return accNo;
-			}
+	private class Customer {
 
-			public void setAccNo(int accNo) {
-				this.accNo = accNo;
-			}
+		private int accNo;
+		private String firstName;
+		private String lastName;
+		private double balance;
 
-		
-			public String getFirstName() {
-				return firstName;
-			}
-
-			public void setFirstName(String firstName) {
-				this.firstName = firstName;
-			}
-
-			public String getLastName() {
-				return lastName;
-			}
-
-			public void setLastName(String lastName) {
-				this.lastName = lastName;
-			}
-
-			public double getBalance() {
-				return balance;
-			}
-
-			public void setBalance(double balance) {
-				this.balance = balance;
-			}
+		// constructor
+		public Customer(int accNo, String firstName, String lastName, double balance) {
+			this.accNo = accNo;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.balance = balance;
 		}
+
+		public Customer() {
+		}
+
+		public int getAccNo() {
+			return accNo;
+		}
+
+		public void setAccNo(int accNo) {
+			this.accNo = accNo;
+		}
+
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public double getBalance() {
+			return balance;
+		}
+
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
+	}
 }

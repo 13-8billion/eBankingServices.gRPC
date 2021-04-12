@@ -105,20 +105,8 @@ public class UserToolsClient {
 // Vault method - Unary
 
 	public static void vault() {
-		
-		String username = null;
-		String password = null;
-		int accNo =0;
-		double sum = 0;
-		String unlockDate = null;
 
 		VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
-				.setUsername(username)
-				.setPassword(password)
-				.setAccNo(accNo)
-				.setSum(sum)
-				.setVaultID(1)
-				.setUnlockDate(unlockDate)
 				.build());
 		
 		System.out.println(response);
@@ -128,25 +116,10 @@ public class UserToolsClient {
 	
 	public static void interestCalc() {
 		
-		String accType;
-		String access;
-		double sum;
-		
-		Scanner in = new Scanner(System.in);
-		System.out.println("Enter account type (12, 24 or 36 months term): ");
-		accType = in.next();
-		System.out.println("Allowed access? (yes/no): ");
-		access = in.next();
-		System.out.println("Enter total sum: ");
-		sum = in.nextDouble();
-
 		CalcResponse response = blockingStub.interestCalc(CalcRequest.newBuilder()
-				.setAccType(accType)
-				.setAccess(access)
-				.setSum(sum)
 				.build());
 
-		System.out.println("Total payable " + response + "euro");
+		System.out.println("Total payable " + response);
 	}
 	
 }

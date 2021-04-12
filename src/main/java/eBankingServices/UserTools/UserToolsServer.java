@@ -14,6 +14,7 @@ import javax.jmdns.ServiceInfo;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
 public class UserToolsServer extends UserToolsImplBase {
@@ -120,23 +121,22 @@ public class UserToolsServer extends UserToolsImplBase {
 // HelpBot method - bi-directional streaming
 	
 	public StreamObserver<HelpRequest> helpBot(StreamObserver<HelpResponse> responseObserver) {
-		
-		Scanner in = new Scanner(System.in);
-		
-	
+
+		String newline = "\n\r";
+			
 		return new StreamObserver<HelpRequest> () {
 			
 			@Override
 			public void onNext(HelpRequest request) {
 				
 //			try {
-				int id = request.getProblemID();
+//				int id = request.getProblemID();
 				
-				String problems = "1. Reset Password "
-								+ "2. Report bug"
-								+ "3. Use vaults"
-								+ "4. Send/receive payments";
-//
+//				String problems = "1. Reset Password "
+//								+ "2. Report bug"
+//								+ "3. Use vaults"
+//								+ "4. Send/receive payments";
+////
 //				System.out.println("Welcome to HelpBot. Please select the number of your problem below:");
 //				System.out.println("Reset password enter 1: ");
 //				System.out.println("Report a bug enter 2: ");
@@ -151,30 +151,29 @@ public class UserToolsServer extends UserToolsImplBase {
 				
 				String solution = null;
 
-				if(id == 1) //request.getSolutions()==Solutions.PASSWORD_RESET)
+				if(request.getOperation()==Operation.PASSWORD_RESET)
 				{
-					solution = "To reset your password, navigate to your account and under settings select 'change password' and follow the instructions";			
+					solution = "To reset your password, navigate to your account and under settings select " + newline+ "'change password' and follow the instructions";			
 				}
-				else if(id == 2)// request.getSolutions()==Solutions.REPORT_BUG
+				else if(request.getOperation()==Operation.REPORT_BUG)
 				{								
-					solution = "To report a bug please send an email to our 24 hour help assist at: eBankingServices.gRPC@nci.ie";
+					solution = "To report a bug please send an email to our "+ newline+ " 24 hour help assist at: eBankingServices.gRPC@nci.ie";
 				}
-				else if(id == 3) // request.getSolutions()==Solutions.VAULTS
+				else if(request.getOperation()==Operation.VAULTS)
 				{
-					solution = "To use our vault service simply navigate to the vaults under the 'user tools' menu, select the amount of money you wish to store and select a date for when the vault can be reopened.";
+					solution = "To use our vault service simply navigate to the vaults under the " + newline+ "'user tools' menu, select the amount of money you wish to store and " + newline+ "select a date for when the vault can be reopened.";
 				}
-				else if(id == 4) // request.getSolutions()==Solutions.PAYMENTS
+				else if(request.getOperation()==Operation.PAYMENTS)
 				{
-					solution = "If you are experiencing issues making or recieveing payment please call our free 24 hour hotline at: 0800-03041992.";
+					solution = "If you are experiencing issues making or recieveing" + newline+"  payment please call our free 24 hour hotline at: 0800-03041992.";
 				}
-				else if (id != 1 || id != 2 || id !=3 | id !=4){
+				else{
 
-					solution = "You have selected an invalid option. Please select from the list";
+					solution = "You have selected an invalid option. " + newline+ " Please select from the list";
 				}		
 
 				HelpResponse reply = HelpResponse.newBuilder()
 						.setSolution(solution)
-						.setProblems(problems)
 						.build();
 				
 				responseObserver.onNext(reply);

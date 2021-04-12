@@ -152,7 +152,7 @@ private Properties getProperties() {
 			
 			dc = DepositConfirmation.newBuilder()
 						.setMessage("SUCCESS " + newline + euro + request.getSum() +  " deposited into Acc No. " + request.getAccNo() + newline +
-			"Previous Balance: " + c.getBalance() + newline + "New Balance: " + newBalance)
+			"Previous Balance: " + euro + c.getBalance() + newline + "New Balance: "+ euro + newBalance)
 						.build();
 		
 		responseObserver.onNext(dc);
@@ -187,7 +187,7 @@ private Properties getProperties() {
 					TransferConfirmation reply = TransferConfirmation.newBuilder()
 							.setMessage("SUCCESS " + newline + euro + request.getSum() +
 									" transferred to Account No.  "+ request.getToAccNo() + newline +
-									"Old Balance : " + c.getBalance() + newline + "New Balance: " + newBalance)
+									"Previous Balance : " + euro + c.getBalance() + newline + "New Balance: "+ euro + newBalance)
 							.build();
 					
 					responseObserver.onNext(reply);
@@ -222,7 +222,7 @@ private Properties getProperties() {
 			
 			@Override
 			public void onError(Throwable t) {
-				// TODO Auto-generated method stub
+				
 			}
 		};
 	}
@@ -317,7 +317,7 @@ private Properties getProperties() {
 				return accNo;
 			}
 
-			public void setEmpNo(int accNo) {
+			public void setAccNo(int accNo) {
 				this.accNo = accNo;
 			}
 

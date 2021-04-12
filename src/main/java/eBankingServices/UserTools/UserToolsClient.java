@@ -61,24 +61,20 @@ public class UserToolsClient {
 			
 
 			requestObserver.onNext(HelpRequest.newBuilder()
-					.setProblemID(1)
 					.build());
 			Thread.sleep(2000);
 			
 
 			requestObserver.onNext(HelpRequest.newBuilder()
-					.setProblemID(2)
 					.build());
 			Thread.sleep(2000);
 
 			
 			requestObserver.onNext(HelpRequest.newBuilder()
-					.setProblemID(3)
 					.build());
 			Thread.sleep(2000);
 			
 			requestObserver.onNext(HelpRequest.newBuilder()
-					.setProblemID(4)
 					.build());
 			Thread.sleep(2000);
 

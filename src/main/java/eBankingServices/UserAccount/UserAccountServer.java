@@ -18,7 +18,10 @@ import eBankingServices.UserAccount.UserAccountGrpc.UserAccountImplBase;
 
 public class UserAccountServer extends UserAccountImplBase {
 	
-
+	private String Username = "Amy";
+	private String currPassword = "123";
+	
+	
 	public static void main(String[] args) throws InterruptedException, IOException {
 
 		// initiate server
@@ -161,7 +164,7 @@ private Properties getProperties() {
 			if (request.getAccNo() == c.getAccNo()) 
 			{
 				reply = AccountInfo.newBuilder()
-						.setMessage("Streaming info for Acc No: " + request.getAccNo() + " ...") 
+						.setMessage("Streaming Account No: " + request.getAccNo() + " ...") 
 						.setAccNo(request.getAccNo())
 						.setFirstName(c.getFirstName())
 						.setLastName(c.getLastName())
@@ -187,12 +190,12 @@ private Properties getProperties() {
 				if (changePass(request.getUsername(), request.getCurrPass(), request.getNewPass())) {
 						
 					pc = PasswordConfirmation.newBuilder()	
-							.setMessage("Server >>>>>>>>> Password for " + request.getUsername() + " has been changed to " + request.getNewPass())
+							.setMessage("Password for " + request.getUsername() + " has been changed to " + request.getNewPass())
 							.build();
 					
 				} else {	
 					pc = PasswordConfirmation.newBuilder()	
-							.setMessage("Server >>>>>>>>> Username or Password Incorrect!" )
+							.setMessage("Username or Password Incorrect!" )
 							.build();
 				}
 				
@@ -205,8 +208,8 @@ private Properties getProperties() {
 	
 	private boolean changePass(String username, String currPass, String newPass)
 	{
-		if (username.equals("Amy") && currPass.equals("123"))
-			currPass = newPass;
+		if (username.equals(Username) && currPass.equals(currPassword))
+			currPassword = newPass;
 			return true;
 	}
 	
@@ -215,7 +218,7 @@ private Properties getProperties() {
 	
 	private boolean authenticateUser(String username, String password) 
 	{
-		if (username.equals("Amy") && password.equals("123")) 
+		if (username.equals(Username) && password.equals(currPassword)) 
 		{
 			return true;
 		} 
@@ -252,7 +255,7 @@ private Properties getProperties() {
 			return accNo;
 		}
 
-		public void setEmpNo(int accNo) {
+		public void setAccNo(int accNo) {
 			this.accNo = accNo;
 		}
 

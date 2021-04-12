@@ -20,8 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private HelpRequest() {
-    problemID_ = 0;
-    solutions_ = 0;
+    operation_ = 0;
   }
 
   @java.lang.Override
@@ -49,14 +48,9 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 8: {
-
-            problemID_ = input.readInt32();
-            break;
-          }
-          case 16: {
             int rawValue = input.readEnum();
 
-            solutions_ = rawValue;
+            operation_ = rawValue;
             break;
           }
           default: {
@@ -92,9 +86,9 @@ private static final long serialVersionUID = 0L;
   }
 
   /**
-   * Protobuf enum {@code UserTools.HelpRequest.Solutions}
+   * Protobuf enum {@code UserTools.HelpRequest.Operation}
    */
-  public enum Solutions
+  public enum Operation
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <code>PASSWORD_RESET = 0;</code>
@@ -145,11 +139,11 @@ private static final long serialVersionUID = 0L;
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
-    public static Solutions valueOf(int value) {
+    public static Operation valueOf(int value) {
       return forNumber(value);
     }
 
-    public static Solutions forNumber(int value) {
+    public static Operation forNumber(int value) {
       switch (value) {
         case 0: return PASSWORD_RESET;
         case 1: return REPORT_BUG;
@@ -159,15 +153,15 @@ private static final long serialVersionUID = 0L;
       }
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<Solutions>
+    public static com.google.protobuf.Internal.EnumLiteMap<Operation>
         internalGetValueMap() {
       return internalValueMap;
     }
     private static final com.google.protobuf.Internal.EnumLiteMap<
-        Solutions> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Solutions>() {
-            public Solutions findValueByNumber(int number) {
-              return Solutions.forNumber(number);
+        Operation> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Operation>() {
+            public Operation findValueByNumber(int number) {
+              return Operation.forNumber(number);
             }
           };
 
@@ -184,9 +178,9 @@ private static final long serialVersionUID = 0L;
       return eBankingServices.UserTools.HelpRequest.getDescriptor().getEnumTypes().get(0);
     }
 
-    private static final Solutions[] VALUES = values();
+    private static final Operation[] VALUES = values();
 
-    public static Solutions valueOf(
+    public static Operation valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -200,37 +194,28 @@ private static final long serialVersionUID = 0L;
 
     private final int value;
 
-    private Solutions(int value) {
+    private Operation(int value) {
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:UserTools.HelpRequest.Solutions)
+    // @@protoc_insertion_point(enum_scope:UserTools.HelpRequest.Operation)
   }
 
-  public static final int PROBLEMID_FIELD_NUMBER = 1;
-  private int problemID_;
+  public static final int OPERATION_FIELD_NUMBER = 1;
+  private int operation_;
   /**
-   * <code>int32 problemID = 1;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
    */
-  public int getProblemID() {
-    return problemID_;
-  }
-
-  public static final int SOLUTIONS_FIELD_NUMBER = 2;
-  private int solutions_;
-  /**
-   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
-   */
-  public int getSolutionsValue() {
-    return solutions_;
+  public int getOperationValue() {
+    return operation_;
   }
   /**
-   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
    */
-  public eBankingServices.UserTools.HelpRequest.Solutions getSolutions() {
+  public eBankingServices.UserTools.HelpRequest.Operation getOperation() {
     @SuppressWarnings("deprecation")
-    eBankingServices.UserTools.HelpRequest.Solutions result = eBankingServices.UserTools.HelpRequest.Solutions.valueOf(solutions_);
-    return result == null ? eBankingServices.UserTools.HelpRequest.Solutions.UNRECOGNIZED : result;
+    eBankingServices.UserTools.HelpRequest.Operation result = eBankingServices.UserTools.HelpRequest.Operation.valueOf(operation_);
+    return result == null ? eBankingServices.UserTools.HelpRequest.Operation.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -247,11 +232,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (problemID_ != 0) {
-      output.writeInt32(1, problemID_);
-    }
-    if (solutions_ != eBankingServices.UserTools.HelpRequest.Solutions.PASSWORD_RESET.getNumber()) {
-      output.writeEnum(2, solutions_);
+    if (operation_ != eBankingServices.UserTools.HelpRequest.Operation.PASSWORD_RESET.getNumber()) {
+      output.writeEnum(1, operation_);
     }
     unknownFields.writeTo(output);
   }
@@ -262,13 +244,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (problemID_ != 0) {
+    if (operation_ != eBankingServices.UserTools.HelpRequest.Operation.PASSWORD_RESET.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, problemID_);
-    }
-    if (solutions_ != eBankingServices.UserTools.HelpRequest.Solutions.PASSWORD_RESET.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(2, solutions_);
+        .computeEnumSize(1, operation_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -286,9 +264,7 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.HelpRequest other = (eBankingServices.UserTools.HelpRequest) obj;
 
     boolean result = true;
-    result = result && (getProblemID()
-        == other.getProblemID());
-    result = result && solutions_ == other.solutions_;
+    result = result && operation_ == other.operation_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -300,10 +276,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PROBLEMID_FIELD_NUMBER;
-    hash = (53 * hash) + getProblemID();
-    hash = (37 * hash) + SOLUTIONS_FIELD_NUMBER;
-    hash = (53 * hash) + solutions_;
+    hash = (37 * hash) + OPERATION_FIELD_NUMBER;
+    hash = (53 * hash) + operation_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -441,9 +415,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      problemID_ = 0;
-
-      solutions_ = 0;
+      operation_ = 0;
 
       return this;
     }
@@ -471,8 +443,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.HelpRequest buildPartial() {
       eBankingServices.UserTools.HelpRequest result = new eBankingServices.UserTools.HelpRequest(this);
-      result.problemID_ = problemID_;
-      result.solutions_ = solutions_;
+      result.operation_ = operation_;
       onBuilt();
       return result;
     }
@@ -521,11 +492,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.HelpRequest other) {
       if (other == eBankingServices.UserTools.HelpRequest.getDefaultInstance()) return this;
-      if (other.getProblemID() != 0) {
-        setProblemID(other.getProblemID());
-      }
-      if (other.solutions_ != 0) {
-        setSolutionsValue(other.getSolutionsValue());
+      if (other.operation_ != 0) {
+        setOperationValue(other.getOperationValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -556,73 +524,47 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int problemID_ ;
+    private int operation_ = 0;
     /**
-     * <code>int32 problemID = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
      */
-    public int getProblemID() {
-      return problemID_;
+    public int getOperationValue() {
+      return operation_;
     }
     /**
-     * <code>int32 problemID = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
      */
-    public Builder setProblemID(int value) {
-      
-      problemID_ = value;
+    public Builder setOperationValue(int value) {
+      operation_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 problemID = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
      */
-    public Builder clearProblemID() {
-      
-      problemID_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private int solutions_ = 0;
-    /**
-     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
-     */
-    public int getSolutionsValue() {
-      return solutions_;
-    }
-    /**
-     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
-     */
-    public Builder setSolutionsValue(int value) {
-      solutions_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
-     */
-    public eBankingServices.UserTools.HelpRequest.Solutions getSolutions() {
+    public eBankingServices.UserTools.HelpRequest.Operation getOperation() {
       @SuppressWarnings("deprecation")
-      eBankingServices.UserTools.HelpRequest.Solutions result = eBankingServices.UserTools.HelpRequest.Solutions.valueOf(solutions_);
-      return result == null ? eBankingServices.UserTools.HelpRequest.Solutions.UNRECOGNIZED : result;
+      eBankingServices.UserTools.HelpRequest.Operation result = eBankingServices.UserTools.HelpRequest.Operation.valueOf(operation_);
+      return result == null ? eBankingServices.UserTools.HelpRequest.Operation.UNRECOGNIZED : result;
     }
     /**
-     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
      */
-    public Builder setSolutions(eBankingServices.UserTools.HelpRequest.Solutions value) {
+    public Builder setOperation(eBankingServices.UserTools.HelpRequest.Operation value) {
       if (value == null) {
         throw new NullPointerException();
       }
       
-      solutions_ = value.getNumber();
+      operation_ = value.getNumber();
       onChanged();
       return this;
     }
     /**
-     * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
      */
-    public Builder clearSolutions() {
+    public Builder clearOperation() {
       
-      solutions_ = 0;
+      operation_ = 0;
       onChanged();
       return this;
     }

@@ -8,16 +8,11 @@ public interface HelpRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 problemID = 1;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
    */
-  int getProblemID();
-
+  int getOperationValue();
   /**
-   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
    */
-  int getSolutionsValue();
-  /**
-   * <code>.UserTools.HelpRequest.Solutions solutions = 2;</code>
-   */
-  eBankingServices.UserTools.HelpRequest.Solutions getSolutions();
+  eBankingServices.UserTools.HelpRequest.Operation getOperation();
 }

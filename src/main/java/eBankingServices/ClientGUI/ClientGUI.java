@@ -7,6 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.ClientGUI.ClientGUI;
 import eBankingServices.Transactions.DepositConfirmation;
 import eBankingServices.Transactions.DepositConfirmationOrBuilder;
@@ -82,11 +83,10 @@ public class ClientGUI implements ActionListener {
 	private JPasswordField currPass = new JPasswordField(10);
 	private JLabel labelnewpass = new JLabel("New password: ");
 	private JPasswordField newPass = new JPasswordField(10);
-	private JLabel labelpassmsg = new JLabel("Message: ");
-	private JTextField passMsg = new JTextField(10);
+	private JTextArea passMsg = new JTextArea();
 	private JButton buttonPass = new JButton("Change password");
 	// view account
-	private JLabel labelaccno = new JLabel("Acc no: ");
+	private JLabel labelaccno = new JLabel("Account No: ");
 	private JTextField accno = new JTextField(10);
 	private JLabel labelfname = new JLabel("First Name: ");
 	private JTextField firstName = new JTextField(10);
@@ -95,12 +95,13 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelbalance = new JLabel("Balance € ");
 	private JTextField balance = new JTextField(10);
 	private JButton buttonAcc = new JButton("View Account");
-	private JTextField viewAccMsg = new JTextField(10);
+	private JTextArea viewAccMsg = new JTextArea();
+	private JTextArea recentTrans = new JTextArea();
 	// login
 	private JLabel labelUsername = new JLabel("Enter username: ");
 	private JLabel labelPassword = new JLabel("Enter password: ");
 	private JTextField username1 = new JTextField(10);
-	private JTextField loginConf1 = new JTextField(20);
+	private JTextArea loginConf1 = new JTextArea();
 	private JPasswordField password1 = new JPasswordField(10);
 	private JButton buttonLogin = new JButton("Login");
 	private JLabel labelUsername2 = new JLabel("Enter username: ");
@@ -139,6 +140,9 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelsolution = new JLabel("Solution: ");
 	private JTextArea solutions = new JTextArea();
 	private JButton buttonselect = new JButton("Select");
+	private JComboBox comboOperation = new JComboBox();
+	
+	
 
 	private JTabbedPane getClientGUIJTabbedPane() {
 
@@ -148,49 +152,51 @@ public class ClientGUI implements ActionListener {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 
-		// HELP BOT PANEL ----------------------
+// HELP BOT PANEL ----------------------
 
 		JPanel helpBot = new JPanel(new GridBagLayout());
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		helpBot.add(labelhowto, constraints);
+		
+		comboOperation.setModel(new DefaultComboBoxModel(new String[] {"Reset Password","Report a Bug", "Use Vaults", "Send/Receive Payments"}));
+		helpBot.add(comboOperation);
 
-		constraints.ipady = 5;
-		constraints.ipadx = 5;
-		constraints.gridx = 1;
-		helpBot.add(problem, constraints);
-		problem.setEditable(false);
+//		constraints.ipady = 5;
+//		constraints.ipadx = 5;
+//		constraints.gridx = 1;
+//		helpBot.add(problem, constraints);
+//		problem.setEditable(false);
+//
+//		constraints.ipady = 0;
+//		constraints.gridx = 0;
+//		constraints.gridy = 1;
+//		helpBot.add(labelproblemID, constraints);
+//
+//		constraints.gridx = 1;
+//		helpBot.add(problemID, constraints);
 
-		constraints.ipady = 0;
 		constraints.gridx = 0;
-		constraints.gridy = 1;
-		helpBot.add(labelproblemID, constraints);
-
-		constraints.gridx = 1;
-		helpBot.add(problemID, constraints);
-
-		constraints.gridx = 0;
-		constraints.gridy = 5;
+		constraints.gridy = 2;
 		constraints.gridwidth = 2;
 		constraints.anchor = GridBagConstraints.CENTER;
 		buttonselect.addActionListener(this);
 		helpBot.add(buttonselect, constraints);
 
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		helpBot.add(labelsolution, constraints);
+//		constraints.anchor = GridBagConstraints.WEST;
+//		constraints.gridx = 0;
+//		constraints.gridy = 2;
+//		helpBot.add(labelsolution, constraints);
 
-		constraints.ipady = 5;
-		constraints.ipadx = 5;
 		constraints.gridx = 1;
 		helpBot.add(solutions, constraints);
 		solutions.setEditable(false);
+	
 		// set border for the panel
 		helpBot.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "HELP BOT"));
 
-		// VAULT PANEL -------------------
+// VAULT PANEL -------------------
 
 		JPanel vault = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints2 = new GridBagConstraints();
@@ -248,7 +254,7 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		vault.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "VAULT"));
 
-		// INTEREST CALC -------------------
+// INTEREST CALC -------------------
 
 		JPanel interestCalc = new JPanel(new GridBagLayout());
 
@@ -297,7 +303,7 @@ public class ClientGUI implements ActionListener {
 		interestCalc
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
 
-		// LOGIN PANEL -------------------
+// LOGIN PANEL -------------------
 
 		JPanel login = new JPanel(new GridBagLayout());
 
@@ -327,14 +333,13 @@ public class ClientGUI implements ActionListener {
 		buttonLogin.addActionListener(this);
 		login.add(buttonLogin, constraints4);
 
-		constraints4.anchor = GridBagConstraints.WEST;
 		constraints4.gridx = 0;
 		constraints4.gridy = 3;
 		login.add(loginConf1, constraints4);
 		// set border for the panel
 		login.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "LOGIN"));
 
-		// VIEW ACC PANEL -------------------
+// VIEW ACC PANEL -------------------
 
 		JPanel viewAcc = new JPanel(new GridBagLayout());
 
@@ -353,7 +358,7 @@ public class ClientGUI implements ActionListener {
 		constraints5.gridx = 0;
 		constraints5.gridy = 1;
 		constraints5.gridwidth = 2;
-		constraints5.anchor = GridBagConstraints.CENTER;
+		constraints5.anchor = GridBagConstraints.EAST;
 		buttonAcc.addActionListener(this);
 		viewAcc.add(buttonAcc, constraints5);
 
@@ -382,10 +387,14 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(balance, constraints5);
+		
+		constraints5.gridx = 1;
+		constraints5.gridy = 6;
+		viewAcc.add(recentTrans, constraints5);
 		// set border for the panel
 		viewAcc.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "VIEW ACCOUNTS"));
 
-		// CHANGE PASSWORD PANEL -------------------
+// CHANGE PASSWORD PANEL -------------------
 
 		JPanel changePass = new JPanel(new GridBagLayout());
 
@@ -425,7 +434,6 @@ public class ClientGUI implements ActionListener {
 		constraints6.anchor = GridBagConstraints.WEST;
 		constraints6.gridx = 0;
 		constraints6.gridy = 4;
-		changePass.add(labelpassmsg, constraints6);
 
 		constraints6.gridx = 1;
 		changePass.add(passMsg, constraints6);
@@ -433,7 +441,7 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		changePass.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
 
-		// TRANSFER PANEL -------------------
+// TRANSFER PANEL -------------------
 
 		JPanel transfer = new JPanel(new GridBagLayout());
 
@@ -482,7 +490,7 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		transfer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "TRANSFER"));
 
-		// DEPOSIT PANEL -------------------
+// DEPOSIT PANEL -------------------
 
 		JPanel deposit = new JPanel(new GridBagLayout());
 
@@ -523,7 +531,7 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		deposit.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "DEPOSIT"));
 
-		// REQUEST PANEL -------------------
+// REQUEST PANEL -------------------
 
 		JPanel request = new JPanel(new GridBagLayout());
 
@@ -585,43 +593,6 @@ public class ClientGUI implements ActionListener {
 		return tabPane;
 	}
 
-	public static void main(String[] args) {
-
-		ClientGUI gui = new ClientGUI();
-
-		gui.build();
-	}
-
-	private void build() {
-
-		JFrame frame = new JFrame("eBanking Appliation");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Set the panel to add buttons
-		JPanel panel = new JPanel();
-
-		// Set the BoxLayout to be X_AXIS: from left to right
-		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
-
-		panel.setLayout(boxlayout);
-
-		// Set border for the panel
-		panel.setBorder(new EmptyBorder(new Insets(25, 50, 25, 50)));
-
-		panel.add(getClientGUIJTabbedPane());
-
-		// Set size for the frame
-		frame.setSize(300, 300);
-
-		// Set the window to be visible as the default to be false
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
-	}
-
-	/*
-	 * 
-	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -802,6 +773,9 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
+			
+			int index = comboOperation.getSelectedIndex();
+			Operation operation = Operation.forNumber(index);
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
 
@@ -828,9 +802,10 @@ public class ClientGUI implements ActionListener {
 			};
 
 			StreamObserver<HelpRequest> requestObserver = asyncStub.helpBot(responseObserver);
+			
 
 			requestObserver
-					.onNext(HelpRequest.newBuilder().setProblemID(Integer.parseInt(problemID.getText())).build());
+					.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {

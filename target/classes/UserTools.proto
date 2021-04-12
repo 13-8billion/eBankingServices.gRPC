@@ -21,16 +21,15 @@ service UserTools {
 
 // help bot message
 message HelpRequest {
-  int32 problemID = 1; 
   
-    enum Solutions{
+    enum Operation{
 
   	PASSWORD_RESET =0;
   	REPORT_BUG=1;
   	VAULTS=2;
   	PAYMENTS=3;
   }
-  Solutions solutions = 2;
+  Operation operation = 1;
 }
 
 message HelpResponse {

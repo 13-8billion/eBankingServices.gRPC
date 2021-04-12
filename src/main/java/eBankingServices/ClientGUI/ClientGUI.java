@@ -42,9 +42,10 @@ public class ClientGUI implements ActionListener {
 
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
+	private String newlinee = "\n\r";
 
 	// TRANSACTIONS -----------
-	
+
 	// deposit instance variables
 	private JLabel labelentry1 = new JLabel("To Acc No: ");
 	private JTextField entry1 = new JTextField(10);
@@ -70,12 +71,14 @@ public class ClientGUI implements ActionListener {
 	private JTextField toAccNo2 = new JTextField(10);
 	private JLabel labelsum2 = new JLabel("Amount € ");
 	private JTextField sum2 = new JTextField(10);
+	private JLabel labelmonthly = new JLabel("Set monthly? (true/false) ");
+	private JTextField monthly = new JTextField(10);
 	private JButton buttonRequest = new JButton("Request");
 	private JLabel labelstatus = new JLabel("Message: ");
 	private JTextArea status = new JTextArea();
 
 	// USER ACCOUNT---------------------
-	
+
 	// change password
 	private JLabel labelusername = new JLabel("Username: ");
 	private JTextField username = new JTextField(10);
@@ -108,7 +111,7 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelPassword2 = new JLabel("Enter password: ");
 
 	// USER TOOLS --------------
-	
+
 	// vault
 	private JTextField vaultUsername = new JTextField(10);
 	private JTextArea vaultConf = new JTextArea();
@@ -121,11 +124,15 @@ public class ClientGUI implements ActionListener {
 	private JPasswordField vaultPassword = new JPasswordField(10);
 	private JButton buttonVault = new JButton("Vault");
 	// calculator
-	private JLabel labelacctype = new JLabel("Acc type (12, 24 or 36) term: ");
+	private JLabel labelroi = new JLabel("Rates of interest: ");
+	private JTextArea roi = new JTextArea("12 MONTHS TERM: " + newlinee + "access - 0.0001%" +newlinee +"no access - 0.0004%" + newlinee + newlinee +
+			"24 MONTHS TERM: " + newlinee + "access - 0.002%" + newlinee + "no access - 0.003%" + newlinee+ newlinee+
+			"36 MONTHS TERM: " + newlinee + "access - 0.0025%" + newlinee + "no access - 0.05%");	
+	private JLabel labelacctype = new JLabel("Account type (12, 24 or 36): ");
 	private JTextField acctype = new JTextField(10);
 	private JLabel labelcalcsum = new JLabel("Amount € ");
 	private JTextField calcsum = new JTextField(10);
-	private JLabel labelaccess = new JLabel("Access(yes/no): ");
+	private JLabel labelaccess = new JLabel("Money access? (yes/no): ");
 	private JTextField access = new JTextField(10);
 	private JButton buttoncalc = new JButton("Calculate");
 	private JLabel labelinterest = new JLabel("Interest Payable € ");
@@ -136,8 +143,6 @@ public class ClientGUI implements ActionListener {
 	private JTextArea solutions = new JTextArea();
 	private JButton buttonselect = new JButton("Select");
 	private JComboBox comboOperation = new JComboBox();
-	
-	
 
 	private JTabbedPane getClientGUIJTabbedPane() {
 
@@ -154,8 +159,9 @@ public class ClientGUI implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		helpBot.add(labelhowto, constraints);
-		
-		comboOperation.setModel(new DefaultComboBoxModel(new String[] {"Reset Password","Report a Bug", "Use Vaults", "Send/Receive Payments"}));
+
+		comboOperation.setModel(new DefaultComboBoxModel(
+				new String[] { "Reset Password", "Report a Bug", "Use Vaults", "Send/Receive Payments" }));
 		helpBot.add(comboOperation);
 
 		constraints.gridx = 0;
@@ -169,7 +175,7 @@ public class ClientGUI implements ActionListener {
 		constraints.gridy = 3;
 		helpBot.add(solutions, constraints);
 		solutions.setEditable(false);
-	
+
 		// set border for the panel
 		helpBot.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "HELP BOT"));
 
@@ -240,27 +246,35 @@ public class ClientGUI implements ActionListener {
 		// add components to the panel
 		constraints3.gridx = 0;
 		constraints3.gridy = 0;
+		interestCalc.add(labelroi, constraints3);
+
+		constraints3.gridx = 1;
+		interestCalc.add(roi, constraints3);
+		roi.setEditable(false);
+		
+		constraints3.gridx = 0;
+		constraints3.gridy = 1;
 		interestCalc.add(labelacctype, constraints3);
 
 		constraints3.gridx = 1;
 		interestCalc.add(acctype, constraints3);
 
 		constraints3.gridx = 0;
-		constraints3.gridy = 1;
+		constraints3.gridy = 2;
 		interestCalc.add(labelcalcsum, constraints3);
 
 		constraints3.gridx = 1;
 		interestCalc.add(calcsum, constraints3);
 
 		constraints3.gridx = 0;
-		constraints3.gridy = 2;
+		constraints3.gridy = 3;
 		interestCalc.add(labelaccess, constraints3);
 
 		constraints3.gridx = 1;
 		interestCalc.add(access, constraints3);
 
 		constraints3.gridx = 0;
-		constraints3.gridy = 4;
+		constraints3.gridy = 5;
 		constraints3.gridwidth = 2;
 		constraints3.anchor = GridBagConstraints.CENTER;
 		buttoncalc.addActionListener(this);
@@ -268,7 +282,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints3.anchor = GridBagConstraints.WEST;
 		constraints3.gridx = 0;
-		constraints3.gridy = 5;
+		constraints3.gridy = 6;
 		interestCalc.add(labelinterest, constraints3);
 
 		constraints3.gridx = 1;
@@ -362,7 +376,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(balance, constraints5);
-		
+
 		constraints5.gridx = 1;
 		constraints5.gridy = 6;
 		viewAcc.add(recentTrans, constraints5);
@@ -537,8 +551,15 @@ public class ClientGUI implements ActionListener {
 		constraints9.gridx = 1;
 		request.add(sum2, constraints9);
 
-		constraints9.gridx = 1;
+		constraints9.gridx = 0;
 		constraints9.gridy = 3;
+		request.add(labelmonthly, constraints9);
+
+		constraints9.gridx = 1;
+		request.add(monthly, constraints9);
+
+		constraints9.gridx = 1;
+		constraints9.gridy = 4;
 		constraints9.gridwidth = 2;
 		constraints9.anchor = GridBagConstraints.CENTER;
 		buttonRequest.addActionListener(this);
@@ -546,7 +567,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints9.anchor = GridBagConstraints.WEST;
 		constraints9.gridx = 0;
-		constraints9.gridy = 5;
+		constraints9.gridy = 6;
 		request.add(labelstatus, constraints9);
 
 		constraints9.gridx = 1;
@@ -567,7 +588,7 @@ public class ClientGUI implements ActionListener {
 
 		return tabPane;
 	}
-	
+
 	public static void main(String[] args) {
 
 		ClientGUI gui = new ClientGUI();
@@ -592,7 +613,7 @@ public class ClientGUI implements ActionListener {
 		panel.setBorder(new EmptyBorder(new Insets(25, 50, 25, 50)));
 
 		panel.add(getClientGUIJTabbedPane());
-	
+
 		// Set size for the frame
 		frame.setSize(300, 300);
 
@@ -601,7 +622,6 @@ public class ClientGUI implements ActionListener {
 		frame.pack();
 		frame.setVisible(true);
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -695,7 +715,7 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(RequestSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
-					.build());
+					.setMonthly(Boolean.parseBoolean(monthly.getText())).build());
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
 			System.out.println("Login service invoked ...");
@@ -782,7 +802,7 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-			
+
 			int index = comboOperation.getSelectedIndex();
 			Operation operation = Operation.forNumber(index);
 
@@ -811,10 +831,8 @@ public class ClientGUI implements ActionListener {
 			};
 
 			StreamObserver<HelpRequest> requestObserver = asyncStub.helpBot(responseObserver);
-			
 
-			requestObserver
-					.onNext(HelpRequest.newBuilder().setOperation(operation).build());
+			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {

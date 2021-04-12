@@ -20,11 +20,12 @@ public class TransactionsClient {
 	
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
+	private static ManagedChannel channel;
 
 	
 	public static void main(String args[]) throws InterruptedException, IOException {
 	
-		final ManagedChannel channel = ManagedChannelBuilder
+		channel = ManagedChannelBuilder
 				.forAddress("localhost", 50050)
 				.usePlaintext()
 				.build();
@@ -128,7 +129,7 @@ public class TransactionsClient {
 	    };
 	    
 
-// Request money method - Bi-directional streaming 
+// Request money from other accounts - Bi-directional streaming 
 	    
 	    public static void request() {
 
@@ -142,6 +143,12 @@ public class TransactionsClient {
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 
@@ -157,11 +164,12 @@ public class TransactionsClient {
 			StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
 
 			try {
-
+				// simulating multiple requests 
 				requestObserver.onNext(RequestSum.newBuilder()
 						.setSum(10)
 						.setFromAccNo(1)
 						.setToAccNo(2)
+						.setMonthly(false)
 						.build());
 				Thread.sleep(500);
 				
@@ -169,6 +177,7 @@ public class TransactionsClient {
 						.setSum(20)
 						.setFromAccNo(2)
 						.setToAccNo(1)
+						.setMonthly(true)
 						.build());
 				Thread.sleep(500);
 				
@@ -176,6 +185,7 @@ public class TransactionsClient {
 						.setSum(30)
 						.setFromAccNo(2)
 						.setToAccNo(1)
+						.setMonthly(false)
 						.build());
 				Thread.sleep(500);
 

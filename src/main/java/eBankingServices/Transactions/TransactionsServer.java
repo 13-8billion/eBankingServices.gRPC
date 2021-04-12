@@ -21,6 +21,7 @@ import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 public class TransactionsServer extends TransactionsImplBase {
 
 	private String euro = "\u20ac";
+	String newline = "\n\r";
 
 	private Customer[] cArray = new Customer[] {
 
@@ -131,7 +132,6 @@ public class TransactionsServer extends TransactionsImplBase {
 		DepositConfirmation dc = null;
 
 		int depositID = 1;
-		String newline = "\n\r";
 		double newBalance;
 		String accNo = String.valueOf(request.getAccNo());
 
@@ -245,23 +245,28 @@ public class TransactionsServer extends TransactionsImplBase {
 			@Override
 			public void onNext(RequestSum request) {
 
+	
+					String status = ("Acc No. " + request.getToAccNo() + " requesting " + euro
+							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "..." + newline + newline+ "Awaiting confirmation...");
+
+					responseObserver.onNext(RequestStatus.newBuilder()
+							.setStatus(status)
+							.build());
 				try {
-					String status = ("Receiving request:  Acc No. " + request.getToAccNo() + " requesting " + euro
-							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "...");
-
-					RequestStatus reply = RequestStatus.newBuilder().setStatus(status).build();
-
-					responseObserver.onNext(reply);
-
-					Thread.sleep(1000);
-
-					Thread.sleep(new Random().nextInt(1000) + 500);
+					// sleep to simulate waiting for confirmation from other account
+					Thread.sleep(6000);
 
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				
+				status = ("Request confirmed!" + newline + newline +"Acc No. " + request.getFromAccNo() + " has transfered " + newline+ 
+						euro + request.getSum() + " to Acc No. " + request.getToAccNo() + newline + newline + "Monthly request? " + request.getMonthly());
+				responseObserver.onNext(RequestStatus.newBuilder()
+						.setStatus(status)
+						.build());
 			}
 
 			@Override
@@ -270,6 +275,7 @@ public class TransactionsServer extends TransactionsImplBase {
 				t.printStackTrace();
 
 			}
+			
 
 			@Override
 			public void onCompleted() {

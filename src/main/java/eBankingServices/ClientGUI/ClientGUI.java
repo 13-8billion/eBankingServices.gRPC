@@ -133,11 +133,6 @@ public class ClientGUI implements ActionListener {
 	// help bot
 	String newline = "\n\r";
 	private JLabel labelhowto = new JLabel("How to: ");
-	private JTextArea problem = new JTextArea("1. Reset password" + newline + "2. Report bug" + newline
-			+ "3. Use vaults" + newline + "4. Send/receive payments");
-	private JLabel labelproblemID = new JLabel("Enter No:  ");
-	private JTextField problemID = new JTextField(10);
-	private JLabel labelsolution = new JLabel("Solution: ");
 	private JTextArea solutions = new JTextArea();
 	private JButton buttonselect = new JButton("Select");
 	private JComboBox comboOperation = new JComboBox();
@@ -163,20 +158,6 @@ public class ClientGUI implements ActionListener {
 		comboOperation.setModel(new DefaultComboBoxModel(new String[] {"Reset Password","Report a Bug", "Use Vaults", "Send/Receive Payments"}));
 		helpBot.add(comboOperation);
 
-//		constraints.ipady = 5;
-//		constraints.ipadx = 5;
-//		constraints.gridx = 1;
-//		helpBot.add(problem, constraints);
-//		problem.setEditable(false);
-//
-//		constraints.ipady = 0;
-//		constraints.gridx = 0;
-//		constraints.gridy = 1;
-//		helpBot.add(labelproblemID, constraints);
-//
-//		constraints.gridx = 1;
-//		helpBot.add(problemID, constraints);
-
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.gridwidth = 2;
@@ -184,12 +165,8 @@ public class ClientGUI implements ActionListener {
 		buttonselect.addActionListener(this);
 		helpBot.add(buttonselect, constraints);
 
-//		constraints.anchor = GridBagConstraints.WEST;
-//		constraints.gridx = 0;
-//		constraints.gridy = 2;
-//		helpBot.add(labelsolution, constraints);
-
 		constraints.gridx = 1;
+		constraints.gridy = 3;
 		helpBot.add(solutions, constraints);
 		solutions.setEditable(false);
 	
@@ -592,6 +569,40 @@ public class ClientGUI implements ActionListener {
 
 		return tabPane;
 	}
+	
+	public static void main(String[] args) {
+
+		ClientGUI gui = new ClientGUI();
+
+		gui.build();
+	}
+
+	private void build() {
+
+		JFrame frame = new JFrame("eBanking Application");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// Set the panel to add buttons
+		JPanel panel = new JPanel();
+
+		// Set the BoxLayout to be X_AXIS: from left to right
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+
+		panel.setLayout(boxlayout);
+
+		// Set border for the panel
+		panel.setBorder(new EmptyBorder(new Insets(25, 50, 25, 50)));
+
+		panel.add(getClientGUIJTabbedPane());
+	
+		// Set size for the frame
+		frame.setSize(300, 300);
+
+		// Set the window to be visible as the default to be false
+		frame.add(panel);
+		frame.pack();
+		frame.setVisible(true);
+	}
 
 
 	@Override
@@ -777,7 +788,7 @@ public class ClientGUI implements ActionListener {
 			int index = comboOperation.getSelectedIndex();
 			Operation operation = Operation.forNumber(index);
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
 

@@ -19,7 +19,10 @@ import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
 public class UserToolsServer extends UserToolsImplBase {
 	
-	String euro = "\u20AC";
+	private String euro = "\u20AC";
+	private String Username = "Amy";
+	private String Password = "123";
+	
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -129,35 +132,16 @@ public class UserToolsServer extends UserToolsImplBase {
 			@Override
 			public void onNext(HelpRequest request) {
 				
-//			try {
-//				int id = request.getProblemID();
-				
-//				String problems = "1. Reset Password "
-//								+ "2. Report bug"
-//								+ "3. Use vaults"
-//								+ "4. Send/receive payments";
-////
-//				System.out.println("Welcome to HelpBot. Please select the number of your problem below:");
-//				System.out.println("Reset password enter 1: ");
-//				System.out.println("Report a bug enter 2: ");
-//				System.out.println("Help with Vaults enter 3: ");
-//				System.out.println("Help with payments enter 4: ");
-//				Thread.sleep(7000);
-				
-//				id = in.nextInt();
-//				
-//				System.out.println("You have selected Problem No: " + id + " please find solutions on next screen.");
-//				Thread.sleep(2000); 
 				
 				String solution = null;
 
 				if(request.getOperation()==Operation.PASSWORD_RESET)
 				{
-					solution = "To reset your password, navigate to your account and under settings select " + newline+ "'change password' and follow the instructions";			
+					solution = "To reset your password, navigate to your account" + newline + "and under settings select 'change password'"  + newline+ "and follow the instructions";			
 				}
 				else if(request.getOperation()==Operation.REPORT_BUG)
 				{								
-					solution = "To report a bug please send an email to our "+ newline+ " 24 hour help assist at: eBankingServices.gRPC@nci.ie";
+					solution = "To report a bug please send an email to our "+ newline+ "24 hour help assist at: eBankingServices.gRPC@nci.ie";
 				}
 				else if(request.getOperation()==Operation.VAULTS)
 				{
@@ -165,11 +149,7 @@ public class UserToolsServer extends UserToolsImplBase {
 				}
 				else if(request.getOperation()==Operation.PAYMENTS)
 				{
-					solution = "If you are experiencing issues making or recieveing" + newline+"  payment please call our free 24 hour hotline at: 0800-03041992.";
-				}
-				else{
-
-					solution = "You have selected an invalid option. " + newline+ " Please select from the list";
+					solution = "If you are experiencing issues making or recieveing" + newline+" payment please call our free 24 hour hotline at: 0800-03041992.";
 				}		
 
 				HelpResponse reply = HelpResponse.newBuilder()
@@ -177,19 +157,7 @@ public class UserToolsServer extends UserToolsImplBase {
 						.build();
 				
 				responseObserver.onNext(reply);
-			
-//				Thread.sleep(1000);
-//				
 
-				// Sleep for a bit before sending the next one.
-//				Thread.sleep(new Random().nextInt(1000) + 500);
-
-//
-//			} catch (RuntimeException e) {
-//				e.printStackTrace();
-//			} catch (InterruptedException e) {			
-//				e.printStackTrace();
-//			}
 		}
 			
 
@@ -283,7 +251,7 @@ public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> respo
 	
 	private boolean authenticateUser(String username, String password) 
 	{
-		if (username.equals("Amy") && password.equals("123")) 
+		if (username.equals(Username) && password.equals(Password)) 
 		{
 			return true;
 		} 

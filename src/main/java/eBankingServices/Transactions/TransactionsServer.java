@@ -29,7 +29,7 @@ public class TransactionsServer extends TransactionsImplBase {
 			new Customer(1, "Arthur", "Morgan", 27000), new Customer(2, "Sadie", "Adler", 5900),
 			new Customer(3, "Amy", "Percival", 33300) };
 
-	// hard code some account balances
+	// hard code account balances
 	private double[] accounts = { 0, 27000, 5900, 33333 };
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -50,7 +50,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 			System.out.println("Transaction server started, listening on " + port);
 
-			server.start().awaitTermination();
+			server.awaitTermination();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -2,6 +2,7 @@ package eBankingServices.ClientGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -79,7 +80,6 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelapprove = new JLabel("Approve? (true/false) ");
 	private JTextField approve = new JTextField(10);
 
-
 	// USER ACCOUNT---------------------
 
 	// change password
@@ -128,9 +128,10 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonVault = new JButton("Vault");
 	// calculator
 	private JLabel labelroi = new JLabel("Rates of interest: ");
-	private JTextArea roi = new JTextArea("12 MONTHS TERM: " + newlinee + "access - 0.0001%" +newlinee +"no access - 0.0004%" + newlinee + newlinee +
-			"24 MONTHS TERM: " + newlinee + "access - 0.002%" + newlinee + "no access - 0.003%" + newlinee+ newlinee+
-			"36 MONTHS TERM: " + newlinee + "access - 0.0025%" + newlinee + "no access - 0.05%");	
+	private JTextArea roi = new JTextArea(
+			"12 MONTHS TERM: " + newlinee + "access - 0.0001%" + newlinee + "no access - 0.0004%" + newlinee + newlinee
+					+ "24 MONTHS TERM: " + newlinee + "access - 0.002%" + newlinee + "no access - 0.003%" + newlinee
+					+ newlinee + "36 MONTHS TERM: " + newlinee + "access - 0.0025%" + newlinee + "no access - 0.05%");
 	private JLabel labelacctype = new JLabel("Account type (12, 24 or 36): ");
 	private JTextField acctype = new JTextField(10);
 	private JLabel labelcalcsum = new JLabel("Amount € ");
@@ -254,7 +255,7 @@ public class ClientGUI implements ActionListener {
 		constraints3.gridx = 1;
 		interestCalc.add(roi, constraints3);
 		roi.setEditable(false);
-		
+
 		constraints3.gridx = 0;
 		constraints3.gridy = 1;
 		interestCalc.add(labelacctype, constraints3);
@@ -575,7 +576,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints9.gridx = 1;
 		request.add(status, constraints9);
-		
+
 		constraints9.gridx = 1;
 		constraints9.gridy = 7;
 		request.add(labelapprove, constraints9);
@@ -583,9 +584,6 @@ public class ClientGUI implements ActionListener {
 		constraints9.gridx = 1;
 		constraints9.gridy = 8;
 		request.add(approve, constraints9);
-
-		
-	
 
 		// set border for the panel
 		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
@@ -657,6 +655,13 @@ public class ClientGUI implements ActionListener {
 			reply1.setText(response.getMessage());
 //			reply1.setText((String.valueOf(response.getBalance())));
 
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {
 			System.out.println("Transfer service invoked ...");
@@ -692,6 +697,13 @@ public class ClientGUI implements ActionListener {
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
 
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 // REQUEST ---------------------------------------------------------------------------------------				
 		} else if (label.equals("Request")) {
 			System.out.println("Request service invoked ...");
@@ -705,13 +717,11 @@ public class ClientGUI implements ActionListener {
 
 			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
 
-				
 				@Override
 				public void onNext(RequestStatus response) {
 
 					status.setText(response.getStatus());
 				}
-				
 
 				@Override
 				public void onError(Throwable t) {
@@ -730,8 +740,15 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(RequestSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
-					.setMonthly(Boolean.parseBoolean(monthly.getText())).setApprove(Boolean.parseBoolean(approve.getText())).build());
-	
+					.setMonthly(Boolean.parseBoolean(monthly.getText()))
+					.setApprove(Boolean.parseBoolean(approve.getText())).build());
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
 			System.out.println("Login service invoked ...");
@@ -750,6 +767,13 @@ public class ClientGUI implements ActionListener {
 
 			// Retrieving reply from service
 			loginConf1.setText(response.getMessage());
+
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 // VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("View Account")) {
@@ -790,6 +814,13 @@ public class ClientGUI implements ActionListener {
 			};
 			asyncStub.viewAccount(request, responseObserver);
 
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 // CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
 
 		} else if (label.equals("Change password")) {
@@ -810,6 +841,13 @@ public class ClientGUI implements ActionListener {
 
 			// Retrieving reply from service
 			passMsg.setText(response.getMessage());
+
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 // HELP BOT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Select")) {
@@ -850,6 +888,13 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {
 			System.out.println("Vault service invoked ...");
@@ -868,6 +913,13 @@ public class ClientGUI implements ActionListener {
 					.setUnlockDate(vaultunlock.getText()).build());
 			// Retrieving reply from service
 			vaultConf.setText(response.getVaultConf());
+
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 // INTEREST CALCULATOR ---------------------------------------------------------------------------------------
 
@@ -888,6 +940,13 @@ public class ClientGUI implements ActionListener {
 					.build());
 			// Retrieving reply from service
 			interest.setText((String.valueOf(response.getInterest())));
+
+			try {
+				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		}
 	}

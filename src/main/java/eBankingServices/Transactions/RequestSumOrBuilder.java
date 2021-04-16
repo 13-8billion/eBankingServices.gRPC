@@ -26,4 +26,9 @@ public interface RequestSumOrBuilder extends
    * <code>bool monthly = 4;</code>
    */
   boolean getMonthly();
+
+  /**
+   * <code>bool approve = 5;</code>
+   */
+  boolean getApprove();
 }

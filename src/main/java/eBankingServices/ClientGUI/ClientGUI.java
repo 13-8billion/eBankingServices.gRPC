@@ -76,6 +76,9 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonRequest = new JButton("Request");
 	private JLabel labelstatus = new JLabel("Message: ");
 	private JTextArea status = new JTextArea();
+	private JLabel labelapprove = new JLabel("Approve? (true/false) ");
+	private JTextField approve = new JTextField(10);
+
 
 	// USER ACCOUNT---------------------
 
@@ -572,6 +575,17 @@ public class ClientGUI implements ActionListener {
 
 		constraints9.gridx = 1;
 		request.add(status, constraints9);
+		
+		constraints9.gridx = 1;
+		constraints9.gridy = 7;
+		request.add(labelapprove, constraints9);
+
+		constraints9.gridx = 1;
+		constraints9.gridy = 8;
+		request.add(approve, constraints9);
+
+		
+	
 
 		// set border for the panel
 		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
@@ -685,18 +699,19 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-
 			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
 
 			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
 
+				
 				@Override
 				public void onNext(RequestStatus response) {
 
 					status.setText(response.getStatus());
 				}
+				
 
 				@Override
 				public void onError(Throwable t) {
@@ -715,7 +730,8 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(RequestSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
-					.setMonthly(Boolean.parseBoolean(monthly.getText())).build());
+					.setMonthly(Boolean.parseBoolean(monthly.getText())).setApprove(Boolean.parseBoolean(approve.getText())).build());
+	
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
 			System.out.println("Login service invoked ...");

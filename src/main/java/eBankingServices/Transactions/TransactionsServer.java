@@ -247,11 +247,26 @@ public class TransactionsServer extends TransactionsImplBase {
 
 	
 					String status = ("Acc No. " + request.getToAccNo() + " requesting " + euro
-							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "..." + newline + newline+ "Awaiting confirmation...");
+							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "..." + newline + newline+ "Pending...");
 
 					responseObserver.onNext(RequestStatus.newBuilder()
 							.setStatus(status)
 							.build());
+				try {
+					// sleep to simulate waiting for confirmation from other account
+					Thread.sleep(6000);
+
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				status = ("Do you approve this request?");
+				responseObserver.onNext(RequestStatus.newBuilder()
+						.setStatus(status)
+						.build());
+				
 				try {
 					// sleep to simulate waiting for confirmation from other account
 					Thread.sleep(6000);

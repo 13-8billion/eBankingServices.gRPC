@@ -48,7 +48,8 @@ message RequestSum {
   int32 from_accNo = 1;
   int32 to_accNo = 2;
   double sum = 3;
-  bool monthly = 4;  
+  bool monthly = 4; 
+  bool approve =5; 
 }
 // request money response
 message RequestStatus {

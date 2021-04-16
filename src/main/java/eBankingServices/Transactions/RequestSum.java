@@ -24,6 +24,7 @@ private static final long serialVersionUID = 0L;
     toAccNo_ = 0;
     sum_ = 0D;
     monthly_ = false;
+    approve_ = false;
   }
 
   @java.lang.Override
@@ -68,6 +69,11 @@ private static final long serialVersionUID = 0L;
           case 32: {
 
             monthly_ = input.readBool();
+            break;
+          }
+          case 40: {
+
+            approve_ = input.readBool();
             break;
           }
           default: {
@@ -138,6 +144,15 @@ private static final long serialVersionUID = 0L;
     return monthly_;
   }
 
+  public static final int APPROVE_FIELD_NUMBER = 5;
+  private boolean approve_;
+  /**
+   * <code>bool approve = 5;</code>
+   */
+  public boolean getApprove() {
+    return approve_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -164,6 +179,9 @@ private static final long serialVersionUID = 0L;
     if (monthly_ != false) {
       output.writeBool(4, monthly_);
     }
+    if (approve_ != false) {
+      output.writeBool(5, approve_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -188,6 +206,10 @@ private static final long serialVersionUID = 0L;
     if (monthly_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(4, monthly_);
+    }
+    if (approve_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(5, approve_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -215,6 +237,8 @@ private static final long serialVersionUID = 0L;
             other.getSum()));
     result = result && (getMonthly()
         == other.getMonthly());
+    result = result && (getApprove()
+        == other.getApprove());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -236,6 +260,9 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + MONTHLY_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getMonthly());
+    hash = (37 * hash) + APPROVE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getApprove());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -381,6 +408,8 @@ private static final long serialVersionUID = 0L;
 
       monthly_ = false;
 
+      approve_ = false;
+
       return this;
     }
 
@@ -411,6 +440,7 @@ private static final long serialVersionUID = 0L;
       result.toAccNo_ = toAccNo_;
       result.sum_ = sum_;
       result.monthly_ = monthly_;
+      result.approve_ = approve_;
       onBuilt();
       return result;
     }
@@ -470,6 +500,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getMonthly() != false) {
         setMonthly(other.getMonthly());
+      }
+      if (other.getApprove() != false) {
+        setApprove(other.getApprove());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -600,6 +633,32 @@ private static final long serialVersionUID = 0L;
     public Builder clearMonthly() {
       
       monthly_ = false;
+      onChanged();
+      return this;
+    }
+
+    private boolean approve_ ;
+    /**
+     * <code>bool approve = 5;</code>
+     */
+    public boolean getApprove() {
+      return approve_;
+    }
+    /**
+     * <code>bool approve = 5;</code>
+     */
+    public Builder setApprove(boolean value) {
+      
+      approve_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bool approve = 5;</code>
+     */
+    public Builder clearApprove() {
+      
+      approve_ = false;
       onChanged();
       return this;
     }

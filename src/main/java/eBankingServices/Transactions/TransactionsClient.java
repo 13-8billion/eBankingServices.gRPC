@@ -138,6 +138,7 @@ public class TransactionsClient {
 				@Override
 				public void onNext(RequestStatus response) {
 					System.out.println("Requesting status: "+ response.getStatus());
+					System.out.println(response.getMessage());
 				}
 
 				@Override
@@ -170,6 +171,7 @@ public class TransactionsClient {
 						.setFromAccNo(1)
 						.setToAccNo(2)
 						.setMonthly(false)
+						.setApprove(true)
 						.build());
 				Thread.sleep(500);
 				
@@ -178,6 +180,7 @@ public class TransactionsClient {
 						.setFromAccNo(2)
 						.setToAccNo(1)
 						.setMonthly(true)
+						.setApprove(false)
 						.build());
 				Thread.sleep(500);
 				
@@ -186,6 +189,7 @@ public class TransactionsClient {
 						.setFromAccNo(2)
 						.setToAccNo(1)
 						.setMonthly(false)
+						.setApprove(true)
 						.build());
 				Thread.sleep(500);
 

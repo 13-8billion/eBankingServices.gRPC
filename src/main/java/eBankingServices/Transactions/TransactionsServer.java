@@ -7,11 +7,10 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -49,7 +48,7 @@ public class TransactionsServer extends TransactionsImplBase {
 			Server server = ServerBuilder.forPort(port).addService(transactions).build().start();
 
 			System.out.println("Transaction server started, listening on " + port);
-
+			
 			server.awaitTermination();
 
 		} catch (IOException e) {

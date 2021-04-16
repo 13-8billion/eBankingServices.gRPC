@@ -2,9 +2,17 @@ package eBankingServices.ClientGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 import java.awt.event.*;
 import java.awt.*;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -41,6 +49,9 @@ import io.grpc.stub.StreamObserver;
 
 public class ClientGUI implements ActionListener {
 
+	private ServiceInfo transactionsServiceInfo;
+	private ServiceInfo userAccountServiceInfo;
+	private ServiceInfo userToolsServiceInfo;
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
 	private String newlinee = "\n\r";
@@ -603,9 +614,71 @@ public class ClientGUI implements ActionListener {
 
 	public static void main(String[] args) {
 
+
 		ClientGUI gui = new ClientGUI();
 
 		gui.build();
+	}
+
+	
+	private void discoverTransactionsService(String service_type) {
+		
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+				
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+				
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("Transaction Service resolved: " + event.getInfo());
+
+					transactionsServiceInfo = event.getInfo();
+
+					int port = transactionsServiceInfo.getPort();
+					
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + transactionsServiceInfo.getNiceTextString());
+					System.out.println("\t host: " + transactionsServiceInfo.getHostAddresses()[0]);
+				
+					
+				}
+				
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("Transactions Service removed: " + event.getInfo());
+
+					
+				}
+				
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("Transactions Service added: " + event.getInfo());
+
+					
+				}
+			});
+			
+			// Wait a bit
+			Thread.sleep(2000);
+			
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	private void build() {
@@ -642,8 +715,16 @@ public class ClientGUI implements ActionListener {
 // DEPOSIT ---------------------------------------------------------------------------------------			
 		if (label.equals("Deposit")) {
 			System.out.println("Deposits service invoked ...");
+			
+			String transactions_service_type = "_transactions._tcp.local.";
+			
+			// discover transactions service
+			discoverTransactionsService(transactions_service_type);
+			
+			String host = transactionsServiceInfo.getHostAddresses()[0];
+			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
 
@@ -949,5 +1030,7 @@ public class ClientGUI implements ActionListener {
 			}
 
 		}
-	}
+	
+}
+
 }

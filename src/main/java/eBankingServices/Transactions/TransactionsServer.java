@@ -143,8 +143,8 @@ public class TransactionsServer extends TransactionsImplBase {
 
 				dc = DepositConfirmation.newBuilder()
 						.setMessage("SUCCESS " + newline + euro + request.getSum() + " deposited into Acc No. "
-								+ request.getAccNo() + newline + "Previous Balance: " + euro + c.getBalance() + newline
-								+ "New Balance: " + euro + newBalance).build();
+								+ request.getAccNo() + newline + "Your Previous Balance: " + euro + c.getBalance() + newline
+								+ "Your New Balance: " + euro + newBalance).build();
 				
 			} else if (request.getAccNo() != c.getAccNo() && !validAccNo(accNo)) {
 				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + accNo + " is not valid!" + newline
@@ -183,7 +183,7 @@ public class TransactionsServer extends TransactionsImplBase {
 							reply = TransferConfirmation.newBuilder()
 									.setMessage("SUCCESS " + newline + euro + request.getSum()
 											+ " transferred to Account No.  " + request.getToAccNo() + newline
-											+ "Previous Balance : " + euro + c.getBalance() + newline + "New Balance: "
+											+ "Your Previous Balance : " + euro + c.getBalance() + newline + "Your New Balance: "
 											+ euro + newBalance)
 									.build();
 

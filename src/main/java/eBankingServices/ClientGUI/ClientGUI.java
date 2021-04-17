@@ -624,49 +624,54 @@ public class ClientGUI implements ActionListener {
 	private void discoverTransactionsService(String service_type) {
 		
 		
+		
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
-				
 			jmdns.addServiceListener(service_type, new ServiceListener() {
 				
 				@Override
 				public void serviceResolved(ServiceEvent event) {
-					System.out.println("Transaction Service resolved: " + event.getInfo());
+					System.out.println("TRANSACTION Service resolved: " + event.getInfo());
 
 					transactionsServiceInfo = event.getInfo();
 
 					int port = transactionsServiceInfo.getPort();
+					
+					String host = transactionsServiceInfo.getHostAddresses()[0];
+					
+//					String serviceUrl = event.getInfo().getURL();
+				
 					
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
 					System.out.println("\t type:"+ event.getType());
 					System.out.println("\t name: " + event.getName());
 					System.out.println("\t description/properties: " + transactionsServiceInfo.getNiceTextString());
-					System.out.println("\t host: " + transactionsServiceInfo.getHostAddresses()[0]);
-				
-					
+					System.out.println("\t host: " + host);
+							
+	
 				}
 				
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
-					System.out.println("Transactions Service removed: " + event.getInfo());
+					System.out.println("TRANSACTION Service removed: " + event.getInfo());
 
 					
 				}
-				
+
 				@Override
 				public void serviceAdded(ServiceEvent event) {
-					System.out.println("Transactions Service added: " + event.getInfo());
+					System.out.println("TRANSACTION Service added: " + event.getInfo());
+					 jmdns.requestServiceInfo(event.getType(), event.getName());
 
 					
 				}
 			});
 			
 			// Wait a bit
-			Thread.sleep(2000);
-			
+			Thread.sleep(1000);
 			jmdns.close();
 
 		} catch (UnknownHostException e) {
@@ -681,6 +686,134 @@ public class ClientGUI implements ActionListener {
 		
 	}
 
+	private void discoverUserAccountService(String service_type) {
+		
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+				
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("USER ACCOUNT Service resolved: " + event.getInfo());
+
+					userAccountServiceInfo = event.getInfo();
+
+					int port = userAccountServiceInfo.getPort();
+					
+					String host = userAccountServiceInfo.getHostAddresses()[0];
+					
+//					String serviceUrl = event.getInfo().getURL();
+				
+					
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + userAccountServiceInfo.getNiceTextString());
+					System.out.println("\t host: " + host);
+							
+	
+				}
+				
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("USER ACCOUNT Service removed: " + event.getInfo());
+
+					
+				}
+
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("USER ACCOUNT Service added: " + event.getInfo());
+					 jmdns.requestServiceInfo(event.getType(), event.getName());
+
+					
+				}
+			});
+			
+			// Wait a bit
+			Thread.sleep(1000);
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	private void discoverUserToolsService(String service_type) {
+		
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+				
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("USER TOOLS Service resolved: " + event.getInfo());
+
+					userToolsServiceInfo = event.getInfo();
+
+					int port = userToolsServiceInfo.getPort();
+					
+					String host = userToolsServiceInfo.getHostAddresses()[0];
+					
+//					String serviceUrl = event.getInfo().getURL();
+				
+					
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + userToolsServiceInfo.getNiceTextString());
+					System.out.println("\t host: " + host);
+							
+	
+				}
+				
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("USER TOOLS Service removed: " + event.getInfo());
+
+					
+				}
+
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("USER TOOLS Service added: " + event.getInfo());
+					 jmdns.requestServiceInfo(event.getType(), event.getName());
+
+					
+				}
+			});
+			
+			// Wait a bit
+			Thread.sleep(1000);
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	private void build() {
 
 		JFrame frame = new JFrame("eBanking Application");
@@ -749,7 +882,16 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050).usePlaintext().build();
+			String transactions_service_type = "_transactions._tcp.local.";
+			
+			// discover transactions service
+			discoverTransactionsService(transactions_service_type);
+			
+			String host = transactionsServiceInfo.getHostAddresses()[0];
+			int port = transactionsServiceInfo.getPort();
+			
+			
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
 
@@ -778,12 +920,12 @@ public class ClientGUI implements ActionListener {
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+//				channel.awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // REQUEST ---------------------------------------------------------------------------------------				
 		} else if (label.equals("Request")) {
@@ -792,7 +934,16 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50050).usePlaintext().build();
+			
+			String transactions_service_type = "_transactions._tcp.local.";
+			
+			// discover transactions service
+			discoverTransactionsService(transactions_service_type);
+			
+			String host = transactionsServiceInfo.getHostAddresses()[0];
+			int port = transactionsServiceInfo.getPort();
+			
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
 
@@ -837,8 +988,16 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
+			
+			String userAccount_service_type = "_userAccount._tcp.local.";
+			
+			// discover transactions service
+			discoverUserAccountService(userAccount_service_type);
+			
+			String host = userAccountServiceInfo.getHostAddresses()[0];
+			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
 
@@ -864,7 +1023,15 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
+			String userAccount_service_type = "_userAccount._tcp.local.";
+			
+			// discover transactions service
+			discoverUserAccountService(userAccount_service_type);
+			
+			String host = userAccountServiceInfo.getHostAddresses()[0];
+			int port = userAccountServiceInfo.getPort();
+
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserAccountGrpc.UserAccountStub asyncStub = UserAccountGrpc.newStub(channel);
 
@@ -911,7 +1078,15 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
+			String userAccount_service_type = "_userAccount._tcp.local.";
+			
+			// discover transactions service
+			discoverUserAccountService(userAccount_service_type);
+			
+			String host = transactionsServiceInfo.getHostAddresses()[0];
+			int port = transactionsServiceInfo.getPort();
+
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
 
@@ -941,7 +1116,15 @@ public class ClientGUI implements ActionListener {
 			int index = comboOperation.getSelectedIndex();
 			Operation operation = Operation.forNumber(index);
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
+			String userTools_service_type = "_ userToolst._tcp.local.";
+			
+			// discover transactions service
+			discoverUserToolsService( userTools_service_type);
+			
+			String host =  userToolsServiceInfo.getHostAddresses()[0];
+			int port =  userToolsServiceInfo.getPort();
+
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
 
@@ -984,7 +1167,15 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
+			String userTools_service_type = "_ userToolst._tcp.local.";
+			
+			// discover transactions service
+			discoverUserToolsService( userTools_service_type);
+			
+			String host =  userToolsServiceInfo.getHostAddresses()[0];
+			int port =  userToolsServiceInfo.getPort();
+
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
 
@@ -1011,7 +1202,15 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50054).usePlaintext().build();
+			String userTools_service_type = "_ userToolst._tcp.local.";
+			
+			// discover transactions service
+			discoverUserToolsService( userTools_service_type);
+			
+			String host =  userToolsServiceInfo.getHostAddresses()[0];
+			int port =  userToolsServiceInfo.getPort();
+
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
 

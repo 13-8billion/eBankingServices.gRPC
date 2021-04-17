@@ -209,8 +209,14 @@ private Properties getProperties() {
 	private boolean changePass(String username, String currPass, String newPass)
 	{
 		if (username.equals(Username) && currPass.equals(currPassword))
+		{
 			currPassword = newPass;
 			return true;
+		} 
+		else 
+		{
+			return false;
+		}
 	}
 	
 	

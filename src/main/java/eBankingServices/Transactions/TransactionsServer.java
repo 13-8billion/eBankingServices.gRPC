@@ -245,8 +245,7 @@ public class TransactionsServer extends TransactionsImplBase {
 			public void onNext(RequestSum request) {
 
 	
-					String status = ("Acc No. " + request.getToAccNo() + " requesting " + euro
-							+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "..." + newline + newline+ "Pending...");
+					String status = ("Pending...");
 
 					responseObserver.onNext(RequestStatus.newBuilder()
 							.setStatus(status)

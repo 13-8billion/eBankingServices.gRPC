@@ -377,6 +377,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(firstName, constraints5);
+		balance.setEditable(false);
 
 		constraints5.gridx = 0;
 		constraints5.gridy = 4;
@@ -384,6 +385,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(lastName, constraints5);
+		balance.setEditable(false);
 
 		constraints5.gridx = 0;
 		constraints5.gridy = 5;
@@ -391,6 +393,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(balance, constraints5);
+		balance.setEditable(false);
 
 		constraints5.gridx = 1;
 		constraints5.gridy = 6;
@@ -439,7 +442,7 @@ public class ClientGUI implements ActionListener {
 		constraints6.gridx = 0;
 		constraints6.gridy = 4;
 
-		constraints6.gridx = 1;
+		constraints6.gridx = 0;
 		changePass.add(passMsg, constraints6);
 
 		// set border for the panel
@@ -622,9 +625,7 @@ public class ClientGUI implements ActionListener {
 
 	
 	private void discoverTransactionsService(String service_type) {
-		
-		
-		
+	
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
@@ -640,10 +641,7 @@ public class ClientGUI implements ActionListener {
 					int port = transactionsServiceInfo.getPort();
 					
 					String host = transactionsServiceInfo.getHostAddresses()[0];
-					
-//					String serviceUrl = event.getInfo().getURL();
-				
-					
+		
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
 					System.out.println("\t type:"+ event.getType());
@@ -671,7 +669,7 @@ public class ClientGUI implements ActionListener {
 			});
 			
 			// Wait a bit
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			jmdns.close();
 
 		} catch (UnknownHostException e) {
@@ -705,9 +703,6 @@ public class ClientGUI implements ActionListener {
 					
 					String host = userAccountServiceInfo.getHostAddresses()[0];
 					
-//					String serviceUrl = event.getInfo().getURL();
-				
-					
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
 					System.out.println("\t type:"+ event.getType());
@@ -735,7 +730,7 @@ public class ClientGUI implements ActionListener {
 			});
 			
 			// Wait a bit
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			jmdns.close();
 
 		} catch (UnknownHostException e) {
@@ -768,10 +763,8 @@ public class ClientGUI implements ActionListener {
 					int port = userToolsServiceInfo.getPort();
 					
 					String host = userToolsServiceInfo.getHostAddresses()[0];
-					
-//					String serviceUrl = event.getInfo().getURL();
 				
-					
+				
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
 					System.out.println("\t type:"+ event.getType());
@@ -799,7 +792,7 @@ public class ClientGUI implements ActionListener {
 			});
 			
 			// Wait a bit
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			jmdns.close();
 
 		} catch (UnknownHostException e) {
@@ -974,12 +967,16 @@ public class ClientGUI implements ActionListener {
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
 					.setMonthly(Boolean.parseBoolean(monthly.getText()))
 					.setApprove(Boolean.parseBoolean(approve.getText())).build());
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
+//			try {
+//			channel.shutdown().awaitTermination(100, TimeUnit.SECONDS);
+//			} catch (RuntimeException e1) {
+//				e1.printStackTrace();
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+
 
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
@@ -1008,12 +1005,12 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			loginConf1.setText(response.getMessage());
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("View Account")) {
@@ -1062,12 +1059,12 @@ public class ClientGUI implements ActionListener {
 			};
 			asyncStub.viewAccount(request, responseObserver);
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
 
@@ -1083,8 +1080,8 @@ public class ClientGUI implements ActionListener {
 			// discover transactions service
 			discoverUserAccountService(userAccount_service_type);
 			
-			String host = transactionsServiceInfo.getHostAddresses()[0];
-			int port = transactionsServiceInfo.getPort();
+			String host = userAccountServiceInfo.getHostAddresses()[0];
+			int port = userAccountServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
@@ -1098,12 +1095,12 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			passMsg.setText(response.getMessage());
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // HELP BOT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Select")) {
@@ -1152,12 +1149,12 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {
@@ -1186,12 +1183,12 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			vaultConf.setText(response.getVaultConf());
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 // INTEREST CALCULATOR ---------------------------------------------------------------------------------------
 
@@ -1221,12 +1218,12 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			interest.setText((String.valueOf(response.getInterest())));
 
-			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 
 		}
 	

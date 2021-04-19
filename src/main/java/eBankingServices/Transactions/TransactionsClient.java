@@ -1,6 +1,8 @@
 package eBankingServices.Transactions;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -20,7 +22,7 @@ public class TransactionsClient {
 	private static TransactionsStub asyncStub;
 	private static ManagedChannel channel;
 
-	
+	private static final Logger logger = Logger.getLogger(TransactionsClient.class.getName());
 	public static void main(String args[]) throws InterruptedException, IOException {
 	
 		channel = ManagedChannelBuilder
@@ -34,37 +36,35 @@ public class TransactionsClient {
 		// call methods
 		deposit();
 		transfer();
-		request();	
+//		request();	
 		
-		channel.shutdown()
-	 	   .awaitTermination(60, TimeUnit.SECONDS);
+//		channel.shutdown()
+//	 	   .awaitTermination(60, TimeUnit.SECONDS);
 	}
 	
 	
 // Deposit money into account method - Unary RPC
 	
-	public static void deposit() {
+	public static void deposit() throws InterruptedException {
 		
 		System.out.println("Requesting to deposit...");
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
 				.build());
-
-		
-		System.out.println(response);
-
-	
-		System.out.println("Requesting to deposit...");
-		response = blockingStub.deposit(DepositSum.newBuilder()
-				.setAccNo(2)
-				.setSum(100)
-				.build());
 		
 		System.out.println(response);
 		
-//	    channel.shutdown()
-//	    	   .awaitTermination(5, TimeUnit.SECONDS);			
+//	 } catch (StatusRuntimeException e) {
+//		    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+//		    
+//		    return;		
+//		    
+//	    } finally {
+//	    	//shutdown channel
+//	    	channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+//	    }
+	  			
 	}
 	     
 
@@ -76,18 +76,31 @@ public class TransactionsClient {
 
 				@Override
 				public void onNext(TransferConfirmation response) {
-					
-					System.out.println("Getting confirmation " + response.getMessage());			
+//					
+					System.out.println("Getting confirmation... " + response.getMessage());			
 				}
 
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			
 				}
 
 				@Override
 				public void onCompleted() {
 					System.out.println("STREAM END: All transfers have completed.");
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}			
 			};
@@ -95,7 +108,7 @@ public class TransactionsClient {
 			StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
 			try {
 			requestObserver.onNext(TransferSum.newBuilder()
-					.setSum(30)
+					.setSum(10)
 					.setFromAccNo(1)
 					.setToAccNo(2)
 					.build());
@@ -103,14 +116,14 @@ public class TransactionsClient {
 			
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(300)
-					.setFromAccNo(2)
+					.setFromAccNo(1)
 					.setToAccNo(1)
 					.build());
 			Thread.sleep(1000);
 			
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(300)
-					.setFromAccNo(0)
+					.setFromAccNo(1)
 					.setToAccNo(1)
 					.build());
 			Thread.sleep(1000);
@@ -154,6 +167,12 @@ public class TransactionsClient {
 				@Override
 				public void onCompleted() {
 					System.out.println("END OF STREAM: Money request completed");
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			};

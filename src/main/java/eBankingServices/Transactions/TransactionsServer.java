@@ -61,7 +61,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 	}
 
-// register service method 
+// register service
 
 	private void registerService(Properties prop) {
 
@@ -83,21 +83,21 @@ public class TransactionsServer extends TransactionsImplBase {
 
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
 
-			// Wait a bit
-			Thread.sleep(500);
+//			// Wait a bit
+//			Thread.sleep(500);
 
 			// Unregister all services
 			// jmdns.unregisterAllServices();
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 		}
 	}
 
-// get service properties method
+// get service properties
 
 	private Properties getProperties() {
 
@@ -130,7 +130,6 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		DepositConfirmation dc = null;
 
-		int depositID = 1;
 		double newBalance;
 		String accNo = String.valueOf(request.getAccNo());
 
@@ -150,11 +149,12 @@ public class TransactionsServer extends TransactionsImplBase {
 				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + accNo + " is not valid!" + newline
 						+ "Please enter a valid Account Number (1, 2 or 3)").build();
 			}
-			responseObserver.onNext(dc);
-			responseObserver.onCompleted();
-
 		}
+		responseObserver.onNext(dc);
+		responseObserver.onCompleted();
 	}
+
+
 
 // Transfer money method - Client streaming
 
@@ -162,21 +162,20 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		return new StreamObserver<TransferSum>() {
 
+			TransferConfirmation reply = null;
+			
 			@Override
 			public void onNext(TransferSum request) {
-
-				TransferConfirmation reply = null;
-
-				double newBalance;
+				
 				String newline = "\n\r";
 				String toAccNo = String.valueOf(request.getToAccNo());
 				String fromAccNo = String.valueOf(request.getFromAccNo());
-
+				
 				for (int i = 0; i < cArray.length; i++) {
 					Customer c = cArray[i];
-					newBalance = c.getBalance() - request.getSum();
+					double newBalance = c.getBalance() - request.getSum();
 
-					try {
+				try {
 						if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
 								&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
 
@@ -186,52 +185,51 @@ public class TransactionsServer extends TransactionsImplBase {
 											+ "Your Previous Balance : " + euro + c.getBalance() + newline + "Your New Balance: "
 											+ euro + newBalance)
 									.build();
-
-							responseObserver.onNext(reply);
+						
 
 						} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 							reply = TransferConfirmation.newBuilder()
 									.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo())
-									.build();
-
-							responseObserver.onNext(reply);
+									.build();					
+		
 
 						} else if (!validAccNo(toAccNo)) {
 							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + toAccNo
 									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
 									.build();
-
-							responseObserver.onNext(reply);
-
+					
+				
 						} else if (!validAccNo(fromAccNo)) {
 							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
 									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
 									.build();
 
-							responseObserver.onNext(reply);
+			
 						}
 						Thread.sleep(1000);
-
+				
 					} catch (RuntimeException e) {
 						e.printStackTrace();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+		
 				}
-
+				responseObserver.onNext(reply);
 			}
+			
 
 			@Override
 			public void onCompleted() {
-
 				System.out.println("Transaction process completed");
+				responseObserver.onCompleted();
 			}
-
 			@Override
 			public void onError(Throwable t) {
-
+				
 			}
 		};
+		
 	}
 
 // Request money from another account - Bi-directional streaming

@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -45,6 +47,7 @@ import eBankingServices.UserTools.VaultAccess;
 import eBankingServices.UserTools.VaultConfirmation;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
 public class ClientGUI implements ActionListener {
@@ -55,6 +58,8 @@ public class ClientGUI implements ActionListener {
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
 	private String newlinee = "\n\r";
+	private static final Logger logger = Logger.getLogger(ClientGUI.class.getName());
+
 
 	// TRANSACTIONS -----------
 
@@ -835,7 +840,7 @@ public class ClientGUI implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed (ActionEvent e){
 		JButton button = (JButton) e.getSource();
 		String label = button.getActionCommand();
 // DEPOSIT ---------------------------------------------------------------------------------------			
@@ -853,21 +858,21 @@ public class ClientGUI implements ActionListener {
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
-
+			
 			// preparing message to send
 			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 					.setAccNo(Integer.parseInt(entry1.getText())).setSum(Double.parseDouble(entry2.getText())).build());
 
 			// Retrieving reply from service
 			reply1.setText(response.getMessage());
-//			reply1.setText((String.valueOf(response.getBalance())));
-
+			
 			try {
-				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
+				channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+			} catch (InterruptedException ex) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				ex.printStackTrace();
 			}
+
 
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {
@@ -900,11 +905,23 @@ public class ClientGUI implements ActionListener {
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 				@Override
 				public void onCompleted() {
 					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 			};
@@ -913,12 +930,6 @@ public class ClientGUI implements ActionListener {
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
 
-
-//				channel.awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 
 // REQUEST ---------------------------------------------------------------------------------------				
 		} else if (label.equals("Request")) {
@@ -951,12 +962,24 @@ public class ClientGUI implements ActionListener {
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 
 				@Override
 				public void onCompleted() {
 					System.out.println("Client >>>>>>>>> END OF STREAM: Money request completed");
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			};
@@ -967,16 +990,7 @@ public class ClientGUI implements ActionListener {
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
 					.setMonthly(Boolean.parseBoolean(monthly.getText()))
 					.setApprove(Boolean.parseBoolean(approve.getText())).build());
-			
-//			try {
-//			channel.shutdown().awaitTermination(100, TimeUnit.SECONDS);
-//			} catch (RuntimeException e1) {
-//				e1.printStackTrace();
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-
+		
 
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {

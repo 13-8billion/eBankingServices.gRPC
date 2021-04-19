@@ -53,25 +53,25 @@ public final class UserToolsImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017UserTools.proto\022\tUserTools\"\215\001\n\013HelpReq" +
-      "uest\0223\n\toperation\030\001 \001(\0162 .UserTools.Help" +
-      "Request.Operation\"I\n\tOperation\022\022\n\016PASSWO" +
-      "RD_RESET\020\000\022\016\n\nREPORT_BUG\020\001\022\n\n\006VAULTS\020\002\022\014" +
-      "\n\010PAYMENTS\020\003\"2\n\014HelpResponse\022\020\n\010problems" +
-      "\030\001 \001(\t\022\020\n\010solution\030\002 \001(\t\"r\n\013VaultAccess\022" +
-      "\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\022\022\n\nunlockDat" +
-      "e\030\003 \001(\t\022\017\n\007vaultID\030\004 \001(\005\022\020\n\010username\030\005 \001" +
-      "(\t\022\020\n\010password\030\006 \001(\t\"&\n\021VaultConfirmatio" +
-      "n\022\021\n\tvaultConf\030\003 \001(\t\";\n\013CalcRequest\022\017\n\007a" +
-      "ccType\030\001 \001(\t\022\013\n\003sum\030\002 \001(\001\022\016\n\006access\030\003 \001(" +
-      "\t\" \n\014CalcResponse\022\020\n\010interest\030\001 \001(\0012\321\001\n\t" +
-      "UserTools\022@\n\007HelpBot\022\026.UserTools.HelpReq" +
-      "uest\032\027.UserTools.HelpResponse\"\000(\0010\001\022?\n\005V" +
-      "ault\022\026.UserTools.VaultAccess\032\034.UserTools" +
-      ".VaultConfirmation\"\000\022A\n\014InterestCalc\022\026.U" +
-      "serTools.CalcRequest\032\027.UserTools.CalcRes" +
-      "ponse\"\000B-\n\032eBankingServices.UserToolsB\rU" +
-      "serToolsImplP\001b\006proto3"
+      "\n\017UserTools.proto\022\tUserTools\"\236\001\n\013HelpReq" +
+      "uest\022\017\n\007message\030\001 \001(\t\0223\n\toperation\030\002 \001(\016" +
+      "2 .UserTools.HelpRequest.Operation\"I\n\tOp" +
+      "eration\022\022\n\016PASSWORD_RESET\020\000\022\016\n\nREPORT_BU" +
+      "G\020\001\022\n\n\006VAULTS\020\002\022\014\n\010PAYMENTS\020\003\"2\n\014HelpRes" +
+      "ponse\022\020\n\010problems\030\001 \001(\t\022\020\n\010solution\030\002 \001(" +
+      "\t\"r\n\013VaultAccess\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002" +
+      " \001(\001\022\022\n\nunlockDate\030\003 \001(\t\022\017\n\007vaultID\030\004 \001(" +
+      "\005\022\020\n\010username\030\005 \001(\t\022\020\n\010password\030\006 \001(\t\"&\n" +
+      "\021VaultConfirmation\022\021\n\tvaultConf\030\003 \001(\t\";\n" +
+      "\013CalcRequest\022\017\n\007accType\030\001 \001(\t\022\013\n\003sum\030\002 \001" +
+      "(\001\022\016\n\006access\030\003 \001(\t\" \n\014CalcResponse\022\020\n\010in" +
+      "terest\030\001 \001(\0012\321\001\n\tUserTools\022@\n\007HelpBot\022\026." +
+      "UserTools.HelpRequest\032\027.UserTools.HelpRe" +
+      "sponse\"\000(\0010\001\022?\n\005Vault\022\026.UserTools.VaultA" +
+      "ccess\032\034.UserTools.VaultConfirmation\"\000\022A\n" +
+      "\014InterestCalc\022\026.UserTools.CalcRequest\032\027." +
+      "UserTools.CalcResponse\"\000B-\n\032eBankingServ" +
+      "ices.UserToolsB\rUserToolsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -90,7 +90,7 @@ public final class UserToolsImpl {
     internal_static_UserTools_HelpRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_HelpRequest_descriptor,
-        new java.lang.String[] { "Operation", });
+        new java.lang.String[] { "Message", "Operation", });
     internal_static_UserTools_HelpResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_UserTools_HelpResponse_fieldAccessorTable = new

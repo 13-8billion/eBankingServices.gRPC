@@ -75,7 +75,7 @@ public class UserToolsServer extends UserToolsImplBase {
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
 
 			// Wait a bit
-			Thread.sleep(1000);
+			Thread.sleep(50);
 
 			// Unregister all services
 			// jmdns.unregisterAllServices();
@@ -128,18 +128,18 @@ public class UserToolsServer extends UserToolsImplBase {
 				String solution = null;
 
 				if (request.getOperation() == Operation.PASSWORD_RESET) {
-					solution = "To reset your password, navigate to your account" + newline
-							+ "and under settings select 'change password'" + newline + "and follow the instructions";
+					solution = request.getMessage() + newline + "To reset your password, navigate to your account" + newline
+							+ "and under settings select 'change password'" + newline + "and follow the instructions" + newline + newline;
 				} else if (request.getOperation() == Operation.REPORT_BUG) {
-					solution = "To report a bug please send an email to our " + newline
-							+ "24 hour help assist at: eBankingServices.gRPC@nci.ie";
+					solution = request.getMessage() + newline + "To report a bug please send an email to our " + newline
+							+ "24 hour help assist at: eBankingServices.gRPC@nci.ie" + newline + newline;
 				} else if (request.getOperation() == Operation.VAULTS) {
-					solution = "To use our vault service simply navigate to the vaults under the " + newline
+					solution = request.getMessage() + newline +"To use our vault service simply navigate to the vaults under the " + newline
 							+ "'user tools' menu, select the amount of money you wish to store and " + newline
-							+ "select a date for when the vault can be reopened.";
+							+ "select a date for when the vault can be reopened." + newline + newline;
 				} else if (request.getOperation() == Operation.PAYMENTS) {
-					solution = "If you are experiencing issues making or recieveing payment " + newline
-							+"please call our free 24 hour hotline at: 0800-03041992.";
+					solution = request.getMessage() + newline + "If you are experiencing issues making or recieveing payment " + newline
+							+"please call our free 24 hour hotline at: 0800-03041992." + newline + newline;
 				}
 
 				HelpResponse reply = HelpResponse.newBuilder().setSolution(solution).build();
@@ -214,6 +214,7 @@ public class UserToolsServer extends UserToolsImplBase {
 				.setVaultConf("Invalid date/format!" )
 				.build();
 		}
+		System.out.println(vc);
 		responseObserver.onNext(vc);
 		responseObserver.onCompleted();
 	

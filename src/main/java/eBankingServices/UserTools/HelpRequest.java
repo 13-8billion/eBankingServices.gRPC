@@ -20,6 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private HelpRequest() {
+    message_ = "";
     operation_ = 0;
   }
 
@@ -47,7 +48,13 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            message_ = s;
+            break;
+          }
+          case 16: {
             int rawValue = input.readEnum();
 
             operation_ = rawValue;
@@ -201,16 +208,50 @@ private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(enum_scope:UserTools.HelpRequest.Operation)
   }
 
-  public static final int OPERATION_FIELD_NUMBER = 1;
+  public static final int MESSAGE_FIELD_NUMBER = 1;
+  private volatile java.lang.Object message_;
+  /**
+   * <code>string message = 1;</code>
+   */
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      message_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string message = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getMessageBytes() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      message_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int OPERATION_FIELD_NUMBER = 2;
   private int operation_;
   /**
-   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
    */
   public int getOperationValue() {
     return operation_;
   }
   /**
-   * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+   * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
    */
   public eBankingServices.UserTools.HelpRequest.Operation getOperation() {
     @SuppressWarnings("deprecation")
@@ -232,8 +273,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
+    }
     if (operation_ != eBankingServices.UserTools.HelpRequest.Operation.PASSWORD_RESET.getNumber()) {
-      output.writeEnum(1, operation_);
+      output.writeEnum(2, operation_);
     }
     unknownFields.writeTo(output);
   }
@@ -244,9 +288,12 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
+    }
     if (operation_ != eBankingServices.UserTools.HelpRequest.Operation.PASSWORD_RESET.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(1, operation_);
+        .computeEnumSize(2, operation_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -264,6 +311,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.HelpRequest other = (eBankingServices.UserTools.HelpRequest) obj;
 
     boolean result = true;
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && operation_ == other.operation_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -276,6 +325,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (37 * hash) + OPERATION_FIELD_NUMBER;
     hash = (53 * hash) + operation_;
     hash = (29 * hash) + unknownFields.hashCode();
@@ -415,6 +466,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      message_ = "";
+
       operation_ = 0;
 
       return this;
@@ -443,6 +496,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.HelpRequest buildPartial() {
       eBankingServices.UserTools.HelpRequest result = new eBankingServices.UserTools.HelpRequest(this);
+      result.message_ = message_;
       result.operation_ = operation_;
       onBuilt();
       return result;
@@ -492,6 +546,10 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.HelpRequest other) {
       if (other == eBankingServices.UserTools.HelpRequest.getDefaultInstance()) return this;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
+        onChanged();
+      }
       if (other.operation_ != 0) {
         setOperationValue(other.getOperationValue());
       }
@@ -524,15 +582,84 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object message_ = "";
+    /**
+     * <code>string message = 1;</code>
+     */
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string message = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string message = 1;</code>
+     */
+    public Builder setMessage(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      message_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 1;</code>
+     */
+    public Builder clearMessage() {
+      
+      message_ = getDefaultInstance().getMessage();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 1;</code>
+     */
+    public Builder setMessageBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      message_ = value;
+      onChanged();
+      return this;
+    }
+
     private int operation_ = 0;
     /**
-     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
      */
     public int getOperationValue() {
       return operation_;
     }
     /**
-     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
      */
     public Builder setOperationValue(int value) {
       operation_ = value;
@@ -540,7 +667,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
      */
     public eBankingServices.UserTools.HelpRequest.Operation getOperation() {
       @SuppressWarnings("deprecation")
@@ -548,7 +675,7 @@ private static final long serialVersionUID = 0L;
       return result == null ? eBankingServices.UserTools.HelpRequest.Operation.UNRECOGNIZED : result;
     }
     /**
-     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
      */
     public Builder setOperation(eBankingServices.UserTools.HelpRequest.Operation value) {
       if (value == null) {
@@ -560,7 +687,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.UserTools.HelpRequest.Operation operation = 1;</code>
+     * <code>.UserTools.HelpRequest.Operation operation = 2;</code>
      */
     public Builder clearOperation() {
       

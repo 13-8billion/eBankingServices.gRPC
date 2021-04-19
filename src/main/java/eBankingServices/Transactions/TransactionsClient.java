@@ -34,9 +34,9 @@ public class TransactionsClient {
 		asyncStub = TransactionsGrpc.newStub(channel);
 	
 		// call methods
-		deposit();
-		transfer();
-//		request();	
+//		deposit();
+//		transfer();
+		request();	
 		
 //		channel.shutdown()
 //	 	   .awaitTermination(60, TimeUnit.SECONDS);
@@ -51,6 +51,14 @@ public class TransactionsClient {
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 				.setAccNo(1)
 				.setSum(33)
+				.build());
+		
+		System.out.println(response);
+		
+		System.out.println("Requesting to deposit...");
+		response = blockingStub.deposit(DepositSum.newBuilder()
+				.setAccNo(2)
+				.setSum(22)
 				.build());
 		
 		System.out.println(response);
@@ -83,24 +91,24 @@ public class TransactionsClient {
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
-					try {
-						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 			
 				}
 
 				@Override
 				public void onCompleted() {
 					System.out.println("STREAM END: All transfers have completed.");
-					try {
-						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 
 				}			
 			};
@@ -114,6 +122,7 @@ public class TransactionsClient {
 					.build());
 			Thread.sleep(1000);
 			
+			
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(300)
 					.setFromAccNo(1)
@@ -121,16 +130,17 @@ public class TransactionsClient {
 					.build());
 			Thread.sleep(1000);
 			
+			
 			requestObserver.onNext(TransferSum.newBuilder()
-					.setSum(300)
+					.setSum(30)
 					.setFromAccNo(1)
-					.setToAccNo(1)
+					.setToAccNo(3)
 					.build());
 			Thread.sleep(1000);
 						
-			Thread.sleep(2000);
+			Thread.sleep(20000);
 			
-			responseObserver.onCompleted();	
+			requestObserver.onCompleted();	
 				
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -214,10 +224,6 @@ public class TransactionsClient {
 				requestObserver.onCompleted();
 
 
-				// Sleep for a bit before sending the next one.
-				Thread.sleep(new Random().nextInt(1000) + 500);
-
-
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {			
@@ -227,7 +233,7 @@ public class TransactionsClient {
 
 
 			try {
-				Thread.sleep(15000);
+				Thread.sleep(60000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

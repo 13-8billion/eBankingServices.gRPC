@@ -3,6 +3,7 @@ package eBankingServices.UserTools;
 import java.util.Random;
 import java.util.Scanner;
 
+import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsBlockingStub;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsStub;
 import io.grpc.ManagedChannel;
@@ -27,8 +28,8 @@ public class UserToolsClient {
 		asyncStub = UserToolsGrpc.newStub(channel);
 		
 		// call methods 
-		helpBot();
-		vault();
+//		helpBot();
+//		vault();
 		interestCalc();
 	}
 	
@@ -61,29 +62,34 @@ public class UserToolsClient {
 			
 			// simulating multiple help requests to the help bot server
 			requestObserver.onNext(HelpRequest.newBuilder()
+					.setMessage("How do I reset my password?")
+					.setOperation(Operation.PASSWORD_RESET)
 					.build());
-			Thread.sleep(2000); // simulating wait time
+			Thread.sleep(3000); // simulating wait time
 			
 
 			requestObserver.onNext(HelpRequest.newBuilder()
+					.setMessage("How do I report a bug?")
+					.setOperation(Operation.REPORT_BUG)
 					.build());
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 
 			
 			requestObserver.onNext(HelpRequest.newBuilder()
+					.setMessage("How do I use Vaults?")
+					.setOperation(Operation.VAULTS)
 					.build());
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 			
 			requestObserver.onNext(HelpRequest.newBuilder()
+					.setMessage("How do I send and receieve payments?")
+					.setOperation(Operation.PAYMENTS)
 					.build());
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 
 			// Mark the end of requests
 			requestObserver.onCompleted();
 
-
-			// Sleep for a bit before sending the next one.
-			Thread.sleep(new Random().nextInt(1000) + 500);
 
 
 		} catch (RuntimeException e) {
@@ -94,7 +100,7 @@ public class UserToolsClient {
 
 
 		try {
-			Thread.sleep(40000);
+			Thread.sleep(30000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,6 +113,11 @@ public class UserToolsClient {
 	public static void vault() {
 
 		VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
+				.setUsername("Amy")
+				.setPassword("123")
+				.setAccNo(1)
+				.setSum(100)
+				.setUnlockDate("03/04/2021")
 				.build());
 		
 		System.out.println(response);
@@ -117,6 +128,9 @@ public class UserToolsClient {
 	public static void interestCalc() {
 		
 		CalcResponse response = blockingStub.interestCalc(CalcRequest.newBuilder()
+				.setAccess("yes")
+				.setAccType("12")
+				.setSum(30000)
 				.build());
 
 		System.out.println("Total payable " + response);

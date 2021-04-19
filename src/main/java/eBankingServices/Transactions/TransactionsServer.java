@@ -162,7 +162,9 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		return new StreamObserver<TransferSum>() {
 
-			TransferConfirmation reply = null;
+			TransferConfirmation reply;
+			
+			ArrayList<Tran> tran = new ArrayList<Tran>();
 			
 			@Override
 			public void onNext(TransferSum request) {
@@ -185,7 +187,7 @@ public class TransactionsServer extends TransactionsImplBase {
 											+ "Your Previous Balance : " + euro + c.getBalance() + newline + "Your New Balance: "
 											+ euro + newBalance)
 									.build();
-						
+							responseObserver.onNext(reply);
 
 						} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 							reply = TransferConfirmation.newBuilder()
@@ -203,26 +205,29 @@ public class TransactionsServer extends TransactionsImplBase {
 							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
 									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
 									.build();
-
-			
+							
 						}
+												
 						Thread.sleep(1000);
+						
 				
 					} catch (RuntimeException e) {
 						e.printStackTrace();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-		
+			
 				}
-				responseObserver.onNext(reply);
+				
 			}
 			
 
 			@Override
 			public void onCompleted() {
 				System.out.println("Transaction process completed");
-				responseObserver.onCompleted();
+//				System.out.println(reply);
+//				responseObserver.onCompleted();
+				
 			}
 			@Override
 			public void onError(Throwable t) {
@@ -321,6 +326,45 @@ public class TransactionsServer extends TransactionsImplBase {
 			return true;
 		}
 
+	}
+	
+	private class Tran {
+
+		private String toAccNo;
+		private String fromAccNo;
+		private double preBalance;
+		private double newBalance;
+
+		// constructor
+		public Tran(String toAccNo2, String fromAccNo2, double preBalance, double newBalance) {
+			this.toAccNo = toAccNo2;
+			this.fromAccNo = fromAccNo2;
+			this.preBalance = preBalance;
+			this.newBalance = newBalance;
+		}
+
+		public Tran() {
+		}
+
+		public Tran(String toAccNo2, String fromAccNo2) {
+			// TODO Auto-generated constructor stub
+		}
+
+		public String getToAccNo() {
+			return toAccNo;
+		}
+		
+		public String getFromAccNo() {
+			return fromAccNo;
+		}
+		
+		public double getPreBalance() {
+			return preBalance;
+		}
+		
+		public double getNewBalance() {
+			return newBalance;
+		}
 	}
 
 // Customer class

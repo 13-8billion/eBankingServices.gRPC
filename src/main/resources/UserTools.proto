@@ -21,6 +21,8 @@ service UserTools {
 
 // help bot message
 message HelpRequest {
+
+string message = 1;
   
     enum Operation{
 
@@ -29,7 +31,7 @@ message HelpRequest {
   	VAULTS=2;
   	PAYMENTS=3;
   }
-  Operation operation = 1;
+  Operation operation = 2;
 }
 
 message HelpResponse {

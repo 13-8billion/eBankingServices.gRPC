@@ -13,6 +13,8 @@ import javax.jmdns.ServiceInfo;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import eBankingServices.Transactions.TransferConfirmation;
+import eBankingServices.Transactions.TransferSum;
 import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
@@ -128,18 +130,21 @@ public class UserToolsServer extends UserToolsImplBase {
 				String solution = null;
 
 				if (request.getOperation() == Operation.PASSWORD_RESET) {
-					solution = request.getMessage() + newline + "To reset your password, navigate to your account" + newline
-							+ "and under settings select 'change password'" + newline + "and follow the instructions" + newline + newline;
+					solution = request.getMessage() + newline + "To reset your password, navigate to your account"
+							+ newline + "and under settings select 'change password'" + newline
+							+ "and follow the instructions" + newline + newline;
 				} else if (request.getOperation() == Operation.REPORT_BUG) {
 					solution = request.getMessage() + newline + "To report a bug please send an email to our " + newline
 							+ "24 hour help assist at: eBankingServices.gRPC@nci.ie" + newline + newline;
 				} else if (request.getOperation() == Operation.VAULTS) {
-					solution = request.getMessage() + newline +"To use our vault service simply navigate to the vaults under the " + newline
+					solution = request.getMessage() + newline
+							+ "To use our vault service simply navigate to the vaults under the " + newline
 							+ "'user tools' menu, select the amount of money you wish to store and " + newline
 							+ "select a date for when the vault can be reopened." + newline + newline;
 				} else if (request.getOperation() == Operation.PAYMENTS) {
-					solution = request.getMessage() + newline + "If you are experiencing issues making or recieveing payment " + newline
-							+"please call our free 24 hour hotline at: 0800-03041992." + newline + newline;
+					solution = request.getMessage() + newline
+							+ "If you are experiencing issues making or recieveing payment " + newline
+							+ "please call our free 24 hour hotline at: 0800-03041992." + newline + newline;
 				}
 
 				HelpResponse reply = HelpResponse.newBuilder().setSolution(solution).build();
@@ -174,7 +179,6 @@ public class UserToolsServer extends UserToolsImplBase {
 		String dateFormat = "03/04/2021";
 		String unlockDate = request.getUnlockDate();
 		String accNo = String.valueOf(request.getAccNo());
-		
 
 		if (accNo.matches("([1-3])")) {
 			validAccNo = true;
@@ -183,44 +187,36 @@ public class UserToolsServer extends UserToolsImplBase {
 		}
 
 		if (unlockDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
-		    checkFormat=true;
+			checkFormat = true;
 		else
-		   checkFormat=false;
+			checkFormat = false;
 
 		VaultConfirmation vc = null;
 
-		if (authenticateUser(request.getUsername(), request.getPassword()) && validAccNo == true && checkFormat == true) 
-		{
+		if (authenticateUser(request.getUsername(), request.getPassword()) && validAccNo == true
+				&& checkFormat == true) {
 
 			vc = VaultConfirmation.newBuilder()
 					.setVaultConf("SUCCESS! : " + euro + request.getSum() + " locked into Acc No. " + request.getAccNo()
 							+ newline + "The money can not be accessed until " + request.getUnlockDate())
 					.build();
 
-		} 
-		else if (!authenticateUser(request.getUsername(), request.getPassword()))
-		{		
+		} else if (!authenticateUser(request.getUsername(), request.getPassword())) {
 			vc = VaultConfirmation.newBuilder().setVaultConf("Username or Password Incorrect!").build();
-		}
-		else if(validAccNo != true)
-		{
-		vc = VaultConfirmation.newBuilder()	
-				.setVaultConf("Account Number does not exist exist!" + newline + "Please enter valid Account Number (1, 2 or 3)")
-				.build();
-		}
-		else if(checkFormat != true)
-		{
-		vc = VaultConfirmation.newBuilder()	
-				.setVaultConf("Invalid date/format!" )
-				.build();
+		} else if (validAccNo != true) {
+			vc = VaultConfirmation.newBuilder().setVaultConf(
+					"Account Number does not exist exist!" + newline + "Please enter valid Account Number (1, 2 or 3)")
+					.build();
+		} else if (checkFormat != true) {
+			vc = VaultConfirmation.newBuilder().setVaultConf("Invalid date/format!").build();
 		}
 		System.out.println(vc);
 		responseObserver.onNext(vc);
 		responseObserver.onCompleted();
-	
+
 	}
 
-// Interest calculator method - Unary 
+	// Interest calculator method - Unary
 
 	public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
 

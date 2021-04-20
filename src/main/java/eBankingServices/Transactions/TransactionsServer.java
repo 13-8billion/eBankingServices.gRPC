@@ -138,7 +138,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 			newBalance = request.getSum() + c.getBalance();
 
-			if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) {
+			if (request.getAccNo() == c.getAccNo() && validAccNo(request.getAccNo())) {
 
 				dc = DepositConfirmation.newBuilder()
 						.setMessage("SUCCESS " + newline + euro + request.getSum() + " deposited into Acc No. "
@@ -146,9 +146,9 @@ public class TransactionsServer extends TransactionsImplBase {
 								+ newline + "Your New Balance: " + euro + newBalance)
 						.build();
 
-			} else if (request.getAccNo() != c.getAccNo() && !validAccNo(accNo)) {
-				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + accNo + " is not valid!" + newline
-						+ "Please enter a valid Account Number (1, 2 or 3)").build();
+			} else if (request.getAccNo() != c.getAccNo() && !validAccNo(request.getAccNo())) {
+				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + request.getAccNo()
+						+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)").build();
 			}
 		}
 		responseObserver.onNext(dc);
@@ -161,46 +161,45 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		return new StreamObserver<TransferSum>() {
 
-			TransferConfirmation reply;
+			String newline = "\n\r";
 
 			@Override
-			public void onNext(TransferSum request) {
-				
-				System.out.println(request.getMessage());
+			public void onNext(TransferSum request)  {
 
-				String newline = "\n\r";
-				String toAccNo = String.valueOf(request.getToAccNo());
-				String fromAccNo = String.valueOf(request.getFromAccNo());
-				int fromAccNo1 = request.getFromAccNo();
+				TransferConfirmation reply;
 
 				try {
 					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
-							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
-
-						withdraw(fromAccNo1, request.getSum());
+							&& validAccNo(request.getToAccNo()) && validAccNo(request.getFromAccNo())) {
 
 						reply = TransferConfirmation.newBuilder()
 								.setMessage("SUCCESS " + newline + euro + request.getSum()
-										+ " transferred to Account No.  " + request.getToAccNo() + newline
-										+ withdraw(fromAccNo1, request.getSum()))
+										+ " transferred to Account No.  " + request.getToAccNo() + newline + newline
+										+ withdraw(request.getFromAccNo(), request.getSum()))
 								.build();
+
+						responseObserver.onNext(reply);
 
 					} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 						reply = TransferConfirmation.newBuilder()
 								.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo()).build();
 
-					} else if (!validAccNo(toAccNo)) {
-						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + toAccNo
+						responseObserver.onNext(reply);
+
+					} else if (!validAccNo(request.getToAccNo())) {
+						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + request.getToAccNo()
 								+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
 								.build();
 
-					} else if (!validAccNo(fromAccNo)) {
-						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
+						responseObserver.onNext(reply);
+
+					} else if (!validAccNo(request.getFromAccNo())) {
+						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + request.getFromAccNo()
 								+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
 								.build();
 
+						responseObserver.onNext(reply);
 					}
-
 					Thread.sleep(1000);
 
 				} catch (RuntimeException e) {
@@ -209,14 +208,11 @@ public class TransactionsServer extends TransactionsImplBase {
 					e.printStackTrace();
 				}
 
-				responseObserver.onNext(reply);
-//				responseObserver.onCompleted();
 			}
 
 			@Override
 			public void onCompleted() {
 				System.out.println("Transaction process completed");
-//				System.out.println(reply);
 //				responseObserver.onCompleted();
 
 			}
@@ -229,65 +225,75 @@ public class TransactionsServer extends TransactionsImplBase {
 
 	}
 
-// Request money from another account - Bi-directional streaming
+	// Request money from another account - Bi-directional streaming
 
-	@Override
-	public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
+		@Override
+		public StreamObserver<RequestSum> request(StreamObserver<RequestStatus> responseObserver) {
 
-		return new StreamObserver<RequestSum>() {
+			return new StreamObserver<RequestSum>() {
 
-			@Override
-			public void onNext(RequestSum request) {
+				@Override
+				public void onNext(RequestSum request) {
 
-				String status = ("Pending...");
+		
+						String status = ("Acc No. " + request.getToAccNo() + " requesting " + euro
+								+ request.getSum() + " from Acc No. " + request.getFromAccNo() + "..." + newline + newline+ "Pending...");
 
-				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
-				try {
-					// sleep to simulate waiting for confirmation from other account
-					Thread.sleep(6000);
+						responseObserver.onNext(RequestStatus.newBuilder()
+								.setStatus(status)
+								.build());
+					try {
+						// sleep to simulate waiting for confirmation from other account
+						Thread.sleep(6000);
 
-				} catch (RuntimeException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					} catch (RuntimeException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					status = ("Do you approve this request?");
+					responseObserver.onNext(RequestStatus.newBuilder()
+							.setStatus(status)
+							.build());
+					
+					try {
+						// sleep to simulate waiting for confirmation from other account
+						Thread.sleep(6000);
+
+					} catch (RuntimeException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					status = ("Request confirmed!" + newline + newline +"Acc No. " + request.getFromAccNo() + " has transfered " + newline+ 
+							euro + request.getSum() + " to Acc No. " + request.getToAccNo() + newline + newline + "Monthly request: " + request.getMonthly());
+					responseObserver.onNext(RequestStatus.newBuilder()
+							.setStatus(status)
+							.build());
 				}
 
-				status = ("Do you approve this request?");
-				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
+				@Override
+				public void onError(Throwable t) {
 
-				try {
-					// sleep to simulate waiting for confirmation from other account
-					Thread.sleep(6000);
+					t.printStackTrace();
 
-				} catch (RuntimeException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				}
+				
+
+				@Override
+				public void onCompleted() {
+					System.out.println("Receiving money request complete");
+
+					// completed too
+					responseObserver.onCompleted();
 				}
 
-				status = ("Request confirmed!" + newline + newline + "Acc No. " + request.getFromAccNo()
-						+ " has transfered " + newline + euro + request.getSum() + " to Acc No. " + request.getToAccNo()
-						+ newline + newline + "Monthly request? " + request.getMonthly());
-				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
-			}
+			};
+		}
 
-			@Override
-			public void onError(Throwable t) {
-
-				t.printStackTrace();
-
-			}
-
-			@Override
-			public void onCompleted() {
-				System.out.println("Receiving money request complete");
-
-				// completed too
-				responseObserver.onCompleted();
-			}
-
-		};
-	}
+// method to withdraw money from account 
 
 	private String withdraw(int fromAccNo, double sum) {
 
@@ -301,13 +307,13 @@ public class TransactionsServer extends TransactionsImplBase {
 
 	}
 
-// valid account number
+// validate account number
 
-	private boolean validAccNo(String accNo) {
-		if (accNo.matches("([1-3])")) {
-			return true;
-		} else {
+	private boolean validAccNo(int accNo) {
+		if (accNo != 1 || accNo != 2 || accNo != 3) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
@@ -349,7 +355,7 @@ public class TransactionsServer extends TransactionsImplBase {
 			return accNo;
 		}
 
-		public void setAccNo(int accNo) {
+		public void setAccNo(int accNo) {	
 			this.accNo = accNo;
 		}
 
@@ -375,6 +381,12 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		public void setBalance(double balance) {
 			this.balance = balance;
+		}
+	}
+
+	private class InvalidAccNoException extends Exception {
+		public InvalidAccNoException(String errorMsg) {
+			super(errorMsg);
 		}
 	}
 }

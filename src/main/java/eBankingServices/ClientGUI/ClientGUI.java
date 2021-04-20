@@ -135,7 +135,7 @@ public class ClientGUI implements ActionListener {
 	private JTextField vaultUsername = new JTextField(10);
 	private JTextArea vaultConf = new JTextArea();
 	private JLabel labelaccnovault = new JLabel("Acc No: ");
-	private JLabel labelsumvault = new JLabel("Amount: ");
+	private JLabel labelsumvault = new JLabel("Amount € ");
 	private JTextField vaultaccno = new JTextField(10);
 	private JLabel labelunlock = new JLabel("Unlock Date (dd/mm/yyyy): ");
 	private JTextField vaultunlock = new JTextField(10);
@@ -164,7 +164,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonselect = new JButton("Select");
 	private JComboBox comboOperation = new JComboBox();
 
-	private JTabbedPane getClientGUIJTabbedPane() {
+	private JTabbedPane getUserToolsGUIJTabbedPane() {
 
 		JTabbedPane tabPane = new JTabbedPane();
 
@@ -311,6 +311,23 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		interestCalc
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
+		
+		tabPane.add("Vault", vault);
+		tabPane.add("Help Bot", helpBot);
+		
+		tabPane.add("Interest Calculator", interestCalc);
+
+		return tabPane;
+	
+
+	}
+	private JTabbedPane getUserAccountGUIJTabbedPane() {
+	
+	JTabbedPane tabPane = new JTabbedPane();
+
+	GridBagConstraints constraints = new GridBagConstraints();
+	constraints.anchor = GridBagConstraints.WEST;
+	constraints.insets = new Insets(5, 5, 5, 5);
 
 // LOGIN PANEL -------------------
 
@@ -452,7 +469,23 @@ public class ClientGUI implements ActionListener {
 
 		// set border for the panel
 		changePass.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
+		
+		tabPane.add("Login", login);
+		tabPane.add("View Account", viewAcc);
+		tabPane.add("Change password", changePass);
+		
+		return tabPane;
+}
 
+
+
+	private JTabbedPane getTransactionsGUIJTabbedPane() {
+			
+			JTabbedPane tabPane = new JTabbedPane();
+
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.anchor = GridBagConstraints.WEST;
+			constraints.insets = new Insets(5, 5, 5, 5);
 // TRANSFER PANEL -------------------
 
 		JPanel transfer = new JPanel(new GridBagLayout());
@@ -607,18 +640,13 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
 
-		tabPane.add("Login", login);
-		tabPane.add("View Account", viewAcc);
+		
 		tabPane.add("Deposit", deposit);
 		tabPane.add("Transfer", transfer);
 		tabPane.add("Request", request);
-		tabPane.add("Vault", vault);
-		tabPane.add("Help Bot", helpBot);
-		tabPane.add("Change password", changePass);
-		tabPane.add("Interest Calculator", interestCalc);
-
+		
 		return tabPane;
-	}
+		}
 
 	public static void main(String[] args) {
 
@@ -821,14 +849,17 @@ public class ClientGUI implements ActionListener {
 		JPanel panel = new JPanel();
 
 		// Set the BoxLayout to be X_AXIS: from left to right
-		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.X_AXIS);
 
 		panel.setLayout(boxlayout);
 
 		// Set border for the panel
 		panel.setBorder(new EmptyBorder(new Insets(25, 50, 25, 50)));
 
-		panel.add(getClientGUIJTabbedPane());
+		panel.add(getUserAccountGUIJTabbedPane());
+		panel.add(getTransactionsGUIJTabbedPane());
+		panel.add(getUserToolsGUIJTabbedPane());
+	
 
 		// Set size for the frame
 		frame.setSize(300, 300);
@@ -929,7 +960,6 @@ public class ClientGUI implements ActionListener {
 			StreamObserver<TransferSum> request = asyncStub.transfer(response);
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
-
 
 // REQUEST ---------------------------------------------------------------------------------------				
 		} else if (label.equals("Request")) {
@@ -1241,6 +1271,8 @@ public class ClientGUI implements ActionListener {
 
 		}
 	
+	
 }
+
 
 }

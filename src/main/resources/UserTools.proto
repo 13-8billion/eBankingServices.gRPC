@@ -14,7 +14,7 @@ service UserTools {
   // Unary RPC method 2: Vaults
   rpc Vault(VaultAccess) returns (VaultConfirmation) {}
   
-  // Client-streaming RPC method 3: Interest Calculator
+  // Unary RPC method 3: Interest Calculator
   rpc InterestCalc(CalcRequest) returns (CalcResponse) {}
     
 }

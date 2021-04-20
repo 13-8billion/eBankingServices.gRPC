@@ -21,4 +21,14 @@ public interface TransferSumOrBuilder extends
    * <code>double sum = 3;</code>
    */
   double getSum();
+
+  /**
+   * <code>string message = 4;</code>
+   */
+  java.lang.String getMessage();
+  /**
+   * <code>string message = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getMessageBytes();
 }

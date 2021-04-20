@@ -48,7 +48,7 @@ public class TransactionsServer extends TransactionsImplBase {
 			Server server = ServerBuilder.forPort(port).addService(transactions).build().start();
 
 			System.out.println("Transaction server started, listening on " + port);
-			
+
 			server.awaitTermination();
 
 		} catch (IOException e) {
@@ -142,9 +142,10 @@ public class TransactionsServer extends TransactionsImplBase {
 
 				dc = DepositConfirmation.newBuilder()
 						.setMessage("SUCCESS " + newline + euro + request.getSum() + " deposited into Acc No. "
-								+ request.getAccNo() + newline + "Your Previous Balance: " + euro + c.getBalance() + newline
-								+ "Your New Balance: " + euro + newBalance).build();
-				
+								+ request.getAccNo() + newline + "Your Previous Balance: " + euro + c.getBalance()
+								+ newline + "Your New Balance: " + euro + newBalance)
+						.build();
+
 			} else if (request.getAccNo() != c.getAccNo() && !validAccNo(accNo)) {
 				dc = DepositConfirmation.newBuilder().setMessage("Account number: " + accNo + " is not valid!" + newline
 						+ "Please enter a valid Account Number (1, 2 or 3)").build();
@@ -154,8 +155,6 @@ public class TransactionsServer extends TransactionsImplBase {
 		responseObserver.onCompleted();
 	}
 
-
-
 // Transfer money method - Client streaming
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) {
@@ -163,78 +162,71 @@ public class TransactionsServer extends TransactionsImplBase {
 		return new StreamObserver<TransferSum>() {
 
 			TransferConfirmation reply;
-			
-			ArrayList<Tran> tran = new ArrayList<Tran>();
-			
+
 			@Override
 			public void onNext(TransferSum request) {
 				
+				System.out.println(request.getMessage());
+
 				String newline = "\n\r";
 				String toAccNo = String.valueOf(request.getToAccNo());
 				String fromAccNo = String.valueOf(request.getFromAccNo());
-				
-				for (int i = 0; i < cArray.length; i++) {
-					Customer c = cArray[i];
-					double newBalance = c.getBalance() - request.getSum();
+				int fromAccNo1 = request.getFromAccNo();
 
 				try {
-						if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
-								&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
+					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
+							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
 
-							reply = TransferConfirmation.newBuilder()
-									.setMessage("SUCCESS " + newline + euro + request.getSum()
-											+ " transferred to Account No.  " + request.getToAccNo() + newline
-											+ "Your Previous Balance : " + euro + c.getBalance() + newline + "Your New Balance: "
-											+ euro + newBalance)
-									.build();
-							responseObserver.onNext(reply);
+						withdraw(fromAccNo1, request.getSum());
 
-						} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-							reply = TransferConfirmation.newBuilder()
-									.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo())
-									.build();					
-		
+						reply = TransferConfirmation.newBuilder()
+								.setMessage("SUCCESS " + newline + euro + request.getSum()
+										+ " transferred to Account No.  " + request.getToAccNo() + newline
+										+ withdraw(fromAccNo1, request.getSum()))
+								.build();
 
-						} else if (!validAccNo(toAccNo)) {
-							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + toAccNo
-									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
-									.build();
-					
-				
-						} else if (!validAccNo(fromAccNo)) {
-							reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
-									+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
-									.build();
-							
-						}
-												
-						Thread.sleep(1000);
-						
-				
-					} catch (RuntimeException e) {
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
+						reply = TransferConfirmation.newBuilder()
+								.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo()).build();
+
+					} else if (!validAccNo(toAccNo)) {
+						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + toAccNo
+								+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
+								.build();
+
+					} else if (!validAccNo(fromAccNo)) {
+						reply = TransferConfirmation.newBuilder().setMessage("Account number: " + fromAccNo
+								+ " is not valid!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
+								.build();
+
 					}
-			
+
+					Thread.sleep(1000);
+
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
+
+				responseObserver.onNext(reply);
+//				responseObserver.onCompleted();
 			}
-			
 
 			@Override
 			public void onCompleted() {
 				System.out.println("Transaction process completed");
 //				System.out.println(reply);
 //				responseObserver.onCompleted();
-				
+
 			}
+
 			@Override
 			public void onError(Throwable t) {
-				
+
 			}
 		};
-		
+
 	}
 
 // Request money from another account - Bi-directional streaming
@@ -247,12 +239,9 @@ public class TransactionsServer extends TransactionsImplBase {
 			@Override
 			public void onNext(RequestSum request) {
 
-	
-					String status = ("Pending...");
+				String status = ("Pending...");
 
-					responseObserver.onNext(RequestStatus.newBuilder()
-							.setStatus(status)
-							.build());
+				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
 				try {
 					// sleep to simulate waiting for confirmation from other account
 					Thread.sleep(6000);
@@ -262,12 +251,10 @@ public class TransactionsServer extends TransactionsImplBase {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 				status = ("Do you approve this request?");
-				responseObserver.onNext(RequestStatus.newBuilder()
-						.setStatus(status)
-						.build());
-				
+				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
+
 				try {
 					// sleep to simulate waiting for confirmation from other account
 					Thread.sleep(6000);
@@ -277,12 +264,11 @@ public class TransactionsServer extends TransactionsImplBase {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
-				status = ("Request confirmed!" + newline + newline +"Acc No. " + request.getFromAccNo() + " has transfered " + newline+ 
-						euro + request.getSum() + " to Acc No. " + request.getToAccNo() + newline + newline + "Monthly request? " + request.getMonthly());
-				responseObserver.onNext(RequestStatus.newBuilder()
-						.setStatus(status)
-						.build());
+
+				status = ("Request confirmed!" + newline + newline + "Acc No. " + request.getFromAccNo()
+						+ " has transfered " + newline + euro + request.getSum() + " to Acc No. " + request.getToAccNo()
+						+ newline + newline + "Monthly request? " + request.getMonthly());
+				responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
 			}
 
 			@Override
@@ -291,7 +277,6 @@ public class TransactionsServer extends TransactionsImplBase {
 				t.printStackTrace();
 
 			}
-			
 
 			@Override
 			public void onCompleted() {
@@ -302,6 +287,18 @@ public class TransactionsServer extends TransactionsImplBase {
 			}
 
 		};
+	}
+
+	private String withdraw(int fromAccNo, double sum) {
+
+		double preBalance = accounts[fromAccNo];
+
+		double newBalance = accounts[fromAccNo] - sum;
+
+		String res = "Previous Balance: " + euro + preBalance + newline + "New Balance: " + euro + newBalance;
+
+		return res;
+
 	}
 
 // valid account number
@@ -326,45 +323,6 @@ public class TransactionsServer extends TransactionsImplBase {
 			return true;
 		}
 
-	}
-	
-	private class Tran {
-
-		private String toAccNo;
-		private String fromAccNo;
-		private double preBalance;
-		private double newBalance;
-
-		// constructor
-		public Tran(String toAccNo2, String fromAccNo2, double preBalance, double newBalance) {
-			this.toAccNo = toAccNo2;
-			this.fromAccNo = fromAccNo2;
-			this.preBalance = preBalance;
-			this.newBalance = newBalance;
-		}
-
-		public Tran() {
-		}
-
-		public Tran(String toAccNo2, String fromAccNo2) {
-			// TODO Auto-generated constructor stub
-		}
-
-		public String getToAccNo() {
-			return toAccNo;
-		}
-		
-		public String getFromAccNo() {
-			return fromAccNo;
-		}
-		
-		public double getPreBalance() {
-			return preBalance;
-		}
-		
-		public double getNewBalance() {
-			return newBalance;
-		}
 	}
 
 // Customer class

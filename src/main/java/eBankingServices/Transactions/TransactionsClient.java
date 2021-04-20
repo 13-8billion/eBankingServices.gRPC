@@ -35,8 +35,8 @@ public class TransactionsClient {
 	
 		// call methods
 //		deposit();
-//		transfer();
-		request();	
+		transfer();
+//		request();	
 		
 //		channel.shutdown()
 //	 	   .awaitTermination(60, TimeUnit.SECONDS);
@@ -91,12 +91,12 @@ public class TransactionsClient {
 				@Override
 				public void onError(Throwable t) {
 					t.printStackTrace();
-//					try {
-//						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			
 				}
 
@@ -117,27 +117,23 @@ public class TransactionsClient {
 			try {
 			requestObserver.onNext(TransferSum.newBuilder()
 					.setSum(10)
-					.setFromAccNo(1)
+					.setFromAccNo(2)
 					.setToAccNo(2)
 					.build());
 			Thread.sleep(1000);
 			
 			
 			requestObserver.onNext(TransferSum.newBuilder()
-					.setSum(300)
-					.setFromAccNo(1)
-					.setToAccNo(1)
+					.setMessage("Contacting bank...") 
 					.build());
 			Thread.sleep(1000);
 			
 			
 			requestObserver.onNext(TransferSum.newBuilder()
-					.setSum(30)
-					.setFromAccNo(1)
-					.setToAccNo(3)
+					.setMessage("Processing...") 
 					.build());
 			Thread.sleep(1000);
-						
+//						
 			Thread.sleep(20000);
 			
 			requestObserver.onCompleted();	
@@ -186,7 +182,6 @@ public class TransactionsClient {
 				}
 
 			};
-
 
 
 			StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);

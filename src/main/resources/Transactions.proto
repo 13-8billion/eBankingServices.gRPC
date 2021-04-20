@@ -36,6 +36,7 @@ message TransferSum {
   int32 from_accNo = 1;
   int32 to_accNo = 2;
   double sum = 3; 
+  string message = 4;
 }
 // transfer response
 message TransferConfirmation {

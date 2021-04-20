@@ -56,22 +56,23 @@ public final class TransactionsImpl {
       "\n\022Transactions.proto\022\014Transactions\"(\n\nDe" +
       "positSum\022\r\n\005accNo\030\001 \001(\005\022\013\n\003sum\030\002 \001(\001\"J\n\023" +
       "DepositConfirmation\022\021\n\tdepositID\030\001 \001(\005\022\017" +
-      "\n\007balance\030\002 \001(\001\022\017\n\007message\030\003 \001(\t\"@\n\013Tran" +
+      "\n\007balance\030\002 \001(\001\022\017\n\007message\030\003 \001(\t\"Q\n\013Tran" +
       "sferSum\022\022\n\nfrom_accNo\030\001 \001(\005\022\020\n\010to_accNo\030" +
-      "\002 \001(\005\022\013\n\003sum\030\003 \001(\001\";\n\024TransferConfirmati" +
-      "on\022\022\n\ntransferID\030\001 \001(\005\022\017\n\007message\030\002 \001(\t\"" +
-      "a\n\nRequestSum\022\022\n\nfrom_accNo\030\001 \001(\005\022\020\n\010to_" +
-      "accNo\030\002 \001(\005\022\013\n\003sum\030\003 \001(\001\022\017\n\007monthly\030\004 \001(" +
-      "\010\022\017\n\007approve\030\005 \001(\010\"C\n\rRequestStatus\022\016\n\006s" +
-      "tatus\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\021\n\trequestI" +
-      "D\030\003 \001(\0052\357\001\n\014Transactions\022H\n\007Deposit\022\030.Tr" +
-      "ansactions.DepositSum\032!.Transactions.Dep" +
-      "ositConfirmation\"\000\022M\n\010Transfer\022\031.Transac" +
-      "tions.TransferSum\032\".Transactions.Transfe" +
-      "rConfirmation\"\000(\001\022F\n\007Request\022\030.Transacti" +
-      "ons.RequestSum\032\033.Transactions.RequestSta" +
-      "tus\"\000(\0010\001B3\n\035eBankingServices.Transactio" +
-      "nsB\020TransactionsImplP\001b\006proto3"
+      "\002 \001(\005\022\013\n\003sum\030\003 \001(\001\022\017\n\007message\030\004 \001(\t\";\n\024T" +
+      "ransferConfirmation\022\022\n\ntransferID\030\001 \001(\005\022" +
+      "\017\n\007message\030\002 \001(\t\"a\n\nRequestSum\022\022\n\nfrom_a" +
+      "ccNo\030\001 \001(\005\022\020\n\010to_accNo\030\002 \001(\005\022\013\n\003sum\030\003 \001(" +
+      "\001\022\017\n\007monthly\030\004 \001(\010\022\017\n\007approve\030\005 \001(\010\"C\n\rR" +
+      "equestStatus\022\016\n\006status\030\001 \001(\t\022\017\n\007message\030" +
+      "\002 \001(\t\022\021\n\trequestID\030\003 \001(\0052\357\001\n\014Transaction" +
+      "s\022H\n\007Deposit\022\030.Transactions.DepositSum\032!" +
+      ".Transactions.DepositConfirmation\"\000\022M\n\010T" +
+      "ransfer\022\031.Transactions.TransferSum\032\".Tra" +
+      "nsactions.TransferConfirmation\"\000(\001\022F\n\007Re" +
+      "quest\022\030.Transactions.RequestSum\032\033.Transa" +
+      "ctions.RequestStatus\"\000(\0010\001B3\n\035eBankingSe" +
+      "rvices.TransactionsB\020TransactionsImplP\001b" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -102,7 +103,7 @@ public final class TransactionsImpl {
     internal_static_Transactions_TransferSum_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Transactions_TransferSum_descriptor,
-        new java.lang.String[] { "FromAccNo", "ToAccNo", "Sum", });
+        new java.lang.String[] { "FromAccNo", "ToAccNo", "Sum", "Message", });
     internal_static_Transactions_TransferConfirmation_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_Transactions_TransferConfirmation_fieldAccessorTable = new

@@ -60,7 +60,6 @@ public class ClientGUI implements ActionListener {
 	private String newlinee = "\n\r";
 	private static final Logger logger = Logger.getLogger(ClientGUI.class.getName());
 
-
 	// TRANSACTIONS -----------
 
 	// deposit instance variables
@@ -311,23 +310,23 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		interestCalc
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
-		
+
 		tabPane.add("Vault", vault);
 		tabPane.add("Help Bot", helpBot);
-		
+
 		tabPane.add("Interest Calculator", interestCalc);
 
 		return tabPane;
-	
 
 	}
-	private JTabbedPane getUserAccountGUIJTabbedPane() {
-	
-	JTabbedPane tabPane = new JTabbedPane();
 
-	GridBagConstraints constraints = new GridBagConstraints();
-	constraints.anchor = GridBagConstraints.WEST;
-	constraints.insets = new Insets(5, 5, 5, 5);
+	private JTabbedPane getUserAccountGUIJTabbedPane() {
+
+		JTabbedPane tabPane = new JTabbedPane();
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
 
 // LOGIN PANEL -------------------
 
@@ -469,23 +468,21 @@ public class ClientGUI implements ActionListener {
 
 		// set border for the panel
 		changePass.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CHANGE PASSWORD"));
-		
+
 		tabPane.add("Login", login);
 		tabPane.add("View Account", viewAcc);
 		tabPane.add("Change password", changePass);
-		
+
 		return tabPane;
-}
-
-
+	}
 
 	private JTabbedPane getTransactionsGUIJTabbedPane() {
-			
-			JTabbedPane tabPane = new JTabbedPane();
 
-			GridBagConstraints constraints = new GridBagConstraints();
-			constraints.anchor = GridBagConstraints.WEST;
-			constraints.insets = new Insets(5, 5, 5, 5);
+		JTabbedPane tabPane = new JTabbedPane();
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
 // TRANSFER PANEL -------------------
 
 		JPanel transfer = new JPanel(new GridBagLayout());
@@ -640,31 +637,28 @@ public class ClientGUI implements ActionListener {
 		// set border for the panel
 		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
 
-		
 		tabPane.add("Deposit", deposit);
 		tabPane.add("Transfer", transfer);
 		tabPane.add("Request", request);
-		
+
 		return tabPane;
-		}
+	}
 
 	public static void main(String[] args) {
-
 
 		ClientGUI gui = new ClientGUI();
 
 		gui.build();
 	}
 
-	
 	private void discoverTransactionsService(String service_type) {
-	
+
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
 			jmdns.addServiceListener(service_type, new ServiceListener() {
-				
+
 				@Override
 				public void serviceResolved(ServiceEvent event) {
 					System.out.println("TRANSACTION Service resolved: " + event.getInfo());
@@ -672,35 +666,32 @@ public class ClientGUI implements ActionListener {
 					transactionsServiceInfo = event.getInfo();
 
 					int port = transactionsServiceInfo.getPort();
-					
+
 					String host = transactionsServiceInfo.getHostAddresses()[0];
-		
+
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
-					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t type:" + event.getType());
 					System.out.println("\t name: " + event.getName());
 					System.out.println("\t description/properties: " + transactionsServiceInfo.getNiceTextString());
 					System.out.println("\t host: " + host);
-							
-	
+
 				}
-				
+
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
 					System.out.println("TRANSACTION Service removed: " + event.getInfo());
 
-					
 				}
 
 				@Override
 				public void serviceAdded(ServiceEvent event) {
 					System.out.println("TRANSACTION Service added: " + event.getInfo());
-					 jmdns.requestServiceInfo(event.getType(), event.getName());
+					jmdns.requestServiceInfo(event.getType(), event.getName());
 
-					
 				}
 			});
-			
+
 			// Wait a bit
 			Thread.sleep(500);
 			jmdns.close();
@@ -713,19 +704,17 @@ public class ClientGUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	private void discoverUserAccountService(String service_type) {
-		
-		
+
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
 			jmdns.addServiceListener(service_type, new ServiceListener() {
-				
+
 				@Override
 				public void serviceResolved(ServiceEvent event) {
 					System.out.println("USER ACCOUNT Service resolved: " + event.getInfo());
@@ -733,35 +722,32 @@ public class ClientGUI implements ActionListener {
 					userAccountServiceInfo = event.getInfo();
 
 					int port = userAccountServiceInfo.getPort();
-					
+
 					String host = userAccountServiceInfo.getHostAddresses()[0];
-					
+
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
-					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t type:" + event.getType());
 					System.out.println("\t name: " + event.getName());
 					System.out.println("\t description/properties: " + userAccountServiceInfo.getNiceTextString());
 					System.out.println("\t host: " + host);
-							
-	
+
 				}
-				
+
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
 					System.out.println("USER ACCOUNT Service removed: " + event.getInfo());
 
-					
 				}
 
 				@Override
 				public void serviceAdded(ServiceEvent event) {
 					System.out.println("USER ACCOUNT Service added: " + event.getInfo());
-					 jmdns.requestServiceInfo(event.getType(), event.getName());
+					jmdns.requestServiceInfo(event.getType(), event.getName());
 
-					
 				}
 			});
-			
+
 			// Wait a bit
 			Thread.sleep(500);
 			jmdns.close();
@@ -774,19 +760,17 @@ public class ClientGUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	private void discoverUserToolsService(String service_type) {
-		
-		
+
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
 			jmdns.addServiceListener(service_type, new ServiceListener() {
-				
+
 				@Override
 				public void serviceResolved(ServiceEvent event) {
 					System.out.println("USER TOOLS Service resolved: " + event.getInfo());
@@ -794,36 +778,32 @@ public class ClientGUI implements ActionListener {
 					userToolsServiceInfo = event.getInfo();
 
 					int port = userToolsServiceInfo.getPort();
-					
+
 					String host = userToolsServiceInfo.getHostAddresses()[0];
-				
-				
+
 					System.out.println("resolving " + service_type + " with properties ...");
 					System.out.println("\t port: " + port);
-					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t type:" + event.getType());
 					System.out.println("\t name: " + event.getName());
 					System.out.println("\t description/properties: " + userToolsServiceInfo.getNiceTextString());
 					System.out.println("\t host: " + host);
-							
-	
+
 				}
-				
+
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
 					System.out.println("USER TOOLS Service removed: " + event.getInfo());
 
-					
 				}
 
 				@Override
 				public void serviceAdded(ServiceEvent event) {
 					System.out.println("USER TOOLS Service added: " + event.getInfo());
-					 jmdns.requestServiceInfo(event.getType(), event.getName());
+					jmdns.requestServiceInfo(event.getType(), event.getName());
 
-					
 				}
 			});
-			
+
 			// Wait a bit
 			Thread.sleep(500);
 			jmdns.close();
@@ -836,10 +816,9 @@ public class ClientGUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
+
 	private void build() {
 
 		JFrame frame = new JFrame("eBanking Application");
@@ -859,7 +838,6 @@ public class ClientGUI implements ActionListener {
 		panel.add(getUserAccountGUIJTabbedPane());
 		panel.add(getTransactionsGUIJTabbedPane());
 		panel.add(getUserToolsGUIJTabbedPane());
-	
 
 		// Set size for the frame
 		frame.setSize(300, 300);
@@ -871,39 +849,38 @@ public class ClientGUI implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e){
+	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton) e.getSource();
 		String label = button.getActionCommand();
 // DEPOSIT ---------------------------------------------------------------------------------------			
 		if (label.equals("Deposit")) {
 			System.out.println("Deposits service invoked ...");
-			
+
 			String transactions_service_type = "_transactions._tcp.local.";
-			
+
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
-			
+
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
-			
+
 			// preparing message to send
 			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
 					.setAccNo(Integer.parseInt(entry1.getText())).setSum(Double.parseDouble(entry2.getText())).build());
 
 			// Retrieving reply from service
 			reply1.setText(response.getMessage());
-			
+
 			try {
 				channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
 			} catch (InterruptedException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
-
 
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {
@@ -912,14 +889,13 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 			String transactions_service_type = "_transactions._tcp.local.";
-			
+
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
-			
+
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
-			
-			
+
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
@@ -968,15 +944,15 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-			
+
 			String transactions_service_type = "_transactions._tcp.local.";
-			
+
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
-			
+
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
-			
+
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
@@ -1020,7 +996,6 @@ public class ClientGUI implements ActionListener {
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
 					.setMonthly(Boolean.parseBoolean(monthly.getText()))
 					.setApprove(Boolean.parseBoolean(approve.getText())).build());
-		
 
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
@@ -1029,12 +1004,12 @@ public class ClientGUI implements ActionListener {
 			/*
 			 * 
 			 */
-			
+
 			String userAccount_service_type = "_userAccount._tcp.local.";
-			
+
 			// discover transactions service
 			discoverUserAccountService(userAccount_service_type);
-			
+
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
@@ -1065,10 +1040,10 @@ public class ClientGUI implements ActionListener {
 			 */
 
 			String userAccount_service_type = "_userAccount._tcp.local.";
-			
+
 			// discover transactions service
 			discoverUserAccountService(userAccount_service_type);
-			
+
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
@@ -1120,10 +1095,10 @@ public class ClientGUI implements ActionListener {
 			 */
 
 			String userAccount_service_type = "_userAccount._tcp.local.";
-			
+
 			// discover transactions service
 			discoverUserAccountService(userAccount_service_type);
-			
+
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
@@ -1158,12 +1133,12 @@ public class ClientGUI implements ActionListener {
 			Operation operation = Operation.forNumber(index);
 
 			String userTools_service_type = "_ userToolst._tcp.local.";
-			
+
 			// discover transactions service
-			discoverUserToolsService( userTools_service_type);
-			
-			String host =  userToolsServiceInfo.getHostAddresses()[0];
-			int port =  userToolsServiceInfo.getPort();
+			discoverUserToolsService(userTools_service_type);
+
+			String host = userToolsServiceInfo.getHostAddresses()[0];
+			int port = userToolsServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
@@ -1209,12 +1184,12 @@ public class ClientGUI implements ActionListener {
 			 */
 
 			String userTools_service_type = "_ userToolst._tcp.local.";
-			
+
 			// discover transactions service
-			discoverUserToolsService( userTools_service_type);
-			
-			String host =  userToolsServiceInfo.getHostAddresses()[0];
-			int port =  userToolsServiceInfo.getPort();
+			discoverUserToolsService(userTools_service_type);
+
+			String host = userToolsServiceInfo.getHostAddresses()[0];
+			int port = userToolsServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
@@ -1244,12 +1219,12 @@ public class ClientGUI implements ActionListener {
 			 */
 
 			String userTools_service_type = "_ userToolst._tcp.local.";
-			
+
 			// discover transactions service
-			discoverUserToolsService( userTools_service_type);
-			
-			String host =  userToolsServiceInfo.getHostAddresses()[0];
-			int port =  userToolsServiceInfo.getPort();
+			discoverUserToolsService(userTools_service_type);
+
+			String host = userToolsServiceInfo.getHostAddresses()[0];
+			int port = userToolsServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
@@ -1270,9 +1245,7 @@ public class ClientGUI implements ActionListener {
 //			}
 
 		}
-	
-	
-}
 
+	}
 
 }

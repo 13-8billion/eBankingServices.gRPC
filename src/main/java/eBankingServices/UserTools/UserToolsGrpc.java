@@ -172,7 +172,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming RPC method 3: Interest Calculator
+     * Unary RPC method 3: Interest Calculator
      * </pre>
      */
     public void interestCalc(eBankingServices.UserTools.CalcRequest request,
@@ -249,7 +249,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming RPC method 3: Interest Calculator
+     * Unary RPC method 3: Interest Calculator
      * </pre>
      */
     public void interestCalc(eBankingServices.UserTools.CalcRequest request,
@@ -289,7 +289,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming RPC method 3: Interest Calculator
+     * Unary RPC method 3: Interest Calculator
      * </pre>
      */
     public eBankingServices.UserTools.CalcResponse interestCalc(eBankingServices.UserTools.CalcRequest request) {
@@ -329,7 +329,7 @@ public final class UserToolsGrpc {
 
     /**
      * <pre>
-     * Client-streaming RPC method 3: Interest Calculator
+     * Unary RPC method 3: Interest Calculator
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserTools.CalcResponse> interestCalc(

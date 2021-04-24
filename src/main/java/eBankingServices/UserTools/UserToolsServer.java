@@ -212,7 +212,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 			System.out.println(vc);
 			responseObserver.onNext(vc);
-			responseObserver.onCompleted();
+	
 
 		} catch (DateException ex) {
 
@@ -221,7 +221,7 @@ public class UserToolsServer extends UserToolsImplBase {
 					.setVaultConf("Unlock date must be AFTER todays date (03/04/2021). Please fix this.").build();
 			responseObserver.onNext(vc);
 		}
-
+		responseObserver.onCompleted();
 	}
 
 	// Interest calculator method - Unary

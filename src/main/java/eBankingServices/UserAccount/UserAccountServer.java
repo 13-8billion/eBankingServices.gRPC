@@ -20,6 +20,7 @@ public class UserAccountServer extends UserAccountImplBase {
 	
 	private String Username = "Amy";
 	private String currPassword = "123";
+	private String newline = "\n\r";
 	
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -156,12 +157,14 @@ private Properties getProperties() {
 		cArray[1] = new Customer(2, "Sadie", "Adler", 5900);
 		cArray[2] = new Customer(3, "Amy", "Percival", 33333);
 		
+		String accNo = String.valueOf(request.getAccNo());
+		
 				
 		for(int i=0; i<cArray.length;i++)
 		{
 			Customer c = cArray[i];
 			
-			if (request.getAccNo() == c.getAccNo()) 
+			if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) 
 			{
 				reply = AccountInfo.newBuilder()
 						.setMessage("Streaming Account No: " + request.getAccNo() + " ...") 
@@ -169,11 +172,18 @@ private Properties getProperties() {
 						.setFirstName(c.getFirstName())
 						.setLastName(c.getLastName())
 						.setBalance(c.getBalance())
-						.build();	
+						.build();
 				responseObserver.onNext(reply);
-
+			} 
+			else if(!validAccNo(accNo)) 
+			{
+				
+				reply = AccountInfo.newBuilder()
+						.setMessage("Invalid Account Number!" +newline+"Please enter a valid account number (1, 2 or 3)")
+						.build();
+				responseObserver.onNext(reply);
 			}
-			
+		
 		}
 		
 		responseObserver.onCompleted();
@@ -233,6 +243,16 @@ private Properties getProperties() {
 			return false;
 		}
 	}
+	
+	// validate account number
+
+		private boolean validAccNo(String accNo) {
+			if (accNo.matches("([1-3])")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	
 	
 // Customer class 

@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.awt.event.*;
 import java.awt.*;
 
 import javax.jmdns.JmDNS;
@@ -21,15 +18,11 @@ import javax.swing.border.EmptyBorder;
 import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.ClientGUI.ClientGUI;
 import eBankingServices.Transactions.DepositConfirmation;
-import eBankingServices.Transactions.DepositConfirmationOrBuilder;
 import eBankingServices.Transactions.DepositSum;
 import eBankingServices.Transactions.RequestStatus;
 import eBankingServices.Transactions.RequestSum;
 import eBankingServices.Transactions.TransactionsGrpc;
-import eBankingServices.Transactions.TransactionsGrpc.TransactionsBlockingStub;
-import eBankingServices.Transactions.TransactionsGrpc.TransactionsStub;
 import eBankingServices.Transactions.TransferConfirmation;
-import eBankingServices.Transactions.TransferConfirmationOrBuilder;
 import eBankingServices.Transactions.TransferSum;
 import eBankingServices.UserAccount.AccountInfo;
 import eBankingServices.UserAccount.LoginConfirmation;
@@ -47,7 +40,6 @@ import eBankingServices.UserTools.VaultAccess;
 import eBankingServices.UserTools.VaultConfirmation;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
 public class ClientGUI implements ActionListener {
@@ -55,10 +47,7 @@ public class ClientGUI implements ActionListener {
 	private ServiceInfo transactionsServiceInfo;
 	private ServiceInfo userAccountServiceInfo;
 	private ServiceInfo userToolsServiceInfo;
-	private static TransactionsBlockingStub blockingStub;
-	private static TransactionsStub asyncStub;
 	private String newlinee = "\n\r";
-	private static final Logger logger = Logger.getLogger(ClientGUI.class.getName());
 
 	// TRANSACTIONS -----------
 
@@ -156,6 +145,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttoncalc = new JButton("Calculate");
 	private JLabel labelinterest = new JLabel("Interest Payable € ");
 	private JTextField interest = new JTextField(10);
+	private JTextArea error = new JTextArea();
 	// help bot
 	String newline = "\n\r";
 	private JLabel labelhowto = new JLabel("How to: ");
@@ -307,6 +297,11 @@ public class ClientGUI implements ActionListener {
 		constraints3.gridx = 1;
 		interestCalc.add(interest, constraints3);
 		interest.setEditable(false);
+		
+		constraints3.gridx = 1;
+		constraints3.gridy = 7;
+		interestCalc.add(error, constraints3);
+		error.setEditable(false);
 		// set border for the panel
 		interestCalc
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "INTEREST CALCULATOR"));
@@ -398,7 +393,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(firstName, constraints5);
-		balance.setEditable(false);
+		firstName.setEditable(false);
 
 		constraints5.gridx = 0;
 		constraints5.gridy = 4;
@@ -406,7 +401,7 @@ public class ClientGUI implements ActionListener {
 
 		constraints5.gridx = 1;
 		viewAcc.add(lastName, constraints5);
-		balance.setEditable(false);
+		lastName.setEditable(false);
 
 		constraints5.gridx = 0;
 		constraints5.gridy = 5;
@@ -646,12 +641,14 @@ public class ClientGUI implements ActionListener {
 
 	public static void main(String[] args) {
 
+
 		ClientGUI gui = new ClientGUI();
 
 		gui.build();
 	}
 
-	private void discoverTransactionsService(String service_type) {
+
+	private void discoverTransactionsService(String service_type){
 
 		try {
 			// Create a JmDNS instance
@@ -818,7 +815,7 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-
+	
 	private void build() {
 
 		JFrame frame = new JFrame("eBanking Application");
@@ -1007,7 +1004,7 @@ public class ClientGUI implements ActionListener {
 
 			String userAccount_service_type = "_userAccount._tcp.local.";
 
-			// discover transactions service
+			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
 
 			String host = userAccountServiceInfo.getHostAddresses()[0];
@@ -1041,7 +1038,7 @@ public class ClientGUI implements ActionListener {
 
 			String userAccount_service_type = "_userAccount._tcp.local.";
 
-			// discover transactions service
+			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
 
 			String host = userAccountServiceInfo.getHostAddresses()[0];
@@ -1096,7 +1093,7 @@ public class ClientGUI implements ActionListener {
 
 			String userAccount_service_type = "_userAccount._tcp.local.";
 
-			// discover transactions service
+			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
 
 			String host = userAccountServiceInfo.getHostAddresses()[0];
@@ -1132,9 +1129,9 @@ public class ClientGUI implements ActionListener {
 			int index = comboOperation.getSelectedIndex();
 			Operation operation = Operation.forNumber(index);
 
-			String userTools_service_type = "_ userToolst._tcp.local.";
+			String userTools_service_type = "_userTools._tcp.local.";
 
-			// discover transactions service
+			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
 
 			String host = userToolsServiceInfo.getHostAddresses()[0];
@@ -1183,9 +1180,9 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_ userToolst._tcp.local.";
+			String userTools_service_type = "_userTools._tcp.local.";
 
-			// discover transactions service
+			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
 
 			String host = userToolsServiceInfo.getHostAddresses()[0];
@@ -1218,9 +1215,9 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_ userToolst._tcp.local.";
+			String userTools_service_type = "_userTools._tcp.local.";
 
-			// discover transactions service
+			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
 
 			String host = userToolsServiceInfo.getHostAddresses()[0];
@@ -1234,8 +1231,11 @@ public class ClientGUI implements ActionListener {
 					.setAccess(access.getText()).setSum(Double.parseDouble(calcsum.getText()))
 
 					.build());
+			
 			// Retrieving reply from service
 			interest.setText((String.valueOf(response.getInterest())));
+			error.setText(response.getError());
+		
 
 //			try {
 //				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);

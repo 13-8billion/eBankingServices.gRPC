@@ -11,4 +11,14 @@ public interface CalcResponseOrBuilder extends
    * <code>double interest = 1;</code>
    */
   double getInterest();
+
+  /**
+   * <code>string error = 2;</code>
+   */
+  java.lang.String getError();
+  /**
+   * <code>string error = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getErrorBytes();
 }

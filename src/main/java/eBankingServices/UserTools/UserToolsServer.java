@@ -143,7 +143,7 @@ public class UserToolsServer extends UserToolsImplBase {
 							+ "select a date for when the vault can be reopened." + newline + newline;
 				} else if (request.getOperation() == Operation.PAYMENTS) {
 					solution = request.getMessage() + newline
-							+ "If you are experiencing issues making or recieveing payment " + newline
+							+ "If you are experiencing issues making or receiving payment " + newline
 							+ "please call our free 24 hour hotline at: 0800-03041992." + newline + newline;
 				}
 
@@ -176,7 +176,6 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		boolean validAccNo = false;
 		boolean checkFormat;
-		String dateFormat = "03/04/2021";
 		String unlockDate = request.getUnlockDate();
 		String accNo = String.valueOf(request.getAccNo());
 
@@ -192,27 +191,36 @@ public class UserToolsServer extends UserToolsImplBase {
 			checkFormat = false;
 
 		VaultConfirmation vc = null;
+		try {
+			if (authenticateUser(request.getUsername(), request.getPassword()) && validAccNo == true
+					&& checkFormat == true && Date(unlockDate)) {
 
-		if (authenticateUser(request.getUsername(), request.getPassword()) && validAccNo == true
-				&& checkFormat == true) {
+				vc = VaultConfirmation.newBuilder()
+						.setVaultConf(
+								"SUCCESS! : " + euro + request.getSum() + " locked into Acc No. " + request.getAccNo()
+										+ newline + "The money can not be accessed until " + request.getUnlockDate())
+						.build();
 
+			} else if (!authenticateUser(request.getUsername(), request.getPassword())) {
+				vc = VaultConfirmation.newBuilder().setVaultConf("Username or Password Incorrect!").build();
+			} else if (validAccNo != true) {
+				vc = VaultConfirmation.newBuilder().setVaultConf("Account Number does not exist exist!" + newline
+						+ "Please enter valid Account Number (1, 2 or 3)").build();
+			} else if (!Date(unlockDate)) {
+				vc = VaultConfirmation.newBuilder().setVaultConf("Invalid date/format!").build();
+			}
+
+			System.out.println(vc);
+			responseObserver.onNext(vc);
+			responseObserver.onCompleted();
+
+		} catch (DateException ex) {
+
+			System.out.println(ex.getMessage());
 			vc = VaultConfirmation.newBuilder()
-					.setVaultConf("SUCCESS! : " + euro + request.getSum() + " locked into Acc No. " + request.getAccNo()
-							+ newline + "The money can not be accessed until " + request.getUnlockDate())
-					.build();
-
-		} else if (!authenticateUser(request.getUsername(), request.getPassword())) {
-			vc = VaultConfirmation.newBuilder().setVaultConf("Username or Password Incorrect!").build();
-		} else if (validAccNo != true) {
-			vc = VaultConfirmation.newBuilder().setVaultConf(
-					"Account Number does not exist exist!" + newline + "Please enter valid Account Number (1, 2 or 3)")
-					.build();
-		} else if (checkFormat != true) {
-			vc = VaultConfirmation.newBuilder().setVaultConf("Invalid date/format!").build();
+					.setVaultConf("Unlock date must be AFTER todays date (03/04/2021). Please fix this.").build();
+			responseObserver.onNext(vc);
 		}
-		System.out.println(vc);
-		responseObserver.onNext(vc);
-		responseObserver.onCompleted();
 
 	}
 
@@ -220,42 +228,108 @@ public class UserToolsServer extends UserToolsImplBase {
 
 	public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
 
+		CalcResponse reply;
+
 		System.out.println("Calculating interest...");
 
 		String accType = request.getAccType();
 		String access = request.getAccess();
 		double sum = request.getSum();
 		double interest = 0;
+		try {
+			AccType(access, accType);
 
-		if (accType.equals("12")) { // if..else statement for "12 month term" account type
-			if (access.equals("yes")) { // if money access allowed
-				interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
-			} else if (access.equals("no")) { // else if money access is not allowed
-				interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
+			if (accType.equals("12")) { // if..else statement for "12 month term" account type
+				if (access.equals("yes")) { // if money access allowed
+					interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
+				} else if (access.equals("no")) { // else if money access is not allowed
+					interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
+				}
+			} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
+				if (access.equals("yes")) {
+					interest = sum * 0.002;
+				} else if (access.equals("no")) {
+					interest = sum * 0.003;
+				}
+			} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
+				if (access.equals("yes")) {
+					interest = sum * 0.0025;
+				} else if (access.equals("no")) {
+					interest = sum * 0.05;
+				}
 			}
-		} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
-			if (access.equals("yes")) {
-				interest = sum * 0.002;
-			} else if (access.equals("no")) {
-				interest = sum * 0.003;
-			}
-		} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
-			if (access.equals("yes")) {
-				interest = sum * 0.0025;
-			} else if (access.equals("no")) {
-				interest = sum * 0.05;
-			}
-		} else {
-			interest = -1; // if account type is invalid
+
+			reply = CalcResponse.newBuilder().setInterest(interest).build();
+
+			responseObserver.onNext(reply);
+
+			
+		} catch (AccTypeException ex) {
+
+			System.out.println(ex.getMessage());
+
+			reply = CalcResponse.newBuilder().setError(ex.getMessage()).build();
+
+			responseObserver.onNext(reply);
+
 		}
-
-		CalcResponse reply = CalcResponse.newBuilder().setInterest(interest).build();
-
-		responseObserver.onNext(reply);
-
 		responseObserver.onCompleted();
 	}
 
+	public class DateException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public DateException(String errorMsg) {
+			super(errorMsg);
+		}
+
+	}
+
+	public class AccTypeException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public AccTypeException(String errorMsg) {
+			super(errorMsg);
+		}
+	}
+
+	private void AccType(String access, String accType) throws AccTypeException {
+		if (!accType.equals("12") && !accType.equals("24") && !accType.equals("36")) {
+
+			throw new AccTypeException("Invalid account type." + newline + "Please select from the following (12, 24 or 36)");
+
+		}
+
+		if (!access.equalsIgnoreCase("yes") && !access.equalsIgnoreCase("no")) {
+			throw new AccTypeException("Invalid account access response." + newline + "Please select 'yes' or 'no' ONLY");
+		}
+	}
+
+	private boolean Date(String date) throws DateException {
+		String todaysDate = "03/04/2021";
+		if ((date.compareTo(todaysDate) == -1 || date.compareTo(todaysDate) == -2 || date.compareTo(todaysDate) == -3
+				|| date.compareTo(todaysDate) == -4 || date.compareTo(todaysDate) == -5
+				|| date.compareTo(todaysDate) == -6 || date.compareTo(todaysDate) == -7
+				|| date.compareTo(todaysDate) == -8 || date.compareTo(todaysDate) == -9))
+
+		{
+			throw new DateException("Unlock date must be AFTER todays date (03/04/2021). Please fix this.");
+
+		}
+
+		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+			return true;
+		else
+			return false;
+
+	}
 // Authenticate user method
 
 	private boolean authenticateUser(String username, String password) {

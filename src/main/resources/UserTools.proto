@@ -62,4 +62,5 @@ message CalcRequest {
 
 message CalcResponse {
   double interest = 1;
+  string error = 2;
 }

@@ -64,14 +64,15 @@ public final class UserToolsImpl {
       "\005\022\020\n\010username\030\005 \001(\t\022\020\n\010password\030\006 \001(\t\"&\n" +
       "\021VaultConfirmation\022\021\n\tvaultConf\030\003 \001(\t\";\n" +
       "\013CalcRequest\022\017\n\007accType\030\001 \001(\t\022\013\n\003sum\030\002 \001" +
-      "(\001\022\016\n\006access\030\003 \001(\t\" \n\014CalcResponse\022\020\n\010in" +
-      "terest\030\001 \001(\0012\321\001\n\tUserTools\022@\n\007HelpBot\022\026." +
-      "UserTools.HelpRequest\032\027.UserTools.HelpRe" +
-      "sponse\"\000(\0010\001\022?\n\005Vault\022\026.UserTools.VaultA" +
-      "ccess\032\034.UserTools.VaultConfirmation\"\000\022A\n" +
-      "\014InterestCalc\022\026.UserTools.CalcRequest\032\027." +
-      "UserTools.CalcResponse\"\000B-\n\032eBankingServ" +
-      "ices.UserToolsB\rUserToolsImplP\001b\006proto3"
+      "(\001\022\016\n\006access\030\003 \001(\t\"/\n\014CalcResponse\022\020\n\010in" +
+      "terest\030\001 \001(\001\022\r\n\005error\030\002 \001(\t2\321\001\n\tUserTool" +
+      "s\022@\n\007HelpBot\022\026.UserTools.HelpRequest\032\027.U" +
+      "serTools.HelpResponse\"\000(\0010\001\022?\n\005Vault\022\026.U" +
+      "serTools.VaultAccess\032\034.UserTools.VaultCo" +
+      "nfirmation\"\000\022A\n\014InterestCalc\022\026.UserTools" +
+      ".CalcRequest\032\027.UserTools.CalcResponse\"\000B" +
+      "-\n\032eBankingServices.UserToolsB\rUserTools" +
+      "ImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -120,7 +121,7 @@ public final class UserToolsImpl {
     internal_static_UserTools_CalcResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_CalcResponse_descriptor,
-        new java.lang.String[] { "Interest", });
+        new java.lang.String[] { "Interest", "Error", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

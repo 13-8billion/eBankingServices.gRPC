@@ -903,7 +903,7 @@ public class ClientGUI implements ActionListener {
 				@Override
 				public void onNext(TransferConfirmation response) {
 
-					transMsg.setText(response.getMessage());
+					transMsg.setText(response.getConf());
 				}
 
 				@Override
@@ -931,6 +931,9 @@ public class ClientGUI implements ActionListener {
 			};
 
 			StreamObserver<TransferSum> request = asyncStub.transfer(response);
+			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
+					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
+			
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
 

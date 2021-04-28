@@ -83,17 +83,8 @@ public class TransactionsServer extends TransactionsImplBase {
 
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
 
-//			// Wait a bit
-//			Thread.sleep(500);
-
-			// Unregister all services
-			// jmdns.unregisterAllServices();
-
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
 		}
 	}
 
@@ -171,70 +162,67 @@ public class TransactionsServer extends TransactionsImplBase {
 		return new StreamObserver<TransferSum>() {
 
 			String newline = "\n\r";
+		
+			ArrayList<String> list = new ArrayList<String>();
+			
 
 			@Override
 			public void onNext(TransferSum request) {
 
-				TransferConfirmation reply;
 				String toAccNo = String.valueOf(request.getToAccNo());
 				String fromAccNo = String.valueOf(request.getFromAccNo());
 
 				try {
 					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
 							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
+						
+						System.out.println("Receiving transfer request: "+ euro + request.getSum() + " >>> to acc no. " + request.getToAccNo());
+						Thread.sleep(500);
 
-						reply = TransferConfirmation.newBuilder()
-								.setMessage("SUCCESS " + newline + euro + request.getSum()
-										+ " transferred to Account No.  " + request.getToAccNo() + newline + newline
-										+ withdraw(request.getFromAccNo(), request.getSum()))
-								.build();
+						list.add("SUCCESS " + newline +newline+ "Acc No. " + request.getFromAccNo() +" transferred " + euro + request.getSum()
+										+ " to Acc No.  " + request.getToAccNo() + newline
+										+ withdraw(request.getFromAccNo(), request.getSum()) + newline + newline);
 
-						responseObserver.onNext(reply);
-
+				
 					} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-						reply = TransferConfirmation.newBuilder()
-								.setMessage("FAILED not enough funds in Account No. " + request.getFromAccNo()).build();
-
-						responseObserver.onNext(reply);
+						list.add("FAILED not enough funds in Account No. " + request.getFromAccNo());
 
 					}
 					Thread.sleep(1000);
-
-//				} catch (RuntimeException e) {
-//					e.printStackTrace();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (AccNoException ex) {
 
 					System.out.println(ex.getMessage());
-					reply = TransferConfirmation.newBuilder().setMessage(
-							"Invalid Account Number!" + newline + "Please enter a valid Account Number (1, 2 or 3)")
-							.build();
+					list.add("Invalid Account Number!" + newline + "Please enter a valid Account Number (1, 2 or 3)");
 
-					responseObserver.onNext(reply);
 
 				} catch (NumberFormatException ex) {
 
 					System.out.println(ex.getMessage());
-					reply = TransferConfirmation.newBuilder().setMessage("Account number or sum must be a number!!")
-							.build();
-
-					responseObserver.onNext(reply);
-
+					list.add("Account number or sum must be a number!!");
+					
 				}
-			}
-
-			@Override
-			public void onCompleted() {
-				System.out.println("Transaction process completed");
-//				responseObserver.onCompleted();
 
 			}
-
+				
 			@Override
 			public void onError(Throwable t) {
 
 			}
+			
+			@Override
+			public void onCompleted() {
+//				System.out.println(list.toString());		
+				responseObserver.onNext(TransferConfirmation.newBuilder()
+						.setConf(list.toString())
+						.build());
+				responseObserver.onCompleted();
+			
+				System.out.println("Transactions complete");
+
+			}
+
 		};
 
 	}

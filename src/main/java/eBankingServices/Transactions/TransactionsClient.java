@@ -48,9 +48,9 @@ public class TransactionsClient {
 		asyncStub = TransactionsGrpc.newStub(channel);
 
 		// call methods
-		deposit();
+//		deposit();
 		transfer();
-		request();	
+//		request();	
 
 //		channel.shutdown()
 //	 	   .awaitTermination(60, TimeUnit.SECONDS);
@@ -137,10 +137,11 @@ public class TransactionsClient {
 
 			@Override
 			public void onNext(TransferConfirmation response) {
-//					
-				System.out.println("Getting confirmation... " + response.getMessage());
+					
+				System.out.println("Getting confirmation... " + response.getConf());
+				
 			}
-
+	
 			@Override
 			public void onError(Throwable t) {
 				t.printStackTrace();
@@ -152,7 +153,6 @@ public class TransactionsClient {
 				}
 
 			}
-
 			@Override
 			public void onCompleted() {
 				System.out.println("STREAM END: All transfers have completed.");
@@ -170,12 +170,17 @@ public class TransactionsClient {
 		try {
 			
 			requestObserver.onNext(TransferSum.newBuilder().setSum(10).setFromAccNo(2).setToAccNo(1).build());
+			Thread.sleep(500);
+
+			requestObserver.onNext(TransferSum.newBuilder().setSum(100).setFromAccNo(3).setToAccNo(2).build());
+			Thread.sleep(500);
+			
+			requestObserver.onNext(TransferSum.newBuilder().setSum(1000).setFromAccNo(1).setToAccNo(3).build());
+			Thread.sleep(500);
+
 			Thread.sleep(1000);
 
-
-			Thread.sleep(2000);
-
-			requestObserver.onCompleted();
+			responseObserver.onCompleted();
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();

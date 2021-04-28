@@ -64,14 +64,14 @@ public final class TransactionsImpl {
       "\002 \001(\005\022\013\n\003sum\030\003 \001(\001\022\017\n\007monthly\030\004 \001(\010\022\017\n\007a" +
       "pprove\030\005 \001(\010\"C\n\rRequestStatus\022\016\n\006status\030" +
       "\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\021\n\trequestID\030\003 \001(" +
-      "\0052\357\001\n\014Transactions\022H\n\007Deposit\022\030.Transact" +
+      "\0052\361\001\n\014Transactions\022H\n\007Deposit\022\030.Transact" +
       "ions.DepositSum\032!.Transactions.DepositCo" +
-      "nfirmation\"\000\022M\n\010Transfer\022\031.Transactions." +
+      "nfirmation\"\000\022O\n\010Transfer\022\031.Transactions." +
       "TransferSum\032\".Transactions.TransferConfi" +
-      "rmation\"\000(\001\022F\n\007Request\022\030.Transactions.Re" +
-      "questSum\032\033.Transactions.RequestStatus\"\000(" +
-      "\0010\001B3\n\035eBankingServices.TransactionsB\020Tr" +
-      "ansactionsImplP\001b\006proto3"
+      "rmation\"\000(\0010\001\022F\n\007Request\022\030.Transactions." +
+      "RequestSum\032\033.Transactions.RequestStatus\"" +
+      "\000(\0010\001B3\n\035eBankingServices.TransactionsB\020" +
+      "TransactionsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

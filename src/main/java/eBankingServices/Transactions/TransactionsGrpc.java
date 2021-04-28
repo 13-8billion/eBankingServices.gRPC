@@ -66,7 +66,7 @@ public final class TransactionsGrpc {
       fullMethodName = SERVICE_NAME + '/' + "Transfer",
       requestType = eBankingServices.Transactions.TransferSum.class,
       responseType = eBankingServices.Transactions.TransferConfirmation.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
   public static io.grpc.MethodDescriptor<eBankingServices.Transactions.TransferSum,
       eBankingServices.Transactions.TransferConfirmation> getTransferMethod() {
     io.grpc.MethodDescriptor<eBankingServices.Transactions.TransferSum, eBankingServices.Transactions.TransferConfirmation> getTransferMethod;
@@ -75,7 +75,7 @@ public final class TransactionsGrpc {
         if ((getTransferMethod = TransactionsGrpc.getTransferMethod) == null) {
           TransactionsGrpc.getTransferMethod = getTransferMethod = 
               io.grpc.MethodDescriptor.<eBankingServices.Transactions.TransferSum, eBankingServices.Transactions.TransferConfirmation>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "Transactions.Transactions", "Transfer"))
               .setSampledToLocalTracing(true)
@@ -191,7 +191,7 @@ public final class TransactionsGrpc {
                   this, METHODID_DEPOSIT)))
           .addMethod(
             getTransferMethod(),
-            asyncClientStreamingCall(
+            asyncBidiStreamingCall(
               new MethodHandlers<
                 eBankingServices.Transactions.TransferSum,
                 eBankingServices.Transactions.TransferConfirmation>(
@@ -243,7 +243,7 @@ public final class TransactionsGrpc {
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(
         io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferConfirmation> responseObserver) {
-      return asyncClientStreamingCall(
+      return asyncBidiStreamingCall(
           getChannel().newCall(getTransferMethod(), getCallOptions()), responseObserver);
     }
 

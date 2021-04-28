@@ -155,7 +155,7 @@ public class TransactionsServer extends TransactionsImplBase {
 		}
 	}
 
-// Transfer money method - Client streaming
+// Transfer money method - bi-directional streaming
 
 	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) throws NumberFormatException{
 
@@ -165,7 +165,6 @@ public class TransactionsServer extends TransactionsImplBase {
 		
 			ArrayList<String> list = new ArrayList<String>();
 			
-
 			@Override
 			public void onNext(TransferSum request) {
 
@@ -176,7 +175,7 @@ public class TransactionsServer extends TransactionsImplBase {
 					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
 							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
 						
-						System.out.println("Receiving transfer request: "+ euro + request.getSum() + " >>> to acc no. " + request.getToAccNo());
+						System.out.println("Receiving transfer request..."+ euro + request.getSum() + " >>> to acc no. " + request.getToAccNo());
 						Thread.sleep(500);
 
 						list.add("SUCCESS " + newline +newline+ "Acc No. " + request.getFromAccNo() +" transferred " + euro + request.getSum()
@@ -194,15 +193,20 @@ public class TransactionsServer extends TransactionsImplBase {
 				} catch (AccNoException ex) {
 
 					System.out.println(ex.getMessage());
-					list.add("Invalid Account Number!" + newline + "Please enter a valid Account Number (1, 2 or 3)");
+					list.add("Receiving transfer request... Invalid Account Number!" + newline + "Please enter a valid Account Number (1, 2 or 3)" + newline);
 
 
 				} catch (NumberFormatException ex) {
 
 					System.out.println(ex.getMessage());
-					list.add("Account number or sum must be a number!!");
+					list.add("Receiving transfer request... Account number or sum must be a number!!" + newline);
 					
 				}
+	
+				responseObserver.onNext(TransferConfirmation.newBuilder()
+						.setConf(list.toString())
+						.build());
+			
 
 			}
 				
@@ -211,14 +215,10 @@ public class TransactionsServer extends TransactionsImplBase {
 
 			}
 			
+			
 			@Override
 			public void onCompleted() {
-//				System.out.println(list.toString());		
-				responseObserver.onNext(TransferConfirmation.newBuilder()
-						.setConf(list.toString())
-						.build());
-				responseObserver.onCompleted();
-			
+	
 				System.out.println("Transactions complete");
 
 			}

@@ -28,6 +28,7 @@ public class TransactionsClient {
 	private static TransactionsBlockingStub blockingStub;
 	private static TransactionsStub asyncStub;
 	private static ManagedChannel channel;
+	private static String newline = "\n\r";
 
 	private static final Logger logger = Logger.getLogger(TransactionsClient.class.getName());
 
@@ -129,7 +130,7 @@ public class TransactionsClient {
 
 	}
 
-// Transfer money between accounts method - Client-streaming RPC
+// Transfer money between accounts method - bi-directional-streaming RPC
 
 	public static void transfer() {
 
@@ -138,7 +139,7 @@ public class TransactionsClient {
 			@Override
 			public void onNext(TransferConfirmation response) {
 					
-				System.out.println("Getting confirmation... " + response.getConf());
+				System.out.println("Getting confirmation... " + newline + response.getConf());
 				
 			}
 	
@@ -169,16 +170,16 @@ public class TransactionsClient {
 		StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
 		try {
 			
-			requestObserver.onNext(TransferSum.newBuilder().setSum(10).setFromAccNo(2).setToAccNo(1).build());
+			requestObserver.onNext(TransferSum.newBuilder().setSum(10).setFromAccNo(3).setToAccNo(1).build());
 			Thread.sleep(500);
 
-			requestObserver.onNext(TransferSum.newBuilder().setSum(100).setFromAccNo(3).setToAccNo(2).build());
+			requestObserver.onNext(TransferSum.newBuilder().setSum(100).setFromAccNo(2).setToAccNo(2).build());
 			Thread.sleep(500);
 			
 			requestObserver.onNext(TransferSum.newBuilder().setSum(1000).setFromAccNo(1).setToAccNo(3).build());
 			Thread.sleep(500);
 
-			Thread.sleep(1000);
+			Thread.sleep(6000);
 
 			responseObserver.onCompleted();
 

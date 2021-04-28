@@ -3,6 +3,10 @@
 
 package eBankingServices.UserTools;
 
+import java.util.ArrayList;
+
+import io.grpc.ServerBuilder;
+
 /**
  * Protobuf type {@code UserTools.CalcResponse}
  */
@@ -558,6 +562,11 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
+
+	public ServerBuilder setInterest(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
     // @@protoc_insertion_point(builder_scope:UserTools.CalcResponse)

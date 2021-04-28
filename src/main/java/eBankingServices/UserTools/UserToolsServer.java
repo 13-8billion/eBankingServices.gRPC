@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.text.SimpleDateFormat;
 
@@ -15,6 +16,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import eBankingServices.Transactions.TransferConfirmation;
 import eBankingServices.Transactions.TransferSum;
+import eBankingServices.Transactions.TransactionsServer.AccNoException;
 import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
@@ -212,7 +214,6 @@ public class UserToolsServer extends UserToolsImplBase {
 
 			System.out.println(vc);
 			responseObserver.onNext(vc);
-	
 
 		} catch (DateException ex) {
 
@@ -226,54 +227,127 @@ public class UserToolsServer extends UserToolsImplBase {
 
 	// Interest calculator method - Unary
 
-	public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
+//	public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
+//
+//		CalcResponse reply;
+//
+//		System.out.println("Calculating interest...");
+//
+//		String accType = request.getAccType();
+//		String access = request.getAccess();
+//		double sum = request.getSum();
+//		double interest = 0;
+//		try {
+//			AccType(access, accType);
+//
+//			if (accType.equals("12")) { // if..else statement for "12 month term" account type
+//				if (access.equals("yes")) { // if money access allowed
+//					interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
+//				} else if (access.equals("no")) { // else if money access is not allowed
+//					interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
+//				}
+//			} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
+//				if (access.equals("yes")) {
+//					interest = sum * 0.002;
+//				} else if (access.equals("no")) {
+//					interest = sum * 0.003;
+//				}
+//			} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
+//				if (access.equals("yes")) {
+//					interest = sum * 0.0025;
+//				} else if (access.equals("no")) {
+//					interest = sum * 0.05;
+//				}
+//			}
+//
+//			reply = CalcResponse.newBuilder().setInterest(interest).build();
+//
+//			responseObserver.onNext(reply);
+//
+//			
+//		} catch (AccTypeException ex) {
+//
+//			System.out.println(ex.getMessage());
+//
+//			reply = CalcResponse.newBuilder().setError(ex.getMessage()).build();
+//
+//			responseObserver.onNext(reply);
+//
+//		}
+//		responseObserver.onCompleted();
+//	}
 
-		CalcResponse reply;
+	// ---------------------------------
 
-		System.out.println("Calculating interest...");
+	public StreamObserver<CalcRequest> interestCalc(StreamObserver<CalcResponse> responseObserver) {
 
-		String accType = request.getAccType();
-		String access = request.getAccess();
-		double sum = request.getSum();
-		double interest = 0;
-		try {
-			AccType(access, accType);
+		return new StreamObserver<CalcRequest>() {
 
-			if (accType.equals("12")) { // if..else statement for "12 month term" account type
-				if (access.equals("yes")) { // if money access allowed
-					interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
-				} else if (access.equals("no")) { // else if money access is not allowed
-					interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
+			ArrayList<Object> list = new ArrayList<Object>();
+
+			@Override
+			public void onNext(CalcRequest request) {
+
+				System.out.println("Calculating interest...");
+
+				String accType = request.getAccType();
+				String access = request.getAccess();
+				double sum = request.getSum();
+				double interest = 0;
+				try {
+					AccType(access, accType);
+
+					if (accType.equals("12")) { // if..else statement for "12 month term" account type
+						if (access.equals("yes")) { // if money access allowed
+							interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
+						} else if (access.equals("no")) { // else if money access is not allowed
+							interest = sum * 0.0004; // then interest will equal input amount * (interest stated in
+														// question)
+						}
+					} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
+						if (access.equals("yes")) {
+							interest = sum * 0.002;
+						} else if (access.equals("no")) {
+							interest = sum * 0.003;
+						}
+					} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
+						if (access.equals("yes")) {
+							interest = sum * 0.0025;
+						} else if (access.equals("no")) {
+							interest = sum * 0.05;
+						}
+
+					}
+					list.add(interest);
+
+				} catch (AccTypeException ex) {
+
+					System.out.println(ex.getMessage());
+
+					list.add(ex.getMessage());
+
 				}
-			} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
-				if (access.equals("yes")) {
-					interest = sum * 0.002;
-				} else if (access.equals("no")) {
-					interest = sum * 0.003;
-				}
-			} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
-				if (access.equals("yes")) {
-					interest = sum * 0.0025;
-				} else if (access.equals("no")) {
-					interest = sum * 0.05;
-				}
+				
 			}
 
-			reply = CalcResponse.newBuilder().setInterest(interest).build();
-
-			responseObserver.onNext(reply);
-
+			@Override
+			public void onError(Throwable t) {
+				t.printStackTrace();
+			}
 			
-		} catch (AccTypeException ex) {
 
-			System.out.println(ex.getMessage());
+			@Override
+			public void onCompleted() {
+				System.out.println("Interest: " + list.toString());
+				CalcResponse reply = CalcResponse.newBuilder().setError(list.toString()).build();
+//
+				responseObserver.onNext(reply);
+				responseObserver.onCompleted();
 
-			reply = CalcResponse.newBuilder().setError(ex.getMessage()).build();
+			}
 
-			responseObserver.onNext(reply);
+		};
 
-		}
-		responseObserver.onCompleted();
 	}
 
 	public class DateException extends Exception {
@@ -303,12 +377,14 @@ public class UserToolsServer extends UserToolsImplBase {
 	private void AccType(String access, String accType) throws AccTypeException {
 		if (!accType.equals("12") && !accType.equals("24") && !accType.equals("36")) {
 
-			throw new AccTypeException("Invalid account type." + newline + "Please select from the following (12, 24 or 36)");
+			throw new AccTypeException(
+					"Invalid account type." + newline + "Please select from the following (12, 24 or 36)");
 
 		}
 
 		if (!access.equalsIgnoreCase("yes") && !access.equalsIgnoreCase("no")) {
-			throw new AccTypeException("Invalid account access response." + newline + "Please select 'yes' or 'no' ONLY");
+			throw new AccTypeException(
+					"Invalid account access response." + newline + "Please select 'yes' or 'no' ONLY");
 		}
 	}
 

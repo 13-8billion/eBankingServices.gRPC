@@ -65,14 +65,14 @@ public final class UserToolsImpl {
       "\021VaultConfirmation\022\021\n\tvaultConf\030\003 \001(\t\";\n" +
       "\013CalcRequest\022\017\n\007accType\030\001 \001(\t\022\013\n\003sum\030\002 \001" +
       "(\001\022\016\n\006access\030\003 \001(\t\"/\n\014CalcResponse\022\020\n\010in" +
-      "terest\030\001 \001(\001\022\r\n\005error\030\002 \001(\t2\321\001\n\tUserTool" +
+      "terest\030\001 \001(\001\022\r\n\005error\030\002 \001(\t2\323\001\n\tUserTool" +
       "s\022@\n\007HelpBot\022\026.UserTools.HelpRequest\032\027.U" +
       "serTools.HelpResponse\"\000(\0010\001\022?\n\005Vault\022\026.U" +
       "serTools.VaultAccess\032\034.UserTools.VaultCo" +
-      "nfirmation\"\000\022A\n\014InterestCalc\022\026.UserTools" +
-      ".CalcRequest\032\027.UserTools.CalcResponse\"\000B" +
-      "-\n\032eBankingServices.UserToolsB\rUserTools" +
-      "ImplP\001b\006proto3"
+      "nfirmation\"\000\022C\n\014InterestCalc\022\026.UserTools" +
+      ".CalcRequest\032\027.UserTools.CalcResponse\"\000(" +
+      "\001B-\n\032eBankingServices.UserToolsB\rUserToo" +
+      "lsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

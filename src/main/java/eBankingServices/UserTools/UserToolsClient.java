@@ -5,12 +5,15 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import eBankingServices.Transactions.TransferConfirmation;
+import eBankingServices.Transactions.TransferSum;
 import eBankingServices.UserTools.HelpRequest.Operation;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsBlockingStub;
 import eBankingServices.UserTools.UserToolsGrpc.UserToolsStub;
@@ -26,8 +29,8 @@ public class UserToolsClient {
 
 	public static void main(String args[]) throws InterruptedException {
 
-		 UserToolsClient obj = new  UserToolsClient();
-		 
+		UserToolsClient obj = new UserToolsClient();
+
 		String userTools_service_type = "_userTools._tcp.local.";
 
 		// discover user tools service
@@ -35,16 +38,16 @@ public class UserToolsClient {
 
 		String host = userToolsServiceInfo.getHostAddresses()[0];
 		int port = userToolsServiceInfo.getPort();
-		
+
 		final ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
-		
+
 		// stubs -- generated from .proto file
 		blockingStub = UserToolsGrpc.newBlockingStub(channel);
 		asyncStub = UserToolsGrpc.newStub(channel);
 
 		// call methods
-		helpBot();
-		vault();
+//		helpBot();
+//		vault();
 		interestCalc();
 	}
 
@@ -103,7 +106,7 @@ public class UserToolsClient {
 		}
 
 	}
-	
+
 // HelpBot method - Bi-directional streaming
 	public static void helpBot() {
 
@@ -178,12 +181,56 @@ public class UserToolsClient {
 
 // Interest calculator method - Unary
 
+//	public static void interestCalc() {
+//
+//		CalcResponse response = blockingStub
+//				.interestCalc(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
+//
+//		System.out.println("Total payable " + response);
+//	}
+
 	public static void interestCalc() {
 
-		CalcResponse response = blockingStub
-				.interestCalc(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
+		StreamObserver<CalcResponse> responseObserver = new StreamObserver<CalcResponse>() {
 
-		System.out.println("Total payable " + response);
-	}
+			@Override
+			public void onNext(CalcResponse response) {
+
+				System.out.println("Client >>> Calculating interest... ");
+				System.out.println("Client >>> Interest: " + response.getError());
+
+			}
+
+			@Override
+			public void onError(Throwable t) {
+
+			}
+
+			@Override
+			public void onCompleted() {
+				System.out.println("STREAM END: All transfers have completed.");
+
+			}
+		};
+
+		StreamObserver<CalcRequest> requestObserver = asyncStub.interestCalc(responseObserver);
+		try {
+
+			requestObserver.onNext(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
+			Thread.sleep(500);
+
+			requestObserver.onNext(CalcRequest.newBuilder().setAccess("yes").setAccType("24").setSum(30000).build());
+			Thread.sleep(500);
+
+			Thread.sleep(2000);
+
+			responseObserver.onCompleted();
+
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	};
 
 }

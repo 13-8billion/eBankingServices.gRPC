@@ -49,9 +49,9 @@ public class TransactionsClient {
 		asyncStub = TransactionsGrpc.newStub(channel);
 
 		// call methods
-//		deposit();
+		deposit();
 		transfer();
-//		request();	
+		request();	
 
 //		channel.shutdown()
 //	 	   .awaitTermination(60, TimeUnit.SECONDS);

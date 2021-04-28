@@ -162,7 +162,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Client-Streaming RPC method 2: Transfer
+     * Bi-Directional RPC method 2: Transfer
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(
@@ -238,7 +238,7 @@ public final class TransactionsGrpc {
 
     /**
      * <pre>
-     * Client-Streaming RPC method 2: Transfer
+     * Bi-Directional RPC method 2: Transfer
      * </pre>
      */
     public io.grpc.stub.StreamObserver<eBankingServices.Transactions.TransferSum> transfer(

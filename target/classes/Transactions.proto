@@ -11,7 +11,7 @@ service Transactions {
   // Unary RPC method 1: Deposit
   rpc Deposit(DepositSum) returns (DepositConfirmation) {}
   
-  // Client-Streaming RPC method 2: Transfer
+  // Bi-Directional RPC method 2: Transfer
   rpc Transfer(stream TransferSum) returns (stream TransferConfirmation) {}
   
   // Bi-Directional RPC method 3: Request
@@ -25,10 +25,9 @@ message DepositSum {
   double sum = 2;
 }
 // deposit response
-message DepositConfirmation {
- int32 depositID = 1; 
- double balance = 2;
-  string message = 3;
+message DepositConfirmation { 
+ double balance = 1;
+  string message = 2;
 }
 
 // transfer request
@@ -55,5 +54,5 @@ message RequestSum {
 message RequestStatus {
   string status = 1;
   string message = 2;
-    int32 requestID = 3;
+
 }

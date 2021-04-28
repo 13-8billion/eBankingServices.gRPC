@@ -171,17 +171,17 @@ public class TransactionsClient {
 		try {
 			
 			requestObserver.onNext(TransferSum.newBuilder().setSum(10).setFromAccNo(3).setToAccNo(1).build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 
 			requestObserver.onNext(TransferSum.newBuilder().setSum(100).setFromAccNo(2).setToAccNo(2).build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			
 			requestObserver.onNext(TransferSum.newBuilder().setSum(1000).setFromAccNo(1).setToAccNo(3).build());
-			Thread.sleep(500);
+			Thread.sleep(1000);
+			
+			Thread.sleep(10000);
 
-			Thread.sleep(6000);
-
-			responseObserver.onCompleted();
+			requestObserver.onCompleted();
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();

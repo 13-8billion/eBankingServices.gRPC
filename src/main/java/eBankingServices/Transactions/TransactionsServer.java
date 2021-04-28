@@ -157,14 +157,16 @@ public class TransactionsServer extends TransactionsImplBase {
 
 // Transfer money method - bi-directional streaming
 
-	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver) throws NumberFormatException{
+	public StreamObserver<TransferSum> transfer(StreamObserver<TransferConfirmation> responseObserver)
+			throws NumberFormatException {
 
 		return new StreamObserver<TransferSum>() {
 
 			String newline = "\n\r";
-		
-			ArrayList<String> list = new ArrayList<String>();
-			
+			String conf;
+
+//			ArrayList<String> list = new ArrayList<String>();
+
 			@Override
 			public void onNext(TransferSum request) {
 
@@ -174,52 +176,50 @@ public class TransactionsServer extends TransactionsImplBase {
 				try {
 					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
 							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) {
-						
-						System.out.println("Receiving transfer request..."+ euro + request.getSum() + " >>> to acc no. " + request.getToAccNo());
-						Thread.sleep(500);
 
-						list.add("SUCCESS " + newline +newline+ "Acc No. " + request.getFromAccNo() +" transferred " + euro + request.getSum()
-										+ " to Acc No.  " + request.getToAccNo() + newline
-										+ withdraw(request.getFromAccNo(), request.getSum()) + newline + newline);
+						conf = "Receiving transfer request..." + euro + request.getSum() + " >>> to Acc No. "
+								+ request.getToAccNo();
+						responseObserver.onNext(TransferConfirmation.newBuilder().setConf(conf).build());
 
-				
+						Thread.sleep(1000);
+
+						conf =("SUCCESS! " + newline + newline + "Acc No. " + request.getFromAccNo() + " transferred "
+								+ euro + request.getSum() + " to Acc No.  " + request.getToAccNo() + newline
+								+ withdraw(request.getFromAccNo(), request.getSum()) + newline + newline);
+
 					} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
-						list.add("FAILED not enough funds in Account No. " + request.getFromAccNo());
-
+						conf =("FAILED! not enough funds in Account No. " + request.getFromAccNo());
 					}
-					Thread.sleep(1000);
+					Thread.sleep(2000);
+
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (AccNoException ex) {
 
 					System.out.println(ex.getMessage());
-					list.add("Receiving transfer request... Invalid Account Number!" + newline + "Please enter a valid Account Number (1, 2 or 3)" + newline);
-
+					conf =("Receiving transfer request... Invalid Account Number!" + newline
+							+ "Please enter a valid Account Number (1, 2 or 3)" + newline);
 
 				} catch (NumberFormatException ex) {
 
 					System.out.println(ex.getMessage());
-					list.add("Receiving transfer request... Account number or sum must be a number!!" + newline);
-					
+					conf =("Receiving transfer request... Account number or sum must be a number!!" + newline);
+
 				}
-	
-				responseObserver.onNext(TransferConfirmation.newBuilder()
-						.setConf(list.toString())
-						.build());
-			
+				
+				responseObserver.onNext(TransferConfirmation.newBuilder().setConf(conf).build());
 
 			}
-				
+
 			@Override
 			public void onError(Throwable t) {
 
 			}
-			
-			
+
 			@Override
 			public void onCompleted() {
-	
-				System.out.println("Transactions complete");
+//				System.out.println("Transactions complete");
+//				responseObserver.onCompleted();
 
 			}
 
@@ -341,7 +341,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 // method to check for sufficient funds 
 
-	private boolean transferSum(int toAccNo, int fromAccNo, double sum) throws AccNoException{
+	private boolean transferSum(int toAccNo, int fromAccNo, double sum) throws AccNoException {
 
 		String toAccNos = String.valueOf(toAccNo);
 		String fromAccNos = String.valueOf(fromAccNo);

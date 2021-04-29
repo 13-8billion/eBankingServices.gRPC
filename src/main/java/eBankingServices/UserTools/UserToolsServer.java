@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
+import java.util.*;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -227,6 +228,8 @@ public class UserToolsServer extends UserToolsImplBase {
 		return new StreamObserver<CalcRequest>() {
 
 			ArrayList<Object> list = new ArrayList<Object>();
+			String formattedList;
+	
 
 			@Override
 			public void onNext(CalcRequest request) {
@@ -262,6 +265,13 @@ public class UserToolsServer extends UserToolsImplBase {
 
 					}
 					list.add(interest);
+					
+					formattedList = list.toString()
+						    .replace(",", "                   vs.                 ")  //remove the commas
+						    .replace("[", "")  //remove the right bracket
+						    .replace("]", "")  //remove the left bracket
+						    .trim();
+					
 
 				} catch (AccTypeException ex) {
 
@@ -283,7 +293,7 @@ public class UserToolsServer extends UserToolsImplBase {
 			public void onCompleted() {
 				System.out.printf("Calculating complete");
 
-				CalcResponse reply = CalcResponse.newBuilder().setMessage(list.toString()).build();
+				CalcResponse reply = CalcResponse.newBuilder().setMessage(formattedList).build();
 
 				responseObserver.onNext(reply);
 

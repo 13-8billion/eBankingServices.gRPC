@@ -1031,12 +1031,6 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			loginConf1.setText(response.getMessage());
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 
 // VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("View Account")) {
@@ -1085,12 +1079,6 @@ public class ClientGUI implements ActionListener {
 			};
 			asyncStub.viewAccount(request, responseObserver);
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 
 // CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
 
@@ -1121,12 +1109,12 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			passMsg.setText(response.getMessage());
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+			try {
+				channel.shutdown().awaitTermination(3, TimeUnit.SECONDS);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 // HELP BOT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Select")) {

@@ -47,9 +47,12 @@ public class UserToolsClient {
 		asyncStub = UserToolsGrpc.newStub(channel);
 
 		// call methods
-//		helpBot();
-//		vault();
+		helpBot();
+		vault();
 		interestCalc();
+		
+		channel.shutdown()
+		.awaitTermination(3, TimeUnit.SECONDS);
 	}
 
 	private void discoverUserToolsService(String service_type) {

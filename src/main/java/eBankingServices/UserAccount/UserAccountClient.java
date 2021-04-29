@@ -54,6 +54,9 @@ public class UserAccountClient{
 		login();
 		viewAccount();
 		changePassword();
+		
+		channel.shutdown()
+			.awaitTermination(3, TimeUnit.SECONDS);
 	}
 	
 	private void discoverUserAccountService(String service_type) {

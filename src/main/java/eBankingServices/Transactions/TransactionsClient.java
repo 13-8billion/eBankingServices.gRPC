@@ -53,8 +53,8 @@ public class TransactionsClient {
 		transfer();
 		request();	
 
-//		channel.shutdown()
-//	 	   .awaitTermination(60, TimeUnit.SECONDS);
+		channel.shutdown()
+	 	   .awaitTermination(3, TimeUnit.SECONDS);
 	}
 	
 	private void discoverTransactionsService(String service_type){

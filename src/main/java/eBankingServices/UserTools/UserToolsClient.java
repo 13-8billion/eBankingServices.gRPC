@@ -180,62 +180,8 @@ public class UserToolsClient {
 		System.out.println(response);
 	}
 
-// Interest calculator method - Unary
 
-//	public static void interestCalc() {
-//
-//		CalcResponse response = blockingStub
-//				.interestCalc(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
-//
-//		System.out.println("Total payable " + response);
-//	}
-
-	// --------------------------- CLIENT STREAMING
-//	public static void interestCalc() {
-//
-//		StreamObserver<CalcResponse> responseObserver = new StreamObserver<CalcResponse>() {
-//
-//			@Override
-//			public void onNext(CalcResponse response) {
-//
-//				System.out.println("Client >>> Calculating interest... ");
-//				System.out.println("Client >>> Interest: " + response.getError());
-//
-//			}
-//
-//			@Override
-//			public void onError(Throwable t) {
-//
-//			}
-//
-//			@Override
-//			public void onCompleted() {
-//				System.out.println("STREAM END: All transfers have completed.");
-//
-//			}
-//		};
-//
-//		StreamObserver<CalcRequest> requestObserver = asyncStub.interestCalc(responseObserver);
-//		try {
-//
-//			requestObserver.onNext(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
-//			Thread.sleep(500);
-//
-//			requestObserver.onNext(CalcRequest.newBuilder().setAccess("yes").setAccType("24").setSum(30000).build());
-//			Thread.sleep(500);
-//
-//			Thread.sleep(2000);
-//
-//			requestObserver.onCompleted();
-//
-//		} catch (RuntimeException e) {
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//	};
-//
-//}
+// Calculate interest method - Client streaming
 	
 	public static void interestCalc() {
 

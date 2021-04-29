@@ -24,7 +24,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 	private String euro = "\u20AC";
 	private String newline = "\n\r";
-	private String Username = "Amy";
+	private String Username = "Amy"; // hardcode username/password for login
 	private String Password = "123";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -57,7 +57,6 @@ public class UserToolsServer extends UserToolsImplBase {
 	}
 
 	// register service method
-
 	private void registerService(Properties prop) {
 
 		try {
@@ -94,7 +93,6 @@ public class UserToolsServer extends UserToolsImplBase {
 	}
 
 	// get service properties method
-
 	private Properties getProperties() {
 
 		Properties prop = null;
@@ -121,7 +119,6 @@ public class UserToolsServer extends UserToolsImplBase {
 	}
 
 // HelpBot method - bi-directional streaming
-
 	public StreamObserver<HelpRequest> helpBot(StreamObserver<HelpResponse> responseObserver) {
 
 		return new StreamObserver<HelpRequest>() {
@@ -173,7 +170,6 @@ public class UserToolsServer extends UserToolsImplBase {
 	}
 
 // Vault method - Unary
-
 	public void vault(VaultAccess request, StreamObserver<VaultConfirmation> responseObserver) {
 
 		boolean validAccNo = false;
@@ -226,7 +222,6 @@ public class UserToolsServer extends UserToolsImplBase {
 	}
 
 	// Interest calculator method - Client streaming
-
 	public StreamObserver<CalcRequest> interestCalc(StreamObserver<CalcResponse> responseObserver) {
 
 		return new StreamObserver<CalcRequest>() {
@@ -300,6 +295,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 	}
 
+// custom exception class - valid date for vault service
 	public class DateException extends Exception {
 
 		/**
@@ -313,6 +309,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 	}
 
+// custom exception class - valid account type for interest calc method
 	public class AccTypeException extends Exception {
 		/**
 		 * 
@@ -324,6 +321,7 @@ public class UserToolsServer extends UserToolsImplBase {
 		}
 	}
 
+// validate account type method for interest calculator
 	private void AccType(String access, String accType) throws AccTypeException {
 		if (!accType.equals("12") && !accType.equals("24") && !accType.equals("36")) {
 
@@ -338,6 +336,7 @@ public class UserToolsServer extends UserToolsImplBase {
 		}
 	}
 
+// validate date method for vault services
 	private boolean Date(String date) throws DateException {
 		String todaysDate = "03/04/2021";
 		if ((date.compareTo(todaysDate) == -1 || date.compareTo(todaysDate) == -2 || date.compareTo(todaysDate) == -3
@@ -356,8 +355,8 @@ public class UserToolsServer extends UserToolsImplBase {
 			return false;
 
 	}
-// Authenticate user method
 
+// Authenticate user method for vault service
 	private boolean authenticateUser(String username, String password) {
 		if (username.equals(Username) && password.equals(Password)) {
 			return true;

@@ -142,6 +142,9 @@ public class ClientGUI implements ActionListener {
 	private JTextField calcsum = new JTextField(10);
 	private JLabel labelaccess = new JLabel("Money access? (yes/no): ");
 	private JTextField access = new JTextField(10);
+	private JTextField acctype2 = new JTextField(10);
+	private JTextField calcsum2 = new JTextField(10);
+	private JTextField access2 = new JTextField(10);
 	private JButton buttoncalc = new JButton("Calculate");
 	private JLabel labelinterest = new JLabel("Interest Payable € ");
 	private JTextField interest = new JTextField(10);
@@ -267,6 +270,8 @@ public class ClientGUI implements ActionListener {
 
 		constraints3.gridx = 1;
 		interestCalc.add(acctype, constraints3);
+		constraints3.gridx = 2;
+		interestCalc.add(acctype2, constraints3);
 
 		constraints3.gridx = 0;
 		constraints3.gridy = 2;
@@ -274,6 +279,8 @@ public class ClientGUI implements ActionListener {
 
 		constraints3.gridx = 1;
 		interestCalc.add(calcsum, constraints3);
+		constraints3.gridx = 2;
+		interestCalc.add(calcsum2, constraints3);
 
 		constraints3.gridx = 0;
 		constraints3.gridy = 3;
@@ -281,6 +288,8 @@ public class ClientGUI implements ActionListener {
 
 		constraints3.gridx = 1;
 		interestCalc.add(access, constraints3);
+		constraints3.gridx = 2;
+		interestCalc.add(access2, constraints3);
 
 		constraints3.gridx = 0;
 		constraints3.gridy = 5;
@@ -1225,25 +1234,54 @@ public class ClientGUI implements ActionListener {
 			int port = userToolsServiceInfo.getPort();
 
 			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			
+			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
 
-			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
+			// preparing message to send
+			StreamObserver<CalcResponse> response = new StreamObserver<CalcResponse>() {
 
-			CalcResponse response = blockingStub.interestCalc(CalcRequest.newBuilder().setAccType(acctype.getText())
+				@Override
+				public void onNext(CalcResponse response) {
+
+					interest.setText((String.valueOf(response.getMessage())));
+				}
+
+				@Override
+				public void onError(Throwable t) {
+					t.printStackTrace();
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void onCompleted() {
+					System.out.println("Client >>>>>>>>> STREAM END: All transfers have completed.");
+					try {
+						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			};
+
+			StreamObserver<CalcRequest> request = asyncStub.interestCalc(response);
+			request.onNext(CalcRequest.newBuilder().setAccType(acctype.getText())
 					.setAccess(access.getText()).setSum(Double.parseDouble(calcsum.getText()))
 
 					.build());
 			
-			// Retrieving reply from service
-			interest.setText((String.valueOf(response.getInterest())));
-			error.setText(response.getError());
-		
+			request.onNext(CalcRequest.newBuilder().setAccType(acctype2.getText())
+					.setAccess(access2.getText()).setSum(Double.parseDouble(calcsum2.getText()))
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+					.build());
+			
+			request.onCompleted();
 
 		}
 

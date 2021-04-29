@@ -881,12 +881,6 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			reply1.setText(response.getMessage());
 
-			try {
-				channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-			} catch (InterruptedException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
-			}
 
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {
@@ -1109,12 +1103,6 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			passMsg.setText(response.getMessage());
 
-			try {
-				channel.shutdown().awaitTermination(3, TimeUnit.SECONDS);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 
 // HELP BOT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Select")) {
@@ -1163,12 +1151,6 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {
@@ -1197,12 +1179,6 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			vaultConf.setText(response.getVaultConf());
 
-//			try {
-//				channel.shutdown().awaitTermination(60, TimeUnit.SECONDS);
-//			} catch (InterruptedException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 
 // INTEREST CALCULATOR ---------------------------------------------------------------------------------------
 

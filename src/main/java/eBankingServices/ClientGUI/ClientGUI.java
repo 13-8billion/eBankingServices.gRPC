@@ -291,7 +291,7 @@ public class ClientGUI implements ActionListener {
 		constraints3.gridx = 2;
 		interestCalc.add(access2, constraints3);
 
-		constraints3.gridx = 0;
+		constraints3.gridx = 1;
 		constraints3.gridy = 5;
 		constraints3.gridwidth = 2;
 		constraints3.anchor = GridBagConstraints.CENTER;

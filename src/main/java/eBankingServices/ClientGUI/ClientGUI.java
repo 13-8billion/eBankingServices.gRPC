@@ -137,17 +137,17 @@ public class ClientGUI implements ActionListener {
 					+ "24 MONTHS TERM: " + newlinee + "access - 0.002%" + newlinee + "no access - 0.003%" + newlinee
 					+ newlinee + "36 MONTHS TERM: " + newlinee + "access - 0.0025%" + newlinee + "no access - 0.05%");
 	private JLabel labelacctype = new JLabel("Account type (12, 24 or 36): ");
-	private JTextField acctype = new JTextField(10);
+	private JTextField acctype = new JTextField(5);
 	private JLabel labelcalcsum = new JLabel("Amount € ");
-	private JTextField calcsum = new JTextField(10);
+	private JTextField calcsum = new JTextField(5);
 	private JLabel labelaccess = new JLabel("Money access? (yes/no): ");
-	private JTextField access = new JTextField(10);
-	private JTextField acctype2 = new JTextField(10);
-	private JTextField calcsum2 = new JTextField(10);
-	private JTextField access2 = new JTextField(10);
+	private JTextField access = new JTextField(5);
+	private JTextField acctype2 = new JTextField(5);
+	private JTextField calcsum2 = new JTextField(5);
+	private JTextField access2 = new JTextField(5);
 	private JButton buttoncalc = new JButton("Calculate");
 	private JLabel labelinterest = new JLabel("Interest Payable € ");
-	private JTextField interest = new JTextField(10);
+	private JTextArea interest = new JTextArea();
 	private JTextArea error = new JTextArea();
 	// help bot
 	String newline = "\n\r";

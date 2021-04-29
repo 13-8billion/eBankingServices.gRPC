@@ -3,8 +3,6 @@
 
 package eBankingServices.Transactions;
 
-import io.grpc.ServerBuilder;
-
 /**
  * <pre>
  * transfer response

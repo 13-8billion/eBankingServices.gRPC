@@ -26,6 +26,7 @@ public class UserToolsClient {
 	private static UserToolsBlockingStub blockingStub;
 	private static UserToolsStub asyncStub;
 	private static ServiceInfo userToolsServiceInfo;
+	private static String newline = "\n\r";
 
 	public static void main(String args[]) throws InterruptedException {
 
@@ -189,48 +190,96 @@ public class UserToolsClient {
 //		System.out.println("Total payable " + response);
 //	}
 
+	// --------------------------- CLIENT STREAMING
+//	public static void interestCalc() {
+//
+//		StreamObserver<CalcResponse> responseObserver = new StreamObserver<CalcResponse>() {
+//
+//			@Override
+//			public void onNext(CalcResponse response) {
+//
+//				System.out.println("Client >>> Calculating interest... ");
+//				System.out.println("Client >>> Interest: " + response.getError());
+//
+//			}
+//
+//			@Override
+//			public void onError(Throwable t) {
+//
+//			}
+//
+//			@Override
+//			public void onCompleted() {
+//				System.out.println("STREAM END: All transfers have completed.");
+//
+//			}
+//		};
+//
+//		StreamObserver<CalcRequest> requestObserver = asyncStub.interestCalc(responseObserver);
+//		try {
+//
+//			requestObserver.onNext(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
+//			Thread.sleep(500);
+//
+//			requestObserver.onNext(CalcRequest.newBuilder().setAccess("yes").setAccType("24").setSum(30000).build());
+//			Thread.sleep(500);
+//
+//			Thread.sleep(2000);
+//
+//			requestObserver.onCompleted();
+//
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//	};
+//
+//}
+	
 	public static void interestCalc() {
 
 		StreamObserver<CalcResponse> responseObserver = new StreamObserver<CalcResponse>() {
 
 			@Override
-			public void onNext(CalcResponse response) {
-
-				System.out.println("Client >>> Calculating interest... ");
-				System.out.println("Client >>> Interest: " + response.getError());
-
+			public void onNext(CalcResponse msg) {
+				System.out.println("Interest: " + msg.getMessage());
 			}
 
 			@Override
 			public void onError(Throwable t) {
-
+				t.printStackTrace();
 			}
 
 			@Override
 			public void onCompleted() {
-				System.out.println("STREAM END: All transfers have completed.");
-
+				System.out.println("STREAM END: Calculating completed.");
 			}
+
 		};
+
 
 		StreamObserver<CalcRequest> requestObserver = asyncStub.interestCalc(responseObserver);
 		try {
-
 			requestObserver.onNext(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
 			Thread.sleep(500);
 
 			requestObserver.onNext(CalcRequest.newBuilder().setAccess("yes").setAccType("24").setSum(30000).build());
 			Thread.sleep(500);
 
-			Thread.sleep(2000);
 
-			responseObserver.onCompleted();
+			// Mark the end of requests
+			requestObserver.onCompleted();
 
+			
+			Thread.sleep(10000);
+			
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
-	};
 
+
+	}
 }

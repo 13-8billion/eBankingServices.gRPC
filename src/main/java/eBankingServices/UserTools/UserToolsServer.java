@@ -225,59 +225,7 @@ public class UserToolsServer extends UserToolsImplBase {
 		responseObserver.onCompleted();
 	}
 
-	// Interest calculator method - Unary
-
-//	public void interestCalc(CalcRequest request, StreamObserver<CalcResponse> responseObserver) {
-//
-//		CalcResponse reply;
-//
-//		System.out.println("Calculating interest...");
-//
-//		String accType = request.getAccType();
-//		String access = request.getAccess();
-//		double sum = request.getSum();
-//		double interest = 0;
-//		try {
-//			AccType(access, accType);
-//
-//			if (accType.equals("12")) { // if..else statement for "12 month term" account type
-//				if (access.equals("yes")) { // if money access allowed
-//					interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
-//				} else if (access.equals("no")) { // else if money access is not allowed
-//					interest = sum * 0.0004; // then interest will equal input amount * (interest stated in question)
-//				}
-//			} else if (accType.equals("24")) { // if..else statement for "24 month term" account type
-//				if (access.equals("yes")) {
-//					interest = sum * 0.002;
-//				} else if (access.equals("no")) {
-//					interest = sum * 0.003;
-//				}
-//			} else if (accType.equals("36")) { // if..else statement for "36 month term" account type
-//				if (access.equals("yes")) {
-//					interest = sum * 0.0025;
-//				} else if (access.equals("no")) {
-//					interest = sum * 0.05;
-//				}
-//			}
-//
-//			reply = CalcResponse.newBuilder().setInterest(interest).build();
-//
-//			responseObserver.onNext(reply);
-//
-//			
-//		} catch (AccTypeException ex) {
-//
-//			System.out.println(ex.getMessage());
-//
-//			reply = CalcResponse.newBuilder().setError(ex.getMessage()).build();
-//
-//			responseObserver.onNext(reply);
-//
-//		}
-//		responseObserver.onCompleted();
-//	}
-
-	// ---------------------------------
+	// Interest calculator method - Client streaming
 
 	public StreamObserver<CalcRequest> interestCalc(StreamObserver<CalcResponse> responseObserver) {
 
@@ -294,9 +242,9 @@ public class UserToolsServer extends UserToolsImplBase {
 				String access = request.getAccess();
 				double sum = request.getSum();
 				double interest = 0;
+
 				try {
 					AccType(access, accType);
-
 					if (accType.equals("12")) { // if..else statement for "12 month term" account type
 						if (access.equals("yes")) { // if money access allowed
 							interest = sum * 0.0001; // interest will equal input amount * (interest stated in question)
@@ -327,21 +275,23 @@ public class UserToolsServer extends UserToolsImplBase {
 					list.add(ex.getMessage());
 
 				}
-				
+
 			}
 
 			@Override
 			public void onError(Throwable t) {
 				t.printStackTrace();
+
 			}
-			
 
 			@Override
 			public void onCompleted() {
-				System.out.println("Interest: " + list.toString());
-				CalcResponse reply = CalcResponse.newBuilder().setError(list.toString()).build();
-//
+				System.out.printf("Calculating complete");
+
+				CalcResponse reply = CalcResponse.newBuilder().setMessage(list.toString()).build();
+
 				responseObserver.onNext(reply);
+
 				responseObserver.onCompleted();
 
 			}

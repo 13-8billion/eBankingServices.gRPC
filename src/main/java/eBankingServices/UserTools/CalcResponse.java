@@ -3,10 +3,6 @@
 
 package eBankingServices.UserTools;
 
-import java.util.ArrayList;
-
-import io.grpc.ServerBuilder;
-
 /**
  * Protobuf type {@code UserTools.CalcResponse}
  */
@@ -20,8 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CalcResponse() {
-    interest_ = 0D;
-    error_ = "";
+    message_ = "";
   }
 
   @java.lang.Override
@@ -48,15 +43,10 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 9: {
-
-            interest_ = input.readDouble();
-            break;
-          }
-          case 18: {
+          case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            error_ = s;
+            message_ = s;
             break;
           }
           default: {
@@ -91,43 +81,34 @@ private static final long serialVersionUID = 0L;
             eBankingServices.UserTools.CalcResponse.class, eBankingServices.UserTools.CalcResponse.Builder.class);
   }
 
-  public static final int INTEREST_FIELD_NUMBER = 1;
-  private double interest_;
+  public static final int MESSAGE_FIELD_NUMBER = 1;
+  private volatile java.lang.Object message_;
   /**
-   * <code>double interest = 1;</code>
+   * <code>string message = 1;</code>
    */
-  public double getInterest() {
-    return interest_;
-  }
-
-  public static final int ERROR_FIELD_NUMBER = 2;
-  private volatile java.lang.Object error_;
-  /**
-   * <code>string error = 2;</code>
-   */
-  public java.lang.String getError() {
-    java.lang.Object ref = error_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      error_ = s;
+      message_ = s;
       return s;
     }
   }
   /**
-   * <code>string error = 2;</code>
+   * <code>string message = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getErrorBytes() {
-    java.lang.Object ref = error_;
+      getMessageBytes() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      error_ = b;
+      message_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -148,11 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (interest_ != 0D) {
-      output.writeDouble(1, interest_);
-    }
-    if (!getErrorBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, error_);
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,12 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (interest_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, interest_);
-    }
-    if (!getErrorBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, error_);
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -186,12 +160,8 @@ private static final long serialVersionUID = 0L;
     eBankingServices.UserTools.CalcResponse other = (eBankingServices.UserTools.CalcResponse) obj;
 
     boolean result = true;
-    result = result && (
-        java.lang.Double.doubleToLongBits(getInterest())
-        == java.lang.Double.doubleToLongBits(
-            other.getInterest()));
-    result = result && getError()
-        .equals(other.getError());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -203,11 +173,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + INTEREST_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getInterest()));
-    hash = (37 * hash) + ERROR_FIELD_NUMBER;
-    hash = (53 * hash) + getError().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -341,9 +308,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      interest_ = 0D;
-
-      error_ = "";
+      message_ = "";
 
       return this;
     }
@@ -371,8 +336,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public eBankingServices.UserTools.CalcResponse buildPartial() {
       eBankingServices.UserTools.CalcResponse result = new eBankingServices.UserTools.CalcResponse(this);
-      result.interest_ = interest_;
-      result.error_ = error_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -421,11 +385,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(eBankingServices.UserTools.CalcResponse other) {
       if (other == eBankingServices.UserTools.CalcResponse.getDefaultInstance()) return this;
-      if (other.getInterest() != 0D) {
-        setInterest(other.getInterest());
-      }
-      if (!other.getError().isEmpty()) {
-        error_ = other.error_;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -457,97 +418,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double interest_ ;
+    private java.lang.Object message_ = "";
     /**
-     * <code>double interest = 1;</code>
+     * <code>string message = 1;</code>
      */
-    public double getInterest() {
-      return interest_;
-    }
-    /**
-     * <code>double interest = 1;</code>
-     */
-    public Builder setInterest(double value) {
-      
-      interest_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>double interest = 1;</code>
-     */
-    public Builder clearInterest() {
-      
-      interest_ = 0D;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object error_ = "";
-    /**
-     * <code>string error = 2;</code>
-     */
-    public java.lang.String getError() {
-      java.lang.Object ref = error_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        error_ = s;
+        message_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string error = 2;</code>
+     * <code>string message = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getErrorBytes() {
-      java.lang.Object ref = error_;
+        getMessageBytes() {
+      java.lang.Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        error_ = b;
+        message_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string error = 2;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder setError(
+    public Builder setMessage(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      error_ = value;
+      message_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string error = 2;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder clearError() {
+    public Builder clearMessage() {
       
-      error_ = getDefaultInstance().getError();
+      message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
     }
     /**
-     * <code>string error = 2;</code>
+     * <code>string message = 1;</code>
      */
-    public Builder setErrorBytes(
+    public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      error_ = value;
+      message_ = value;
       onChanged();
       return this;
     }
@@ -562,11 +497,6 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
-
-	public ServerBuilder setInterest(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
     // @@protoc_insertion_point(builder_scope:UserTools.CalcResponse)

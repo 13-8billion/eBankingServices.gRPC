@@ -8,17 +8,12 @@ public interface CalcResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>double interest = 1;</code>
+   * <code>string message = 1;</code>
    */
-  double getInterest();
-
+  java.lang.String getMessage();
   /**
-   * <code>string error = 2;</code>
-   */
-  java.lang.String getError();
-  /**
-   * <code>string error = 2;</code>
+   * <code>string message = 1;</code>
    */
   com.google.protobuf.ByteString
-      getErrorBytes();
+      getMessageBytes();
 }

@@ -49,9 +49,9 @@ public class ClientGUI implements ActionListener {
 	private ServiceInfo userToolsServiceInfo;
 	private String newlinee = "\n\r";
 
-	// TRANSACTIONS -----------
+	// TRANSACTIONS instance variables------------------
 
-	// deposit instance variables
+	// deposit 
 	private JLabel labelentry1 = new JLabel("To Acc No: ");
 	private JTextField entry1 = new JTextField(10);
 	private JLabel labelentry2 = new JLabel("Amount € ");
@@ -59,7 +59,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttondeposit = new JButton("Deposit");
 	private JLabel labelreply1 = new JLabel("Message: ");
 	private JTextArea reply1 = new JTextArea();
-	// transfer instance variables
+	// transfer 
 	private JLabel labelfromaccno = new JLabel("From Acc No: ");
 	private JTextField fromAccNo = new JTextField(10);
 	private JLabel labeltoaccno = new JLabel("To Acc No: ");
@@ -69,7 +69,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonTransfer = new JButton("Transfer");
 	private JLabel labelmsg = new JLabel("Message: ");
 	private JTextArea transMsg = new JTextArea();
-	// request instance variables
+	// request 
 	private JLabel labelfromaccno2 = new JLabel("From Acc No: ");
 	private JTextField fromAccNo2 = new JTextField(10);
 	private JLabel labeltoaccno2 = new JLabel("To Acc No: ");
@@ -84,7 +84,7 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelapprove = new JLabel("Approve? (true/false) ");
 	private JTextField approve = new JTextField(10);
 
-	// USER ACCOUNT---------------------
+	// USER ACCOUNT instance variables---------------------
 
 	// change password
 	private JLabel labelusername = new JLabel("Username: ");
@@ -117,7 +117,7 @@ public class ClientGUI implements ActionListener {
 	private JLabel labelUsername2 = new JLabel("Enter username: ");
 	private JLabel labelPassword2 = new JLabel("Enter password: ");
 
-	// USER TOOLS --------------
+	// USER TOOLS instance variables ------------------------
 
 	// vault
 	private JTextField vaultUsername = new JTextField(10);
@@ -156,6 +156,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonselect = new JButton("Select");
 	private JComboBox comboOperation = new JComboBox();
 
+	// USER TOOLS GUI TABBED PANE
 	private JTabbedPane getUserToolsGUIJTabbedPane() {
 
 		JTabbedPane tabPane = new JTabbedPane();
@@ -323,7 +324,8 @@ public class ClientGUI implements ActionListener {
 		return tabPane;
 
 	}
-
+	
+	// USER ACCOUNT GUI TABBED PANE
 	private JTabbedPane getUserAccountGUIJTabbedPane() {
 
 		JTabbedPane tabPane = new JTabbedPane();
@@ -479,7 +481,8 @@ public class ClientGUI implements ActionListener {
 
 		return tabPane;
 	}
-
+	
+	// TRANSACTIONS TABBED PANE
 	private JTabbedPane getTransactionsGUIJTabbedPane() {
 
 		JTabbedPane tabPane = new JTabbedPane();
@@ -656,7 +659,7 @@ public class ClientGUI implements ActionListener {
 		gui.build();
 	}
 
-
+	// DISCOVER TRANSACTIONS jmDNS
 	private void discoverTransactionsService(String service_type){
 
 		try {
@@ -712,7 +715,8 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-
+	
+	// DISCOVER USER ACCOUNT jmDNS
 	private void discoverUserAccountService(String service_type) {
 
 		try {
@@ -768,7 +772,8 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-
+	
+	// DISCOVER USER TOOLS jmDNS
 	private void discoverUserToolsService(String service_type) {
 
 		try {
@@ -825,6 +830,7 @@ public class ClientGUI implements ActionListener {
 
 	}
 	
+	// BUILD METHOD FOR GUI WINDOW FRAME
 	private void build() {
 
 		JFrame frame = new JFrame("eBanking Application");
@@ -854,10 +860,13 @@ public class ClientGUI implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	// ACTION PERFORMED METHOD HANDLES ALL EVENTS WHEN USER CLICKS ON COMPONENTS (JButton)
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton) e.getSource();
 		String label = button.getActionCommand();
+		
+// SERVICE: TRANSACTIONS
 // DEPOSIT ---------------------------------------------------------------------------------------			
 		if (label.equals("Deposit")) {
 			System.out.println("Deposits service invoked ...");
@@ -870,9 +879,9 @@ public class ClientGUI implements ActionListener {
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
+			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);// generate stub
 
 			// preparing message to send
 			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
@@ -896,16 +905,16 @@ public class ClientGUI implements ActionListener {
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
+			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);// generate stub
 
-			// preparing message to send
+			// preparing server message
 			StreamObserver<TransferConfirmation> response = new StreamObserver<TransferConfirmation>() {
 
 				@Override
 				public void onNext(TransferConfirmation response) {
-
+					// Retrieving reply from service
 					transMsg.setText(response.getConf());
 				}
 
@@ -932,7 +941,7 @@ public class ClientGUI implements ActionListener {
 
 				}
 			};
-
+			// preparing client message to send
 			StreamObserver<TransferSum> request = asyncStub.transfer(response);
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
@@ -954,15 +963,16 @@ public class ClientGUI implements ActionListener {
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
-
+			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);// generate stub
+			
+			// preparing server message
 			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
 
 				@Override
 				public void onNext(RequestStatus response) {
-
+					// Retrieving reply from server
 					status.setText(response.getStatus());
 				}
 
@@ -990,14 +1000,15 @@ public class ClientGUI implements ActionListener {
 				}
 
 			};
-
+			// preparing client message to send
 			StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
 
 			requestObserver.onNext(RequestSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
 					.setMonthly(Boolean.parseBoolean(monthly.getText()))
 					.setApprove(Boolean.parseBoolean(approve.getText())).build());
-
+			
+// SERVICE: USER ACCOUNT
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
 			System.out.println("Login service invoked ...");
@@ -1014,17 +1025,16 @@ public class ClientGUI implements ActionListener {
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
+			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);// generate stub
 
-			// preparing message to send
+			// preparing client message to send
 			LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder().setUsername(username1.getText())
 					.setPassword(password1.getText()).build());
 
-			// Retrieving reply from service
+			// Retrieving reply from server
 			loginConf1.setText(response.getMessage());
-
 
 // VIEW ACCOUNT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("View Account")) {
@@ -1042,16 +1052,18 @@ public class ClientGUI implements ActionListener {
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			UserAccountGrpc.UserAccountStub asyncStub = UserAccountGrpc.newStub(channel);
+			UserAccountGrpc.UserAccountStub asyncStub = UserAccountGrpc.newStub(channel);// generate stub
 
 			ViewRequest request = ViewRequest.newBuilder().setAccNo(Integer.parseInt(accno.getText())).build();
 
+			// retrieving server message
 			StreamObserver<AccountInfo> responseObserver = new StreamObserver<AccountInfo>() {
 
 				@Override
 				public void onNext(AccountInfo value) {
+					// Retrieving reply from server
 					viewAccMsg.setText(value.getMessage());
 					firstName.setText(value.getFirstName());
 					lastName.setText(value.getLastName());
@@ -1071,11 +1083,11 @@ public class ClientGUI implements ActionListener {
 				}
 
 			};
+			// sending client message
 			asyncStub.viewAccount(request, responseObserver);
 
 
 // CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
-
 		} else if (label.equals("Change password")) {
 			System.out.println("Password service invoked ...");
 
@@ -1091,9 +1103,9 @@ public class ClientGUI implements ActionListener {
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build(); // build channel
 
-			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
+			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);// generate stub
 
 			// preparing message to send
 			PasswordConfirmation response = blockingStub
@@ -1103,7 +1115,7 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			passMsg.setText(response.getMessage());
 
-
+// SERVICE: USER TOOLS
 // HELP BOT  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Select")) {
 			System.out.println("Help Bot service invoked ...");
@@ -1112,8 +1124,8 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			int index = comboOperation.getSelectedIndex();
-			Operation operation = Operation.forNumber(index);
+			int index = comboOperation.getSelectedIndex(); // get selected option from combo box
+			Operation operation = Operation.forNumber(index); 
 
 			String userTools_service_type = "_userTools._tcp.local.";
 
@@ -1123,14 +1135,15 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
+			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel); // generate stub
 
 			StreamObserver<HelpResponse> responseObserver = new StreamObserver<HelpResponse>() {
 
 				@Override
 				public void onNext(HelpResponse response) {
+					// retrieving message reply from server
 					solutions.setText(response.getSolution());
 				}
 
@@ -1146,7 +1159,7 @@ public class ClientGUI implements ActionListener {
 				}
 
 			};
-
+			// preparing client message to send
 			StreamObserver<HelpRequest> requestObserver = asyncStub.helpBot(responseObserver);
 
 			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
@@ -1168,9 +1181,9 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 
-			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);
+			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);// generate stub
 
 			VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder()
 					.setUsername(vaultUsername.getText()).setPassword(vaultPassword.getText())
@@ -1197,16 +1210,16 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
 			
-			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
+			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);// generate stub
 
-			// preparing message to send
+			// preparing server message to send
 			StreamObserver<CalcResponse> response = new StreamObserver<CalcResponse>() {
 
 				@Override
 				public void onNext(CalcResponse response) {
-
+					// retreiving reply from server
 					interest.setText((String.valueOf(response.getMessage())));
 				}
 
@@ -1233,7 +1246,7 @@ public class ClientGUI implements ActionListener {
 
 				}
 			};
-
+			// preparing client message to stream
 			StreamObserver<CalcRequest> request = asyncStub.interestCalc(response);
 			request.onNext(CalcRequest.newBuilder().setAccType(acctype.getText())
 					.setAccess(access.getText()).setSum(Double.parseDouble(calcsum.getText()))
@@ -1245,7 +1258,7 @@ public class ClientGUI implements ActionListener {
 
 					.build());
 			
-			request.onCompleted();
+			request.onCompleted(); // marks the end of stream
 
 		}
 

@@ -355,12 +355,12 @@ public class UserToolsServer extends UserToolsImplBase {
 
 // validate date method for vault services
 	private boolean Date(String date) throws DateException {
-		String todaysDate = "03/04/2021";
-		// compare input date and valid date (todays date) lexicographically
-		if ((date.compareTo(todaysDate) == -1 || date.compareTo(todaysDate) == -2 || date.compareTo(todaysDate) == -3
-				|| date.compareTo(todaysDate) == -4 || date.compareTo(todaysDate) == -5
-				|| date.compareTo(todaysDate) == -6 || date.compareTo(todaysDate) == -7
-				|| date.compareTo(todaysDate) == -8 || date.compareTo(todaysDate) == -9))
+	
+		// validate input date with valid date (03/04/2021 or afterwards ) using regex
+		
+		if(!date.matches("([0-9]{2})/([0-9]{2})/((20|21)[0-9][1-9])") 
+				|| date.matches("([0-9]{2})/([0-3]{2})/((20)[2][1])")
+				|| date.matches("([0-2]{2})/([0-4]{2})/((20)[2][1])"))
 
 		{
 			throw new DateException("Unlock date must be AFTER todays date (03/04/2021). Please fix this.");

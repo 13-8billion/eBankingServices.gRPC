@@ -8,7 +8,7 @@ package UserAccount;
 
 service UserAccount {
   
-  // Unary RPC method 1: Login/Logout
+  // Unary RPC method 1: Login
   rpc Login(LoginRequest) returns (LoginConfirmation) {}
   
   // Server-Streaming RPC method 2: View Account

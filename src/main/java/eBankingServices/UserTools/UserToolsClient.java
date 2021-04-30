@@ -33,7 +33,7 @@ public class UserToolsClient {
 		// instantiate user tools client class
 		UserToolsClient obj = new UserToolsClient();
 
-		String userTools_service_type = "_userTools._tcp.local.";
+		String userTools_service_type = "_http._tcp.local.";
 
 		// discover user tools service
 		obj.discoverUserToolsService(userTools_service_type);

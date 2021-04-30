@@ -35,7 +35,7 @@ public class TransactionsClient {
 
 	public static void main(String args[]) throws InterruptedException, IOException {
 
-		String transactions_service_type = "_transactions._tcp.local.";
+		String transactions_service_type = "_http._tcp.local.";
 
 		// instantiate TransactionsClient
 		TransactionsClient obj = new TransactionsClient();

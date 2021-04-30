@@ -30,7 +30,7 @@ public class UserAccountClient {
 
 		UserAccountClient obj = new UserAccountClient();
 
-		String userAccount_service_type = "_userAccount._tcp.local.";
+		String userAccount_service_type = "_http._tcp.local.";
 
 		// discover user account service
 		obj.discoverUserAccountService(userAccount_service_type);

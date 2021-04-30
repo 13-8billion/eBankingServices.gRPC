@@ -237,6 +237,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 			ArrayList<Object> list = new ArrayList<Object>(); // create array list to store calculated values
 			String formattedList; // declare string to remove square brackets and comma from object array values
+			ArrayList<String> error = new ArrayList<String>();
 
 			@Override
 			public void onNext(CalcRequest request) {
@@ -284,7 +285,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 					System.out.println(ex.getMessage());
 
-					list.add(ex.getMessage());// if exception is caught add error message to arrayList
+					error.add(ex.getMessage());// if exception is caught add error message to arrayList
 
 				}
 
@@ -300,7 +301,7 @@ public class UserToolsServer extends UserToolsImplBase {
 			public void onCompleted() {
 				System.out.printf("Calculating complete");
 
-				CalcResponse reply = CalcResponse.newBuilder().setMessage(formattedList).build();
+				CalcResponse reply = CalcResponse.newBuilder().setMessage(formattedList).setError(error.toString()).build();
 
 				responseObserver.onNext(reply); // send the server response
 

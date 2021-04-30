@@ -152,7 +152,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary RPC method 1: Login/Logout
+     * Unary RPC method 1: Login
      * </pre>
      */
     public void login(eBankingServices.UserAccount.LoginRequest request,
@@ -227,7 +227,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary RPC method 1: Login/Logout
+     * Unary RPC method 1: Login
      * </pre>
      */
     public void login(eBankingServices.UserAccount.LoginRequest request,
@@ -279,7 +279,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary RPC method 1: Login/Logout
+     * Unary RPC method 1: Login
      * </pre>
      */
     public eBankingServices.UserAccount.LoginConfirmation login(eBankingServices.UserAccount.LoginRequest request) {
@@ -329,7 +329,7 @@ public final class UserAccountGrpc {
 
     /**
      * <pre>
-     * Unary RPC method 1: Login/Logout
+     * Unary RPC method 1: Login
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<eBankingServices.UserAccount.LoginConfirmation> login(

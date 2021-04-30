@@ -1222,6 +1222,7 @@ public class ClientGUI implements ActionListener {
 				public void onNext(CalcResponse response) {
 					// Retrieving reply from server
 					interest.setText((String.valueOf(response.getMessage())));
+					error.setText(response.getError());
 				}
 
 				@Override

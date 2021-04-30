@@ -16,4 +16,14 @@ public interface CalcResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMessageBytes();
+
+  /**
+   * <code>string error = 2;</code>
+   */
+  java.lang.String getError();
+  /**
+   * <code>string error = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getErrorBytes();
 }

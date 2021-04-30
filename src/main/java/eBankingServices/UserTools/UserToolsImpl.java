@@ -64,14 +64,15 @@ public final class UserToolsImpl {
       "\005\022\020\n\010username\030\005 \001(\t\022\020\n\010password\030\006 \001(\t\"&\n" +
       "\021VaultConfirmation\022\021\n\tvaultConf\030\003 \001(\t\";\n" +
       "\013CalcRequest\022\017\n\007accType\030\001 \001(\t\022\013\n\003sum\030\002 \001" +
-      "(\001\022\016\n\006access\030\003 \001(\t\"\037\n\014CalcResponse\022\017\n\007me" +
-      "ssage\030\001 \001(\t2\323\001\n\tUserTools\022@\n\007HelpBot\022\026.U" +
-      "serTools.HelpRequest\032\027.UserTools.HelpRes" +
-      "ponse\"\000(\0010\001\022?\n\005Vault\022\026.UserTools.VaultAc" +
-      "cess\032\034.UserTools.VaultConfirmation\"\000\022C\n\014" +
-      "InterestCalc\022\026.UserTools.CalcRequest\032\027.U" +
-      "serTools.CalcResponse\"\000(\001B-\n\032eBankingSer" +
-      "vices.UserToolsB\rUserToolsImplP\001b\006proto3"
+      "(\001\022\016\n\006access\030\003 \001(\t\".\n\014CalcResponse\022\017\n\007me" +
+      "ssage\030\001 \001(\t\022\r\n\005error\030\002 \001(\t2\323\001\n\tUserTools" +
+      "\022@\n\007HelpBot\022\026.UserTools.HelpRequest\032\027.Us" +
+      "erTools.HelpResponse\"\000(\0010\001\022?\n\005Vault\022\026.Us" +
+      "erTools.VaultAccess\032\034.UserTools.VaultCon" +
+      "firmation\"\000\022C\n\014InterestCalc\022\026.UserTools." +
+      "CalcRequest\032\027.UserTools.CalcResponse\"\000(\001" +
+      "B-\n\032eBankingServices.UserToolsB\rUserTool" +
+      "sImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -120,7 +121,7 @@ public final class UserToolsImpl {
     internal_static_UserTools_CalcResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserTools_CalcResponse_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Message", "Error", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -20,45 +20,40 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+public class UserAccountClient {
 
-public class UserAccountClient{
-	
-
-	private static UserAccountBlockingStub blockingStub;
+	private static UserAccountBlockingStub blockingStub; // Declare stubs
 	private static UserAccountStub asyncStub;
 	private static ServiceInfo userAccountServiceInfo;
-	
-	
+
 	public static void main(String args[]) throws InterruptedException {
-		
+
 		UserAccountClient obj = new UserAccountClient();
-		
+
 		String userAccount_service_type = "_userAccount._tcp.local.";
 
 		// discover user account service
-		obj. discoverUserAccountService(userAccount_service_type);
+		obj.discoverUserAccountService(userAccount_service_type);
 
 		String host = userAccountServiceInfo.getHostAddresses()[0];
 		int port = userAccountServiceInfo.getPort();
-		
-		final ManagedChannel channel = ManagedChannelBuilder
-				.forAddress(host, port)
-				.usePlaintext()
-				.build();
-		
-		//stubs -- generated from .proto file
+
+		final ManagedChannel channel = ManagedChannelBuilder // build channel
+				.forAddress(host, port).usePlaintext().build();
+
+		// stubs -- generated from .proto file
 		blockingStub = UserAccountGrpc.newBlockingStub(channel);
 		asyncStub = UserAccountGrpc.newStub(channel);
-		
-		// call methods 		
+
+		// call methods
 		login();
 		viewAccount();
 		changePassword();
-		
-		channel.shutdown()
-			.awaitTermination(3, TimeUnit.SECONDS);
+
+		channel.shutdown().awaitTermination(3, TimeUnit.SECONDS);
 	}
-	
+
+// discover service method jmDNS	
 	private void discoverUserAccountService(String service_type) {
 
 		try {
@@ -114,58 +109,54 @@ public class UserAccountClient{
 		}
 
 	}
-	
-	
+
 // Login method - Unary
-	
+
 	public static void login() {
-		
+
 		Scanner in = new Scanner(System.in);
 		String username;
 		String password;
-		
+
 		System.out.println("Client >>>>>>>>> Requesting login...");
 		System.out.println("Enter username (Amy): ");
 		username = in.next();
 		System.out.println("Enter password (123): ");
 		password = in.next();
-		
-		
-		LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder()
-				.setUsername(username)
-				.setPassword(password)
-				.build());
-		
-		System.out.println(response.getMessage());
-				
+
+		// build client message
+		LoginConfirmation response = blockingStub
+				.login(LoginRequest.newBuilder().setUsername(username).setPassword(password).build());
+
+		System.out.println(response.getMessage()); // print response from server
+
 	}
-	     
 
 //  View Account Info method - Server-streaming
-	
+
 	public static void viewAccount() {
-		
+
 		Scanner in = new Scanner(System.in);
 		int accountNo;
 		String euro = "\u20ac";
-		
+
 		System.out.println("Client >>>>>>>>> Enter account number to view (1, 2 or 3): ");
 		accountNo = in.nextInt();
 
-		ViewRequest request = ViewRequest.newBuilder()
-				.setAccNo(accountNo)
-				.build();
+		ViewRequest request = ViewRequest.newBuilder() // build client message
+				.setAccNo(accountNo).build();
 
-
+		// prepare for server response
 		StreamObserver<AccountInfo> responseObserver = new StreamObserver<AccountInfo>() {
 
 			@Override
 			public void onNext(AccountInfo value) {
+				// retrieve response from the server
 				System.out.println("Client >>>>>>>>> Requesting details for Account No: " + accountNo);
 				System.out.println(value.getMessage());
 				System.out.println("Account No:  " + value.getAccNo());
 				System.out.println("Full Name:  " + value.getFirstName() + " " + value.getLastName());
-				System.out.println("Balance:  " + euro + value.getBalance());			
+				System.out.println("Balance:  " + euro + value.getBalance());
 			}
 
 			@Override
@@ -181,7 +172,7 @@ public class UserAccountClient{
 
 		};
 
-		asyncStub.viewAccount(request, responseObserver);
+		asyncStub.viewAccount(request, responseObserver); // send client request
 
 		try {
 			Thread.sleep(1000);
@@ -191,16 +182,15 @@ public class UserAccountClient{
 		}
 
 	}
-	
-	  
+
 // Change Password method - Unary
 	public static void changePassword() {
-		
+
 		Scanner in = new Scanner(System.in);
 		String username;
 		String currPass;
 		String newPass;
-		
+
 		System.out.println("Client >>>>>>>>> Requesting to change password...");
 		System.out.println("Enter username (Amy): ");
 		username = in.next();
@@ -208,18 +198,13 @@ public class UserAccountClient{
 		currPass = in.next();
 		System.out.println("Enter new password: ");
 		newPass = in.next();
-		
-		
-		PasswordConfirmation response = blockingStub.changePassword(PasswordRequest.newBuilder()
-				.setUsername(username)
-				.setCurrPass(currPass)
-				.setNewPass(newPass)
-				.build());
-		
-		System.out.println(response.getMessage());
-				
-	}	
-}	
 
-	   
+		// build client message
+		PasswordConfirmation response = blockingStub.changePassword(PasswordRequest.newBuilder().setUsername(username)
+				.setCurrPass(currPass).setNewPass(newPass).build());	// set user input values
+	
 
+		System.out.println(response.getMessage()); // print response from server
+
+	}
+}

@@ -129,12 +129,12 @@ public class TransactionsServer extends TransactionsImplBase {
 		try {
 			for (int i = 0; i < cArray.length; i++) { // for loop iterates through customer array
 				Customer c = cArray[i]; // adds current iteration to object of type Customer
+				
+				// new balance equals sum plus current customer balance from array
+				newBalance = request.getSum() + c.getBalance(); 
 
-				newBalance = request.getSum() + c.getBalance(); // new balance equals sum plus current customer balance
-																// from array
-
-				if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) { // get account number from user and
-																				// validate by invoking validate methods
+				// get account number from user and validate by invoking validate methods
+				if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) { 
 					// build the response
 					dc = DepositConfirmation.newBuilder()
 							.setMessage("SUCCESS " + newline + euro + request.getSum() + " deposited into Acc No. "
@@ -175,28 +175,20 @@ public class TransactionsServer extends TransactionsImplBase {
 				String fromAccNo = String.valueOf(request.getFromAccNo());
 
 				try {
+					// validate account number and invoke private method transferSum to check account balances for sufficient funds
 					if (transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())
-							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) { // validate account number and invoke
-																				// private method transferSum
-																				// to check account balances for
-																				// sufficient funds
+							&& validAccNo(toAccNo) && validAccNo(fromAccNo)) { 
 						conf = "Receiving transfer request..." + euro + request.getSum() + " >>> to Acc No. "
 								+ request.getToAccNo();
-						responseObserver.onNext(TransferConfirmation.newBuilder().setConf(conf).build()); // build
-																											// response
+						// build response
+						responseObserver.onNext(TransferConfirmation.newBuilder().setConf(conf).build()); 
 
 						Thread.sleep(1000);// sleep to simulate wait time
 
+						// invoke private method withdraw() to precess the transfer
 						conf = ("SUCCESS! " + newline + newline + "Acc No. " + request.getFromAccNo() + " transferred "
 								+ euro + request.getSum() + " to Acc No.  " + request.getToAccNo() + newline
-								+ withdraw(request.getFromAccNo(), request.getSum()) + newline + newline); // invoke
-																											// private
-																											// method
-																											// withdraw()
-																											// to
-																											// process
-																											// the
-																											// transfer
+								+ withdraw(request.getFromAccNo(), request.getSum()) + newline + newline); 
 
 					} else if (!transferSum(request.getToAccNo(), request.getFromAccNo(), request.getSum())) {
 						conf = ("FAILED! not enough funds in Account No. " + request.getFromAccNo());

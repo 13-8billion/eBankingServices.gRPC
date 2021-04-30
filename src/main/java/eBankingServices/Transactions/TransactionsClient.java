@@ -29,6 +29,7 @@ public class TransactionsClient {
 	private static TransactionsStub asyncStub;
 	private static ManagedChannel channel;
 	private static String newline = "\n\r";
+	private String euro = "\u20ac";
 
 	private static final Logger logger = Logger.getLogger(TransactionsClient.class.getName());
 

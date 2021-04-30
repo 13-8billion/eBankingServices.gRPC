@@ -33,6 +33,7 @@ public class UserToolsServer extends UserToolsImplBase {
 		// initiate server
 		UserToolsServer userTools = new UserToolsServer();
 
+		// get properties
 		Properties prop = userTools.getProperties();
 
 		// register the service
@@ -41,7 +42,7 @@ public class UserToolsServer extends UserToolsImplBase {
 		int port = Integer.valueOf(prop.getProperty("service_port"));
 
 		try {
-
+			// build and start the server
 			Server server = ServerBuilder.forPort(port).addService(userTools).build().start();
 
 			System.out.println("User Account server started, listening on " + port);
@@ -127,7 +128,10 @@ public class UserToolsServer extends UserToolsImplBase {
 			@Override
 			public void onNext(HelpRequest request) {
 
-				String solution = null;
+				String solution = null; // Initialise solution to null
+
+				// if...else statement to retrieve the client input and send the corresponding
+				// enum response
 
 				if (request.getOperation() == Operation.PASSWORD_RESET) {
 					solution = request.getMessage() + newline + "To reset your password, navigate to your account"
@@ -147,9 +151,11 @@ public class UserToolsServer extends UserToolsImplBase {
 							+ "please call our free 24 hour hotline at: 0800-03041992." + newline + newline;
 				}
 
+				
+				// build the server response
 				HelpResponse reply = HelpResponse.newBuilder().setSolution(solution).build();
 
-				responseObserver.onNext(reply);
+				responseObserver.onNext(reply); // send server response
 
 			}
 
@@ -163,9 +169,7 @@ public class UserToolsServer extends UserToolsImplBase {
 			@Override
 			public void onCompleted() {
 				System.out.println();
-
-				// completed too
-				responseObserver.onCompleted();
+				responseObserver.onCompleted(); // complete the RPC call
 			}
 		};
 	}
@@ -175,51 +179,55 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		boolean validAccNo = false;
 		boolean checkFormat;
-		String unlockDate = request.getUnlockDate();
+		String unlockDate = request.getUnlockDate(); // extract the required fields from the client input
 		String accNo = String.valueOf(request.getAccNo());
 
-		if (accNo.matches("([1-3])")) {
+		if (accNo.matches("([1-3])")) { // validate account number
 			validAccNo = true;
 		} else {
 			validAccNo = false;
 		}
 
-		if (unlockDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+		if (unlockDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) // validate date format
 			checkFormat = true;
 		else
 			checkFormat = false;
 
-		VaultConfirmation vc = null;
+		VaultConfirmation vc = null; // initialise server response to null;
 		try {
+			// invoked private method authenticateUser, validate account number and check
+			// date format
 			if (authenticateUser(request.getUsername(), request.getPassword()) && validAccNo == true
 					&& checkFormat == true && Date(unlockDate)) {
-
+				// if statement is true build response to inform the user of success
 				vc = VaultConfirmation.newBuilder()
 						.setVaultConf(
 								"SUCCESS! : " + euro + request.getSum() + " locked into Acc No. " + request.getAccNo()
 										+ newline + "The money can not be accessed until " + request.getUnlockDate())
 						.build();
-
+				// if username or password not valid build appropriate response
 			} else if (!authenticateUser(request.getUsername(), request.getPassword())) {
 				vc = VaultConfirmation.newBuilder().setVaultConf("Username or Password Incorrect!").build();
+				// if account number not valid build appropriate response
 			} else if (validAccNo != true) {
 				vc = VaultConfirmation.newBuilder().setVaultConf("Account Number does not exist exist!" + newline
 						+ "Please enter valid Account Number (1, 2 or 3)").build();
+				// if date format not valid build appropriate response
 			} else if (!Date(unlockDate)) {
 				vc = VaultConfirmation.newBuilder().setVaultConf("Invalid date/format!").build();
 			}
 
 			System.out.println(vc);
-			responseObserver.onNext(vc);
+			responseObserver.onNext(vc); // send the server response
 
-		} catch (DateException ex) {
+		} catch (DateException ex) { // custom date exception to catch invalid dates
 
 			System.out.println(ex.getMessage());
-			vc = VaultConfirmation.newBuilder()
+			vc = VaultConfirmation.newBuilder() // build response if exception is caught
 					.setVaultConf("Unlock date must be AFTER todays date (03/04/2021). Please fix this.").build();
-			responseObserver.onNext(vc);
+			responseObserver.onNext(vc); // send the server response
 		}
-		responseObserver.onCompleted();
+		responseObserver.onCompleted(); // complete the RPC call
 	}
 
 	// Interest calculator method - Client streaming
@@ -227,16 +235,15 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		return new StreamObserver<CalcRequest>() {
 
-			ArrayList<Object> list = new ArrayList<Object>();
-			String formattedList;
-	
+			ArrayList<Object> list = new ArrayList<Object>(); // create array list to store calculated values
+			String formattedList; // declare string to remove square brackets and comma from object array values
 
 			@Override
 			public void onNext(CalcRequest request) {
 
 				System.out.println("Calculating interest...");
 
-				String accType = request.getAccType();
+				String accType = request.getAccType(); // extract the required values from client
 				String access = request.getAccess();
 				double sum = request.getSum();
 				double interest = 0;
@@ -264,20 +271,20 @@ public class UserToolsServer extends UserToolsImplBase {
 						}
 
 					}
-					list.add(interest);
-					
-					formattedList = list.toString()
-						    .replace(",", "                   vs.                 ")  //remove the commas
-						    .replace("[", "")  //remove the right bracket
-						    .replace("]", "")  //remove the left bracket
-						    .trim();
-					
+					list.add(interest); // add calculated values to arrayList of type object
 
-				} catch (AccTypeException ex) {
+					formattedList = list.toString() // convert arrayList to string and add to String variable
+													// "formattedList"
+							.replace(",", "                   vs.                 ") // remove the commas, replace with space 
+							.replace("[", "") // remove the right bracket
+							.replace("]", "") // remove the left bracket
+							.trim();
+
+				} catch (AccTypeException ex) { // custom exception to catch invalid account types
 
 					System.out.println(ex.getMessage());
 
-					list.add(ex.getMessage());
+					list.add(ex.getMessage());// if exception is caught add error message to arrayList
 
 				}
 
@@ -295,9 +302,9 @@ public class UserToolsServer extends UserToolsImplBase {
 
 				CalcResponse reply = CalcResponse.newBuilder().setMessage(formattedList).build();
 
-				responseObserver.onNext(reply);
+				responseObserver.onNext(reply); // send the server response
 
-				responseObserver.onCompleted();
+				responseObserver.onCompleted(); // complete the RPC call
 
 			}
 
@@ -339,7 +346,7 @@ public class UserToolsServer extends UserToolsImplBase {
 					"Invalid account type." + newline + "Please select from the following (12, 24 or 36)");
 
 		}
-
+		// validate access input for interest calculator
 		if (!access.equalsIgnoreCase("yes") && !access.equalsIgnoreCase("no")) {
 			throw new AccTypeException(
 					"Invalid account access response." + newline + "Please select 'yes' or 'no' ONLY");
@@ -349,6 +356,7 @@ public class UserToolsServer extends UserToolsImplBase {
 // validate date method for vault services
 	private boolean Date(String date) throws DateException {
 		String todaysDate = "03/04/2021";
+		// compare input date and valid date (todays date) lexicographically
 		if ((date.compareTo(todaysDate) == -1 || date.compareTo(todaysDate) == -2 || date.compareTo(todaysDate) == -3
 				|| date.compareTo(todaysDate) == -4 || date.compareTo(todaysDate) == -5
 				|| date.compareTo(todaysDate) == -6 || date.compareTo(todaysDate) == -7
@@ -359,7 +367,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		}
 
-		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) // validate date format
 			return true;
 		else
 			return false;

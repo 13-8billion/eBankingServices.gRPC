@@ -143,8 +143,8 @@ public class UserAccountServer extends UserAccountImplBase {
 		{
 			Customer c = cArray[i]; // add current iteration to a Customer object
 
-			if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) // get account number from user and validate
-																			// using private method
+			// get account number from user and validate using private method
+			if (request.getAccNo() == c.getAccNo() && validAccNo(accNo)) 
 			{
 				reply = AccountInfo.newBuilder() // build response
 						.setMessage("Streaming Account No: " + request.getAccNo() + " ...").setAccNo(request.getAccNo())

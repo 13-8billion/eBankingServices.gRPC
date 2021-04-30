@@ -51,7 +51,7 @@ public class ClientGUI implements ActionListener {
 
 	// TRANSACTIONS instance variables------------------
 
-	// deposit 
+	// deposit
 	private JLabel labelentry1 = new JLabel("To Acc No: ");
 	private JTextField entry1 = new JTextField(10);
 	private JLabel labelentry2 = new JLabel("Amount € ");
@@ -59,7 +59,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttondeposit = new JButton("Deposit");
 	private JLabel labelreply1 = new JLabel("Message: ");
 	private JTextArea reply1 = new JTextArea();
-	// transfer 
+	// transfer
 	private JLabel labelfromaccno = new JLabel("From Acc No: ");
 	private JTextField fromAccNo = new JTextField(10);
 	private JLabel labeltoaccno = new JLabel("To Acc No: ");
@@ -69,7 +69,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonTransfer = new JButton("Transfer");
 	private JLabel labelmsg = new JLabel("Message: ");
 	private JTextArea transMsg = new JTextArea();
-	// request 
+	// request
 	private JLabel labelfromaccno2 = new JLabel("From Acc No: ");
 	private JTextField fromAccNo2 = new JTextField(10);
 	private JLabel labeltoaccno2 = new JLabel("To Acc No: ");
@@ -81,8 +81,7 @@ public class ClientGUI implements ActionListener {
 	private JButton buttonRequest = new JButton("Request");
 	private JLabel labelstatus = new JLabel("Message: ");
 	private JTextArea status = new JTextArea();
-	private JLabel labelapprove = new JLabel("Approve? (true/false) ");
-	private JTextField approve = new JTextField(10);
+
 
 	// USER ACCOUNT instance variables---------------------
 
@@ -307,7 +306,7 @@ public class ClientGUI implements ActionListener {
 		constraints3.gridx = 1;
 		interestCalc.add(interest, constraints3);
 		interest.setEditable(false);
-		
+
 		constraints3.gridx = 1;
 		constraints3.gridy = 7;
 		interestCalc.add(error, constraints3);
@@ -324,7 +323,7 @@ public class ClientGUI implements ActionListener {
 		return tabPane;
 
 	}
-	
+
 	// USER ACCOUNT GUI TABBED PANE
 	private JTabbedPane getUserAccountGUIJTabbedPane() {
 
@@ -481,7 +480,7 @@ public class ClientGUI implements ActionListener {
 
 		return tabPane;
 	}
-	
+
 	// TRANSACTIONS TABBED PANE
 	private JTabbedPane getTransactionsGUIJTabbedPane() {
 
@@ -633,14 +632,6 @@ public class ClientGUI implements ActionListener {
 		constraints9.gridx = 1;
 		request.add(status, constraints9);
 
-		constraints9.gridx = 1;
-		constraints9.gridy = 7;
-		request.add(labelapprove, constraints9);
-
-		constraints9.gridx = 1;
-		constraints9.gridy = 8;
-		request.add(approve, constraints9);
-
 		// set border for the panel
 		request.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "REQUEST"));
 
@@ -650,9 +641,9 @@ public class ClientGUI implements ActionListener {
 
 		return tabPane;
 	}
-
+	
+	// MAIN METHOD INVOKES BUILDS METHOD ON CLIENT GUI CLASS
 	public static void main(String[] args) {
-
 
 		ClientGUI gui = new ClientGUI();
 
@@ -660,7 +651,7 @@ public class ClientGUI implements ActionListener {
 	}
 
 	// DISCOVER TRANSACTIONS jmDNS
-	private void discoverTransactionsService(String service_type){
+	private void discoverTransactionsService(String service_type) {
 
 		try {
 			// Create a JmDNS instance
@@ -715,7 +706,7 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-	
+
 	// DISCOVER USER ACCOUNT jmDNS
 	private void discoverUserAccountService(String service_type) {
 
@@ -772,7 +763,7 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-	
+
 	// DISCOVER USER TOOLS jmDNS
 	private void discoverUserToolsService(String service_type) {
 
@@ -829,7 +820,7 @@ public class ClientGUI implements ActionListener {
 		}
 
 	}
-	
+
 	// BUILD METHOD FOR GUI WINDOW FRAME
 	private void build() {
 
@@ -865,23 +856,25 @@ public class ClientGUI implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton) e.getSource();
 		String label = button.getActionCommand();
-		
+
 // SERVICE: TRANSACTIONS
 // DEPOSIT ---------------------------------------------------------------------------------------			
 		if (label.equals("Deposit")) {
 			System.out.println("Deposits service invoked ...");
 
-			String transactions_service_type = "_transactions._tcp.local.";
+			String transactions_service_type = "_http._tcp.local.";
 
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
 
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
+			
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
-			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);// generate stub
+			// generate stub
+			TransactionsGrpc.TransactionsBlockingStub blockingStub = TransactionsGrpc.newBlockingStub(channel);
 
 			// preparing message to send
 			DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder()
@@ -890,14 +883,13 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			reply1.setText(response.getMessage());
 
-
 // TRANSFER ---------------------------------------------------------------------------------------		
 		} else if (label.equals("Transfer")) {
 			System.out.println("Transfer service invoked ...");
 			/*
 			 * 
 			 */
-			String transactions_service_type = "_transactions._tcp.local.";
+			String transactions_service_type = "_http._tcp.local.";
 
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
@@ -905,10 +897,12 @@ public class ClientGUI implements ActionListener {
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
-			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);// generate stub
-
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			
+			// generate stub
+			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
+			
 			// preparing server message
 			StreamObserver<TransferConfirmation> response = new StreamObserver<TransferConfirmation>() {
 
@@ -945,7 +939,6 @@ public class ClientGUI implements ActionListener {
 			StreamObserver<TransferSum> request = asyncStub.transfer(response);
 			request.onNext(TransferSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo.getText())).setSum(Double.parseDouble(sum.getText())).build());
-			
 
 // REQUEST ---------------------------------------------------------------------------------------				
 		} else if (label.equals("Request")) {
@@ -955,7 +948,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String transactions_service_type = "_transactions._tcp.local.";
+			String transactions_service_type = "_http._tcp.local.";
 
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
@@ -963,10 +956,12 @@ public class ClientGUI implements ActionListener {
 			String host = transactionsServiceInfo.getHostAddresses()[0];
 			int port = transactionsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
-			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);// generate stub
+			//build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 			
+			// generate stub
+			TransactionsGrpc.TransactionsStub asyncStub = TransactionsGrpc.newStub(channel);
+
 			// preparing server message
 			StreamObserver<RequestStatus> responseObserver = new StreamObserver<RequestStatus>() {
 
@@ -1006,8 +1001,8 @@ public class ClientGUI implements ActionListener {
 			requestObserver.onNext(RequestSum.newBuilder().setFromAccNo(Integer.parseInt(fromAccNo2.getText()))
 					.setToAccNo(Integer.parseInt(toAccNo2.getText())).setSum(Double.parseDouble(sum2.getText()))
 					.setMonthly(Boolean.parseBoolean(monthly.getText()))
-					.setApprove(Boolean.parseBoolean(approve.getText())).build());
-			
+					.build());
+
 // SERVICE: USER ACCOUNT
 // LOGIN ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Login")) {
@@ -1017,7 +1012,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userAccount_service_type = "_userAccount._tcp.local.";
+			String userAccount_service_type = "_http._tcp.local.";
 
 			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
@@ -1025,9 +1020,11 @@ public class ClientGUI implements ActionListener {
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
-			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);// generate stub
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			
+			// generate stub
+			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
 
 			// preparing client message to send
 			LoginConfirmation response = blockingStub.login(LoginRequest.newBuilder().setUsername(username1.getText())
@@ -1051,9 +1048,10 @@ public class ClientGUI implements ActionListener {
 
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
-
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
+			
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			
 			UserAccountGrpc.UserAccountStub asyncStub = UserAccountGrpc.newStub(channel);// generate stub
 
 			ViewRequest request = ViewRequest.newBuilder().setAccNo(Integer.parseInt(accno.getText())).build();
@@ -1086,7 +1084,6 @@ public class ClientGUI implements ActionListener {
 			// sending client message
 			asyncStub.viewAccount(request, responseObserver);
 
-
 // CHANGE PASSWORD  ---------------------------------------------------------------------------------------					
 		} else if (label.equals("Change password")) {
 			System.out.println("Password service invoked ...");
@@ -1095,7 +1092,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userAccount_service_type = "_userAccount._tcp.local.";
+			String userAccount_service_type = "_http._tcp.local.";
 
 			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
@@ -1103,9 +1100,11 @@ public class ClientGUI implements ActionListener {
 			String host = userAccountServiceInfo.getHostAddresses()[0];
 			int port = userAccountServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build(); // build channel
-
-			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);// generate stub
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build(); 
+			
+			// generate stub
+			UserAccountGrpc.UserAccountBlockingStub blockingStub = UserAccountGrpc.newBlockingStub(channel);
 
 			// preparing message to send
 			PasswordConfirmation response = blockingStub
@@ -1125,9 +1124,9 @@ public class ClientGUI implements ActionListener {
 			 */
 
 			int index = comboOperation.getSelectedIndex(); // get selected option from combo box
-			Operation operation = Operation.forNumber(index); 
+			Operation operation = Operation.forNumber(index);
 
-			String userTools_service_type = "_userTools._tcp.local.";
+			String userTools_service_type = "_http._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1135,9 +1134,11 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-
-			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel); // generate stub
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+			
+			// generate stub
+			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);
 
 			StreamObserver<HelpResponse> responseObserver = new StreamObserver<HelpResponse>() {
 
@@ -1164,7 +1165,6 @@ public class ClientGUI implements ActionListener {
 
 			requestObserver.onNext(HelpRequest.newBuilder().setOperation(operation).build());
 
-
 // VAULT ---------------------------------------------------------------------------------------
 		} else if (label.equals("Vault")) {
 			System.out.println("Vault service invoked ...");
@@ -1173,7 +1173,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_userTools._tcp.local.";
+			String userTools_service_type = "_http._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1181,7 +1181,8 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 
 			UserToolsGrpc.UserToolsBlockingStub blockingStub = UserToolsGrpc.newBlockingStub(channel);// generate stub
 
@@ -1192,7 +1193,6 @@ public class ClientGUI implements ActionListener {
 			// Retrieving reply from service
 			vaultConf.setText(response.getVaultConf());
 
-
 // INTEREST CALCULATOR ---------------------------------------------------------------------------------------
 
 		} else if (label.equals("Calculate")) {
@@ -1202,7 +1202,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_userTools._tcp.local.";
+			String userTools_service_type = "_http._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1210,8 +1210,9 @@ public class ClientGUI implements ActionListener {
 			String host = userToolsServiceInfo.getHostAddresses()[0];
 			int port = userToolsServiceInfo.getPort();
 
-			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();// build channel
-			
+			// build channel
+			ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+
 			UserToolsGrpc.UserToolsStub asyncStub = UserToolsGrpc.newStub(channel);// generate stub
 
 			// preparing server message to send
@@ -1219,7 +1220,7 @@ public class ClientGUI implements ActionListener {
 
 				@Override
 				public void onNext(CalcResponse response) {
-					// retreiving reply from server
+					// Retrieving reply from server
 					interest.setText((String.valueOf(response.getMessage())));
 				}
 
@@ -1248,16 +1249,16 @@ public class ClientGUI implements ActionListener {
 			};
 			// preparing client message to stream
 			StreamObserver<CalcRequest> request = asyncStub.interestCalc(response);
-			request.onNext(CalcRequest.newBuilder().setAccType(acctype.getText())
-					.setAccess(access.getText()).setSum(Double.parseDouble(calcsum.getText()))
+			request.onNext(CalcRequest.newBuilder().setAccType(acctype.getText()).setAccess(access.getText())
+					.setSum(Double.parseDouble(calcsum.getText()))
 
 					.build());
-			
-			request.onNext(CalcRequest.newBuilder().setAccType(acctype2.getText())
-					.setAccess(access2.getText()).setSum(Double.parseDouble(calcsum2.getText()))
+
+			request.onNext(CalcRequest.newBuilder().setAccType(acctype2.getText()).setAccess(access2.getText())
+					.setSum(Double.parseDouble(calcsum2.getText()))
 
 					.build());
-			
+
 			request.onCompleted(); // marks the end of stream
 
 		}

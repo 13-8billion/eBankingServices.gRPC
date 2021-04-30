@@ -30,6 +30,7 @@ public class UserToolsClient {
 
 	public static void main(String args[]) throws InterruptedException {
 
+		// instantiate user tools client class
 		UserToolsClient obj = new UserToolsClient();
 
 		String userTools_service_type = "_userTools._tcp.local.";
@@ -46,13 +47,12 @@ public class UserToolsClient {
 		blockingStub = UserToolsGrpc.newBlockingStub(channel);
 		asyncStub = UserToolsGrpc.newStub(channel);
 
-		// call methods
+		// call service methods
 		helpBot();
 		vault();
 		interestCalc();
-		
-		channel.shutdown()
-		.awaitTermination(3, TimeUnit.SECONDS);
+
+		channel.shutdown().awaitTermination(3, TimeUnit.SECONDS);
 	}
 
 	private void discoverUserToolsService(String service_type) {
@@ -118,7 +118,9 @@ public class UserToolsClient {
 
 			@Override
 			public void onNext(HelpResponse response) {
+				// retrieve response from server
 				System.out.println(response.getSolution());
+		
 			}
 
 			@Override
@@ -133,7 +135,7 @@ public class UserToolsClient {
 			}
 
 		};
-
+		// prepare message from client
 		StreamObserver<HelpRequest> requestObserver = asyncStub.helpBot(responseObserver);
 
 		try {
@@ -155,7 +157,7 @@ public class UserToolsClient {
 					.setOperation(Operation.PAYMENTS).build());
 			Thread.sleep(3000);
 
-			// Mark the end of requests
+			// complete the RPC call
 			requestObserver.onCompleted();
 
 		} catch (RuntimeException e) {
@@ -165,7 +167,7 @@ public class UserToolsClient {
 		}
 
 		try {
-			Thread.sleep(30000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,21 +179,22 @@ public class UserToolsClient {
 
 	public static void vault() {
 
+		// build client message
 		VaultConfirmation response = blockingStub.vault(VaultAccess.newBuilder().setUsername("Amy").setPassword("123")
 				.setAccNo(1).setSum(100).setUnlockDate("03/04/2022").build());
 
-		System.out.println(response);
+		System.out.println(response); // print response from the server
 	}
 
-
 // Calculate interest method - Client streaming
-	
+
 	public static void interestCalc() {
 
 		StreamObserver<CalcResponse> responseObserver = new StreamObserver<CalcResponse>() {
 
 			@Override
 			public void onNext(CalcResponse msg) {
+				// retrieve response from the server
 				System.out.println("Interest: " + msg.getMessage());
 			}
 
@@ -207,28 +210,26 @@ public class UserToolsClient {
 
 		};
 
-
+		// prepare messages from client
 		StreamObserver<CalcRequest> requestObserver = asyncStub.interestCalc(responseObserver);
 		try {
+			// multiple requests from client
 			requestObserver.onNext(CalcRequest.newBuilder().setAccess("no").setAccType("24").setSum(30000).build());
-			Thread.sleep(500);
+			Thread.sleep(500); // sleep to simulate wait time
 
 			requestObserver.onNext(CalcRequest.newBuilder().setAccess("yes").setAccType("24").setSum(30000).build());
 			Thread.sleep(500);
 
-
 			// Mark the end of requests
 			requestObserver.onCompleted();
 
-			
 			Thread.sleep(10000);
-			
+
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {			
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 
 	}
 }

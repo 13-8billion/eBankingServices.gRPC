@@ -1,4 +1,4 @@
- package eBankingServices.Transactions;
+package eBankingServices.Transactions;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -25,7 +25,7 @@ import java.util.Random;
 public class TransactionsClient {
 
 	private static ServiceInfo transactionsServiceInfo;
-	private static TransactionsBlockingStub blockingStub;
+	private static TransactionsBlockingStub blockingStub; // declare stubs
 	private static TransactionsStub asyncStub;
 	private static ManagedChannel channel;
 	private static String newline = "\n\r";
@@ -36,14 +36,16 @@ public class TransactionsClient {
 
 		String transactions_service_type = "_transactions._tcp.local.";
 
+		// instantiate TransactionsClient
 		TransactionsClient obj = new TransactionsClient();
+
 		// discover transactions service
 		obj.discoverTransactionsService(transactions_service_type);
 
 		String host = transactionsServiceInfo.getHostAddresses()[0];
 		int port = transactionsServiceInfo.getPort();
 
-		channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+		channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build(); // build channel
 		// stubs -- generated from .proto files
 		blockingStub = TransactionsGrpc.newBlockingStub(channel);
 		asyncStub = TransactionsGrpc.newStub(channel);
@@ -51,13 +53,13 @@ public class TransactionsClient {
 		// call methods
 		deposit();
 		transfer();
-		request();	
+		request();
 
-		channel.shutdown()
-	 	   .awaitTermination(3, TimeUnit.SECONDS);
+		channel.shutdown().awaitTermination(3, TimeUnit.SECONDS); // channel shutdown terminate after 3 seconds
 	}
-	
-	private void discoverTransactionsService(String service_type){
+
+// discover transactions service jmDNS	
+	private void discoverTransactionsService(String service_type) {
 
 		try {
 			// Create a JmDNS instance
@@ -112,16 +114,16 @@ public class TransactionsClient {
 		}
 
 	}
-	
 
 // Deposit money into account method - Unary RPC
 
 	public static void deposit() throws InterruptedException {
 
 		System.out.println("Requesting to deposit...");
+		// build client message
 		DepositConfirmation response = blockingStub.deposit(DepositSum.newBuilder().setAccNo(1).setSum(33).build());
 
-		System.out.println(response);
+		System.out.println(response); // print server response
 
 		System.out.println("Requesting to deposit...");
 		response = blockingStub.deposit(DepositSum.newBuilder().setAccNo(2).setSum(22).build());
@@ -138,11 +140,11 @@ public class TransactionsClient {
 
 			@Override
 			public void onNext(TransferConfirmation response) {
-					
+				// retrieve message from server
 				System.out.println("Getting confirmation... " + newline + response.getConf());
-				
+
 			}
-	
+
 			@Override
 			public void onError(Throwable t) {
 				t.printStackTrace();
@@ -154,34 +156,29 @@ public class TransactionsClient {
 				}
 
 			}
+
 			@Override
 			public void onCompleted() {
 				System.out.println("STREAM END: All transfers have completed.");
-//					try {
-//						channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 
 			}
 		};
-
+		// prepare client message
 		StreamObserver<TransferSum> requestObserver = asyncStub.transfer(responseObserver);
 		try {
-			
+
 			requestObserver.onNext(TransferSum.newBuilder().setSum(10).setFromAccNo(3).setToAccNo(1).build());
-			Thread.sleep(1000);
+			Thread.sleep(1000); // sleep to simulate wait time
 
 			requestObserver.onNext(TransferSum.newBuilder().setSum(100).setFromAccNo(2).setToAccNo(2).build());
 			Thread.sleep(1000);
-			
+
 			requestObserver.onNext(TransferSum.newBuilder().setSum(1000).setFromAccNo(1).setToAccNo(3).build());
 			Thread.sleep(1000);
-			
+
 			Thread.sleep(10000);
 
-			requestObserver.onCompleted();
+			requestObserver.onCompleted(); // complete the RPC call client side
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -198,8 +195,8 @@ public class TransactionsClient {
 
 			@Override
 			public void onNext(RequestStatus response) {
+				// retrieve message from sever
 				System.out.println("Requesting status: " + response.getStatus());
-//				System.out.println(response.getMessage());
 			}
 
 			@Override
@@ -226,14 +223,14 @@ public class TransactionsClient {
 			}
 
 		};
-
+		// prepare client message
 		StreamObserver<RequestSum> requestObserver = asyncStub.request(responseObserver);
 
 		try {
 			// simulating multiple requests
 			requestObserver.onNext(RequestSum.newBuilder().setSum(10).setFromAccNo(1).setToAccNo(2).setMonthly(false)
 					.setApprove(true).build());
-			Thread.sleep(500);
+			Thread.sleep(500); // sleep to simulate wait time between responses
 
 			requestObserver.onNext(RequestSum.newBuilder().setSum(20).setFromAccNo(5).setToAccNo(1).setMonthly(true)
 					.setApprove(false).build());
@@ -243,7 +240,7 @@ public class TransactionsClient {
 					.setApprove(true).build());
 			Thread.sleep(500);
 
-			// Mark the end of requests
+			// compete the RPC call and mark the end of requests
 			requestObserver.onCompleted();
 
 		} catch (RuntimeException e) {

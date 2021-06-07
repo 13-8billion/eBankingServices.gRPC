@@ -19,17 +19,17 @@ import eBankingServices.Transactions.TransactionsGrpc.TransactionsImplBase;
 
 public class TransactionsServer extends TransactionsImplBase {
 
-	private String euro = "\u20ac";
+	private final String euro = "\u20ac";
 	String newline = "\n\r";
 
-	private Customer[] cArray = new Customer[] {
+	private final Customer[] cArray = new Customer[] {
 
 			// hard code some customer accounts to array of type Customer
 			new Customer(1, "Arthur", "Morgan", 27000), new Customer(2, "Sadie", "Adler", 5900),
 			new Customer(3, "Amy", "Percival", 33300) };
 
 	// hard code account balances to array of type double
-	private double[] accounts = { 0, 27000, 5900, 33333 };
+	private final double[] accounts = { 0, 27000, 5900, 33333 };
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -95,7 +95,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		Properties prop = null;
 
-		try (InputStream input = new FileInputStream("src/main/resources/Transactions.properties")) {
+		try (InputStream input = new FileInputStream("/Users/amy/Library/Mobile Documents/com~apple~CloudDocs/OneDrive - National College of Ireland/IntelliJProjects/eBankingServices.gRPC/src/main/resources/Transactions.properties")) {
 
 			prop = new Properties();
 
@@ -165,7 +165,7 @@ public class TransactionsServer extends TransactionsImplBase {
 
 		return new StreamObserver<TransferSum>() {
 
-			String newline = "\n\r";
+			final String newline = "\n\r";
 			String conf;
 
 			@Override
@@ -257,17 +257,15 @@ public class TransactionsServer extends TransactionsImplBase {
 					check = 3;
 
 					responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
-					;
 
-				} else if (!validAccNo(fromAccNo)) {// if from -account number invalid
+                } else if (!validAccNo(fromAccNo)) {// if from -account number invalid
 					status = ("Account number: " + request.getFromAccNo() + " is not valid!" + newline
 							+ "Request cancelled." + newline
 							+ "Please try again with a vaild account number (1, 2 or 3)");
 					check = 3;
 					responseObserver.onNext(RequestStatus.newBuilder().setStatus(status).build());
-					;
 
-				}
+                }
 				try {
 					// sleep to simulate waiting for confirmation from other account
 					Thread.sleep(6000);
@@ -335,11 +333,7 @@ public class TransactionsServer extends TransactionsImplBase {
 // validate account number
 
 	private boolean validAccNo(String accNo) {
-		if (accNo.matches("([1-3])")) {
-			return true;
-		} else {
-			return false;
-		}
+        return accNo.matches("([1-3])");
 	}
 
 // method to check for sufficient funds and throw valid AccNo exception

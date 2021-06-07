@@ -17,9 +17,9 @@ import eBankingServices.UserAccount.UserAccountGrpc.UserAccountImplBase;
 
 public class UserAccountServer extends UserAccountImplBase {
 
-	private String Username = "Amy"; // hardcode username and password
+	private final String Username = "Amy"; // hardcode username and password
 	private String currPassword = "123";
-	private String newline = "\n\r";
+	private final String newline = "\n\r";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -84,7 +84,7 @@ public class UserAccountServer extends UserAccountImplBase {
 
 		Properties prop = null;
 
-		try (InputStream input = new FileInputStream("src/main/resources/UserAccount.properties")) {
+		try (InputStream input = new FileInputStream("/Users/amy/Library/Mobile Documents/com~apple~CloudDocs/OneDrive - National College of Ireland/IntelliJProjects/eBankingServices.gRPC/src/main/resources/UserAccount.properties")) {
 
 			prop = new Properties();
 
@@ -204,21 +204,13 @@ public class UserAccountServer extends UserAccountImplBase {
 // Authenticate user method
 
 	private boolean authenticateUser(String username, String password) {
-		if (username.equals(Username) && password.equals(currPassword)) {
-			return true;
-		} else {
-			return false;
-		}
+        return username.equals(Username) && password.equals(currPassword);
 	}
 
 	// validate account number
 
 	private boolean validAccNo(String accNo) {
-		if (accNo.matches("([1-3])")) {
-			return true;
-		} else {
-			return false;
-		}
+        return accNo.matches("([1-3])");
 	}
 
 // Customer class 

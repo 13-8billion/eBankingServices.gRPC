@@ -26,14 +26,14 @@ public class UserToolsClient {
 	private static UserToolsBlockingStub blockingStub;
 	private static UserToolsStub asyncStub;
 	private static ServiceInfo userToolsServiceInfo;
-	private static String newline = "\n\r";
+	private static final String newline = "\n\r";
 
-	public static void main(String args[]) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 
 		// instantiate user tools client class
 		UserToolsClient obj = new UserToolsClient();
 
-		String userTools_service_type = "_http._tcp.local.";
+		String userTools_service_type = "_http2._tcp.local.";
 
 		// discover user tools service
 		obj.discoverUserToolsService(userTools_service_type);

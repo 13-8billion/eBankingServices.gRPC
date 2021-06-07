@@ -47,113 +47,113 @@ public class ClientGUI implements ActionListener {
 	private ServiceInfo transactionsServiceInfo;
 	private ServiceInfo userAccountServiceInfo;
 	private ServiceInfo userToolsServiceInfo;
-	private String newlinee = "\n\r";
+	private final String newlinee = "\n\r";
 
 	// TRANSACTIONS instance variables------------------
 
 	// deposit
-	private JLabel labelentry1 = new JLabel("To Acc No: ");
-	private JTextField entry1 = new JTextField(10);
-	private JLabel labelentry2 = new JLabel("Amount € ");
-	private JTextField entry2 = new JTextField(10);
-	private JButton buttondeposit = new JButton("Deposit");
-	private JLabel labelreply1 = new JLabel("Message: ");
-	private JTextArea reply1 = new JTextArea();
+	private final JLabel labelentry1 = new JLabel("To Acc No: ");
+	private final JTextField entry1 = new JTextField(10);
+	private final JLabel labelentry2 = new JLabel("Amount € ");
+	private final JTextField entry2 = new JTextField(10);
+	private final JButton buttondeposit = new JButton("Deposit");
+	private final JLabel labelreply1 = new JLabel("Message: ");
+	private final JTextArea reply1 = new JTextArea();
 	// transfer
-	private JLabel labelfromaccno = new JLabel("From Acc No: ");
-	private JTextField fromAccNo = new JTextField(10);
-	private JLabel labeltoaccno = new JLabel("To Acc No: ");
-	private JTextField toAccNo = new JTextField(10);
-	private JLabel labelsum = new JLabel("Amount € ");
-	private JTextField sum = new JTextField(10);
-	private JButton buttonTransfer = new JButton("Transfer");
-	private JLabel labelmsg = new JLabel("Message: ");
-	private JTextArea transMsg = new JTextArea();
+	private final JLabel labelfromaccno = new JLabel("From Acc No: ");
+	private final JTextField fromAccNo = new JTextField(10);
+	private final JLabel labeltoaccno = new JLabel("To Acc No: ");
+	private final JTextField toAccNo = new JTextField(10);
+	private final JLabel labelsum = new JLabel("Amount € ");
+	private final JTextField sum = new JTextField(10);
+	private final JButton buttonTransfer = new JButton("Transfer");
+	private final JLabel labelmsg = new JLabel("Message: ");
+	private final JTextArea transMsg = new JTextArea();
 	// request
-	private JLabel labelfromaccno2 = new JLabel("From Acc No: ");
-	private JTextField fromAccNo2 = new JTextField(10);
-	private JLabel labeltoaccno2 = new JLabel("To Acc No: ");
-	private JTextField toAccNo2 = new JTextField(10);
-	private JLabel labelsum2 = new JLabel("Amount € ");
-	private JTextField sum2 = new JTextField(10);
-	private JLabel labelmonthly = new JLabel("Set monthly? (true/false) ");
-	private JTextField monthly = new JTextField(10);
-	private JButton buttonRequest = new JButton("Request");
-	private JLabel labelstatus = new JLabel("Message: ");
-	private JTextArea status = new JTextArea();
+	private final JLabel labelfromaccno2 = new JLabel("From Acc No: ");
+	private final JTextField fromAccNo2 = new JTextField(10);
+	private final JLabel labeltoaccno2 = new JLabel("To Acc No: ");
+	private final JTextField toAccNo2 = new JTextField(10);
+	private final JLabel labelsum2 = new JLabel("Amount € ");
+	private final JTextField sum2 = new JTextField(10);
+	private final JLabel labelmonthly = new JLabel("Set monthly? (true/false) ");
+	private final JTextField monthly = new JTextField(10);
+	private final JButton buttonRequest = new JButton("Request");
+	private final JLabel labelstatus = new JLabel("Message: ");
+	private final JTextArea status = new JTextArea();
 
 
 	// USER ACCOUNT instance variables---------------------
 
 	// change password
-	private JLabel labelusername = new JLabel("Username: ");
-	private JTextField username = new JTextField(10);
-	private JLabel labelcurrpass = new JLabel("Current password: ");
-	private JPasswordField currPass = new JPasswordField(10);
-	private JLabel labelnewpass = new JLabel("New password: ");
-	private JPasswordField newPass = new JPasswordField(10);
-	private JTextArea passMsg = new JTextArea();
-	private JButton buttonPass = new JButton("Change password");
+	private final JLabel labelusername = new JLabel("Username: ");
+	private final JTextField username = new JTextField(10);
+	private final JLabel labelcurrpass = new JLabel("Current password: ");
+	private final JPasswordField currPass = new JPasswordField(10);
+	private final JLabel labelnewpass = new JLabel("New password: ");
+	private final JPasswordField newPass = new JPasswordField(10);
+	private final JTextArea passMsg = new JTextArea();
+	private final JButton buttonPass = new JButton("Change password");
 	// view account
-	private JLabel labelaccno = new JLabel("Account No: ");
-	private JTextField accno = new JTextField(10);
-	private JLabel labelfname = new JLabel("First Name: ");
-	private JTextField firstName = new JTextField(10);
-	private JLabel labellname = new JLabel("Last Name: ");
-	private JTextField lastName = new JTextField(10);
-	private JLabel labelbalance = new JLabel("Balance € ");
-	private JTextField balance = new JTextField(10);
-	private JButton buttonAcc = new JButton("View Account");
-	private JTextArea viewAccMsg = new JTextArea();
-	private JTextArea recentTrans = new JTextArea();
+	private final JLabel labelaccno = new JLabel("Account No: ");
+	private final JTextField accno = new JTextField(10);
+	private final JLabel labelfname = new JLabel("First Name: ");
+	private final JTextField firstName = new JTextField(10);
+	private final JLabel labellname = new JLabel("Last Name: ");
+	private final JTextField lastName = new JTextField(10);
+	private final JLabel labelbalance = new JLabel("Balance € ");
+	private final JTextField balance = new JTextField(10);
+	private final JButton buttonAcc = new JButton("View Account");
+	private final JTextArea viewAccMsg = new JTextArea();
+	private final JTextArea recentTrans = new JTextArea();
 	// login
-	private JLabel labelUsername = new JLabel("Enter username: ");
-	private JLabel labelPassword = new JLabel("Enter password: ");
-	private JTextField username1 = new JTextField(10);
-	private JTextArea loginConf1 = new JTextArea();
-	private JPasswordField password1 = new JPasswordField(10);
-	private JButton buttonLogin = new JButton("Login");
-	private JLabel labelUsername2 = new JLabel("Enter username: ");
-	private JLabel labelPassword2 = new JLabel("Enter password: ");
+	private final JLabel labelUsername = new JLabel("Enter username: ");
+	private final JLabel labelPassword = new JLabel("Enter password: ");
+	private final JTextField username1 = new JTextField(10);
+	private final JTextArea loginConf1 = new JTextArea();
+	private final JPasswordField password1 = new JPasswordField(10);
+	private final JButton buttonLogin = new JButton("Login");
+	private final JLabel labelUsername2 = new JLabel("Enter username: ");
+	private final JLabel labelPassword2 = new JLabel("Enter password: ");
 
 	// USER TOOLS instance variables ------------------------
 
 	// vault
-	private JTextField vaultUsername = new JTextField(10);
-	private JTextArea vaultConf = new JTextArea();
-	private JLabel labelaccnovault = new JLabel("Acc No: ");
-	private JLabel labelsumvault = new JLabel("Amount € ");
-	private JTextField vaultaccno = new JTextField(10);
-	private JLabel labelunlock = new JLabel("Unlock Date (dd/mm/yyyy): ");
-	private JTextField vaultunlock = new JTextField(10);
-	private JTextField vaultsum = new JTextField(10);
-	private JPasswordField vaultPassword = new JPasswordField(10);
-	private JButton buttonVault = new JButton("Vault");
+	private final JTextField vaultUsername = new JTextField(10);
+	private final JTextArea vaultConf = new JTextArea();
+	private final JLabel labelaccnovault = new JLabel("Acc No: ");
+	private final JLabel labelsumvault = new JLabel("Amount € ");
+	private final JTextField vaultaccno = new JTextField(10);
+	private final JLabel labelunlock = new JLabel("Unlock Date (dd/mm/yyyy): ");
+	private final JTextField vaultunlock = new JTextField(10);
+	private final JTextField vaultsum = new JTextField(10);
+	private final JPasswordField vaultPassword = new JPasswordField(10);
+	private final JButton buttonVault = new JButton("Vault");
 	// calculator
-	private JLabel labelroi = new JLabel("Rates of interest: ");
-	private JTextArea roi = new JTextArea(
+	private final JLabel labelroi = new JLabel("Rates of interest: ");
+	private final JTextArea roi = new JTextArea(
 			"12 MONTHS TERM: " + newlinee + "access - 0.0001%" + newlinee + "no access - 0.0004%" + newlinee + newlinee
 					+ "24 MONTHS TERM: " + newlinee + "access - 0.002%" + newlinee + "no access - 0.003%" + newlinee
 					+ newlinee + "36 MONTHS TERM: " + newlinee + "access - 0.0025%" + newlinee + "no access - 0.05%");
-	private JLabel labelacctype = new JLabel("Account type (12, 24 or 36): ");
-	private JTextField acctype = new JTextField(5);
-	private JLabel labelcalcsum = new JLabel("Amount € ");
-	private JTextField calcsum = new JTextField(5);
-	private JLabel labelaccess = new JLabel("Money access? (yes/no): ");
-	private JTextField access = new JTextField(5);
-	private JTextField acctype2 = new JTextField(5);
-	private JTextField calcsum2 = new JTextField(5);
-	private JTextField access2 = new JTextField(5);
-	private JButton buttoncalc = new JButton("Calculate");
-	private JLabel labelinterest = new JLabel("Interest Payable € ");
-	private JTextArea interest = new JTextArea();
-	private JTextArea error = new JTextArea();
+	private final JLabel labelacctype = new JLabel("Account type (12, 24 or 36): ");
+	private final JTextField acctype = new JTextField(5);
+	private final JLabel labelcalcsum = new JLabel("Amount € ");
+	private final JTextField calcsum = new JTextField(5);
+	private final JLabel labelaccess = new JLabel("Money access? (yes/no): ");
+	private final JTextField access = new JTextField(5);
+	private final JTextField acctype2 = new JTextField(5);
+	private final JTextField calcsum2 = new JTextField(5);
+	private final JTextField access2 = new JTextField(5);
+	private final JButton buttoncalc = new JButton("Calculate");
+	private final JLabel labelinterest = new JLabel("Interest Payable € ");
+	private final JTextArea interest = new JTextArea();
+	private final JTextArea error = new JTextArea();
 	// help bot
 	String newline = "\n\r";
-	private JLabel labelhowto = new JLabel("How to: ");
-	private JTextArea solutions = new JTextArea();
-	private JButton buttonselect = new JButton("Select");
-	private JComboBox comboOperation = new JComboBox();
+	private final JLabel labelhowto = new JLabel("How to: ");
+	private final JTextArea solutions = new JTextArea();
+	private final JButton buttonselect = new JButton("Select");
+	private final JComboBox comboOperation = new JComboBox();
 
 	// USER TOOLS GUI TABBED PANE
 	private JTabbedPane getUserToolsGUIJTabbedPane() {
@@ -862,7 +862,7 @@ public class ClientGUI implements ActionListener {
 		if (label.equals("Deposit")) {
 			System.out.println("Deposits service invoked ...");
 
-			String transactions_service_type = "_http._tcp.local.";
+			String transactions_service_type = "_http2._tcp.local.";
 
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
@@ -948,7 +948,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String transactions_service_type = "_http._tcp.local.";
+			String transactions_service_type = "_http2._tcp.local.";
 
 			// discover transactions service
 			discoverTransactionsService(transactions_service_type);
@@ -1012,7 +1012,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userAccount_service_type = "_http._tcp.local.";
+			String userAccount_service_type = "_http2._tcp.local.";
 
 			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
@@ -1041,7 +1041,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userAccount_service_type = "_userAccount._tcp.local.";
+			String userAccount_service_type = "_http2._tcp.local.";
 
 			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
@@ -1092,7 +1092,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userAccount_service_type = "_http._tcp.local.";
+			String userAccount_service_type = "_http2._tcp.local.";
 
 			// discover user account service
 			discoverUserAccountService(userAccount_service_type);
@@ -1126,7 +1126,7 @@ public class ClientGUI implements ActionListener {
 			int index = comboOperation.getSelectedIndex(); // get selected option from combo box
 			Operation operation = Operation.forNumber(index);
 
-			String userTools_service_type = "_http._tcp.local.";
+			String userTools_service_type = "_http2._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1173,7 +1173,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_http._tcp.local.";
+			String userTools_service_type = "_http2._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1202,7 +1202,7 @@ public class ClientGUI implements ActionListener {
 			 * 
 			 */
 
-			String userTools_service_type = "_http._tcp.local.";
+			String userTools_service_type = "_http2._tcp.local.";
 
 			// discover user tools service
 			discoverUserToolsService(userTools_service_type);
@@ -1221,7 +1221,7 @@ public class ClientGUI implements ActionListener {
 				@Override
 				public void onNext(CalcResponse response) {
 					// Retrieving reply from server
-					interest.setText((String.valueOf(response.getMessage())));
+					interest.setText((response.getMessage()));
 					error.setText(response.getError());
 				}
 

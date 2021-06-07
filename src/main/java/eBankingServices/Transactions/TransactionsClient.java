@@ -28,14 +28,14 @@ public class TransactionsClient {
 	private static TransactionsBlockingStub blockingStub; // declare stubs
 	private static TransactionsStub asyncStub;
 	private static ManagedChannel channel;
-	private static String newline = "\n\r";
-	private String euro = "\u20ac";
+	private static final String newline = "\n\r";
+	private final String euro = "\u20ac";
 
 	private static final Logger logger = Logger.getLogger(TransactionsClient.class.getName());
 
-	public static void main(String args[]) throws InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 
-		String transactions_service_type = "_http._tcp.local.";
+		String transactions_service_type = "_http2._tcp.local.";
 
 		// instantiate TransactionsClient
 		TransactionsClient obj = new TransactionsClient();
@@ -186,7 +186,7 @@ public class TransactionsClient {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	};
+	}
 
 // Request money from other accounts - Bi-directional streaming 
 

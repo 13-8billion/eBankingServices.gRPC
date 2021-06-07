@@ -26,11 +26,11 @@ public class UserAccountClient {
 	private static UserAccountStub asyncStub;
 	private static ServiceInfo userAccountServiceInfo;
 
-	public static void main(String args[]) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 
 		UserAccountClient obj = new UserAccountClient();
 
-		String userAccount_service_type = "_http._tcp.local.";
+		String userAccount_service_type = "_http2._tcp.local.";
 
 		// discover user account service
 		obj.discoverUserAccountService(userAccount_service_type);

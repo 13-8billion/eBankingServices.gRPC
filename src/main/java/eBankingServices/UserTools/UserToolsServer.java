@@ -23,10 +23,10 @@ import eBankingServices.UserTools.UserToolsGrpc.UserToolsImplBase;
 
 public class UserToolsServer extends UserToolsImplBase {
 
-	private String euro = "\u20AC";
-	private String newline = "\n\r";
-	private String Username = "Amy"; // hardcode username/password for login
-	private String Password = "123";
+	private final String euro = "\u20AC";
+	private final String newline = "\n\r";
+	private final String Username = "Amy"; // hardcode username/password for login
+	private final String Password = "123";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -99,7 +99,7 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		Properties prop = null;
 
-		try (InputStream input = new FileInputStream("src/main/resources/UserTools.properties")) {
+		try (InputStream input = new FileInputStream("/Users/amy/Library/Mobile Documents/com~apple~CloudDocs/OneDrive - National College of Ireland/IntelliJProjects/eBankingServices.gRPC/src/main/resources/UserTools.properties")) {
 
 			prop = new Properties();
 
@@ -182,16 +182,11 @@ public class UserToolsServer extends UserToolsImplBase {
 		String unlockDate = request.getUnlockDate(); // extract the required fields from the client input
 		String accNo = String.valueOf(request.getAccNo());
 
-		if (accNo.matches("([1-3])")) { // validate account number
-			validAccNo = true;
-		} else {
-			validAccNo = false;
-		}
+        // validate account number
+        validAccNo = accNo.matches("([1-3])");
 
-		if (unlockDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) // validate date format
-			checkFormat = true;
-		else
-			checkFormat = false;
+        // validate date format
+        checkFormat = unlockDate.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})");
 
 		VaultConfirmation vc = null; // initialise server response to null;
 		try {
@@ -235,9 +230,9 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		return new StreamObserver<CalcRequest>() {
 
-			ArrayList<Object> list = new ArrayList<Object>(); // create array list to store calculated values
+			final ArrayList<Object> list = new ArrayList<Object>(); // create array list to store calculated values
 			String formattedList; // declare string to remove square brackets and comma from object array values
-			ArrayList<String> error = new ArrayList<String>();
+			final ArrayList<String> error = new ArrayList<String>();
 
 			@Override
 			public void onNext(CalcRequest request) {
@@ -368,20 +363,14 @@ public class UserToolsServer extends UserToolsImplBase {
 
 		}
 
-		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) // validate date format
-			return true;
-		else
-			return false;
+        // validate date format
+        return date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})");
 
 	}
 
 // Authenticate user method for vault service
 	private boolean authenticateUser(String username, String password) {
-		if (username.equals(Username) && password.equals(Password)) {
-			return true;
-		} else {
-			return false;
-		}
+        return username.equals(Username) && password.equals(Password);
 	}
 
 }
